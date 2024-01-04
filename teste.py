@@ -1,6 +1,6 @@
-from tkinter import *
-root = Tk()
-root.title("hello")
-top = Toplevel()
-top.title("Python")
-top.mainloop()
+d = {'a': {'b': 'c', 'd': 'e'}, 'f': {'g': 'h', 'i': 'j'}}
+
+
+for letra, letra2 in d.items():
+    for lol in letra2.values():
+        print(lol)
