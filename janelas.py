@@ -149,7 +149,16 @@ class Janelas:
             listas_gerais = cria_listas_gerais(amostradores)
             lista_areas = define_areas(df)
             areas = separa_areas(lista_areas, amostradores=amostradores)
-            #ocorrencias_area = conta_ocorrencias_area(areas, amostrador=True)
-            #reads_especie = calcula_reads_especie(areas, amostrador=True)
-            #print(reads_especie['M '])
+            ocorrencias_area = conta_ocorrencias_area(areas, amostrador=True)
+            reads_especie = calcula_reads_especie(areas, amostrador=True)
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostrador=True)
+
+            caminho_lista_geral = asksaveasfilename(title='Salve as listas gerais', initialfile='lista_gerais', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+
+            salva_listas_gerais(listas_gerais, caminho_lista_geral, amostrador=True)
+
+            caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+
+            salva_resultados(tabelas_finais, caminho_resultado, amostrador=True)
+
 

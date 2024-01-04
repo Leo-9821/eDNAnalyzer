@@ -1,6 +1,4 @@
-d = {'a': {'b': 'c', 'd': 'e'}, 'f': {'g': 'h', 'i': 'j'}}
+d = [{'x': {'a': 'b'}}, {'z': {'c': 'd'}}]
 
-
-for letra, letra2 in d.items():
-    for lol in letra2.values():
-        print(lol)
+for i in d:
+    print(list(i.keys())[0])
