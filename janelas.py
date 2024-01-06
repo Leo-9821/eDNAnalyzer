@@ -141,24 +141,54 @@ class Janelas:
         var_area = var_area.get()
 
         if var_amostrador and not var_area:
-            print('Errou1')
-        elif var_area and not var_amostrador:
-            print('Errou2')
-        elif var_amostrador and var_area:
             amostradores = separa_amostradores(df, lista_amostradores)
-            listas_gerais = cria_listas_gerais(amostradores)
-            lista_areas = define_areas(df)
-            areas = separa_areas(lista_areas, amostradores=amostradores)
-            ocorrencias_area = conta_ocorrencias_area(areas, amostrador=True)
-            reads_especie = calcula_reads_especie(areas, amostrador=True)
-            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostrador=True)
 
-            caminho_lista_geral = asksaveasfilename(title='Salve as listas gerais', initialfile='lista_gerais', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+            ocorrencias = conta_ocorrencias(amostradores, amostrador=True)
 
-            salva_listas_gerais(listas_gerais, caminho_lista_geral, amostrador=True)
+            reads_especie = calcula_reads_especie(amostradores, amostrador=True)
+
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostrador=True)
 
             caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
 
             salva_resultados(tabelas_finais, caminho_resultado, amostrador=True)
+
+        elif var_area and not var_amostrador:
+            lista_areas = define_areas(df)
+
+            areas = separa_areas(lista_areas, df=df)
+
+            ocorrencias = conta_ocorrencias(areas, area=True)
+
+            reads_especie = calcula_reads_especie(areas, area=True)
+
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, area=True)
+
+            caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+
+            salva_resultados(tabelas_finais, caminho_resultado, area=True)
+
+        elif var_amostrador and var_area:
+            amostradores = separa_amostradores(df, lista_amostradores)
+
+            listas_gerais = cria_listas_gerais(amostradores)
+
+            lista_areas = define_areas(df)
+
+            areas = separa_areas(lista_areas, amostradores=amostradores)
+
+            ocorrencias_area = conta_ocorrencias(areas, amostrador=True, area=True)
+
+            reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
+
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostrador=True, area=True)
+
+            caminho_lista_geral = asksaveasfilename(title='Salve as listas gerais', initialfile='lista_gerais', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+
+            salva_listas_gerais(listas_gerais, caminho_lista_geral, amostrador=True, area=True)
+
+            caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+
+            salva_resultados(tabelas_finais, caminho_resultado, amostrador=True, area=True)
 
 
