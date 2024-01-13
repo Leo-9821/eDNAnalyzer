@@ -2,8 +2,6 @@ from metabar import *
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
-from tkinter import ttk
-from pprint import pprint as pp
 
 
 class Janelas:
@@ -183,7 +181,7 @@ class Janelas:
 
             tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostrador=True, area=True)
 
-            caminho_lista_geral = asksaveasfilename(title='Salve as listas gerais', initialfile='lista_gerais', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+            caminho_lista_geral = asksaveasfilename(title='Salve as listas gerais', initialfile='listas_gerais', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
 
             salva_listas_gerais(listas_gerais, caminho_lista_geral, amostrador=True, area=True)
 

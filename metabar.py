@@ -75,8 +75,17 @@ def cria_listas_gerais(dfs):
     listas_gerais = {}
 
     for df in dfs:
-        lista_especies = dfs[df]['OTUFinal'].unique()
-        listas_gerais[df] = pd.DataFrame(lista_especies, columns=['Táxon'],).sort_values(by='Táxon').reset_index(drop=True)
+        lista_especies = dfs[df]['OTUFinal'].value_counts()
+        lista_especies = pd.DataFrame(lista_especies).reset_index()
+        lista_especies = lista_especies.rename(columns={'OTUFinal': 'Táxon', 'count': 'Detecções'})
+        cont_reads = dfs[df][['N_reads', 'OTUFinal']]
+        cont_reads = cont_reads.groupby(by='OTUFinal').sum()
+        cont_reads = cont_reads.sort_values(by='N_reads', ascending=False).reset_index()
+        cont_reads = cont_reads.rename(columns={'OTUFinal': 'Táxon', 'N_reads': 'Reads'})
+        tabelas_concatenadas = lista_especies.merge(cont_reads, how='outer', on='Táxon').sort_values(by='Táxon').reset_index(drop=True)
+
+        listas_gerais.setdefault(df, tabelas_concatenadas)
+
     return listas_gerais
 
 
