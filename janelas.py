@@ -14,7 +14,7 @@ class Janelas:
         self.principal.columnconfigure([0, 1], weight=1)
 
     def inicia_janela(self):
-        label_titulo = tk.Label(self.principal, text='Escolha o processo que deseja rodar', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')#fgrg
+        label_titulo = tk.Label(self.principal, text='Escolha o processo que deseja rodar', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
         label_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
 
         botao_selecionar_funcionalidade = tk.Button(self.principal, text='Processamento da tabela inicial e aplicação do threshold', font=('Arial', 16), command=self.proc_inicial_threshold)
