@@ -69,12 +69,16 @@ class Janelas:
 
         dfs_corridas = separa_corridas(df)
 
-        corridas_tratadas, thresholds = aplica_threshold(dfs_corridas, threshold)
+        selecionados, nao_selecionados, thresholds = aplica_threshold(dfs_corridas, threshold)
 
-        resultado_tratado_geral = concatena_dfs(corridas_tratadas)
+        resultado_tratado_geral = concatena_dfs(selecionados)
+        nao_selecionados_geral = concatena_dfs(nao_selecionados)
 
         caminho_salvar_resultado = asksaveasfilename(title='Salve a tabela de resultados', initialfile='resultados_tratados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
         resultado_tratado_geral.to_excel(caminho_salvar_resultado + ".xlsx", index=False)
+
+        caminho_salvar_resultado = asksaveasfilename(title='Salve a tabela com otus eliminadas', initialfile='otus_eliminadas', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+        nao_selecionados_geral.to_excel(caminho_salvar_resultado + ".xlsx", index=False)
 
         caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela dos thresholds', initialfile='thresholds', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
         thresholds.to_excel(caminho_salvar_thresholds + ".xlsx")

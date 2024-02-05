@@ -24,7 +24,8 @@ def separa_corridas(df):
 
 def aplica_threshold(corridas, threshold_perc):
     thresholds = {}
-    corrs = {}
+    selecionados = {}
+    nao_selecionados = {}
 
     for corrida in corridas:
         df = corridas[corrida]
@@ -34,12 +35,15 @@ def aplica_threshold(corridas, threshold_perc):
 
         thresholds[corrida] = threshold
 
-        corr = df.loc[df['N_reads'] > threshold]
-        corrs[corrida] = corr
+        selecionado = df.loc[df['N_reads'] > threshold]
+        selecionados[corrida] = selecionado
+
+        nao_selecionado = df.loc[df['N_reads'] <= threshold]
+        nao_selecionados[corrida] = nao_selecionado
 
     df_thresholds = pd.DataFrame.from_dict(thresholds, orient='index')
     df_thresholds = df_thresholds.rename(columns={0: 'Threshold'})
-    return corrs, df_thresholds
+    return selecionados, nao_selecionados, df_thresholds
 
 
 def concatena_dfs(dfs):
