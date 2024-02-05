@@ -106,6 +106,78 @@ def separa_areas(lista_areas, amostradores=None, df=None):
         return areas
 
 
+def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
+    ocorr = {}
+
+    if amostradores and areas:
+        for amostrador in dfs:
+            tabelas_areas = dfs[amostrador]
+            for tabela_area in tabelas_areas:
+                for area, tabela in tabela_area.items():
+                    pontos = tabela['Ponto'].unique()
+                    tabelas_taxons = []
+                    for ponto in pontos:
+                        df_ponto = tabela.loc[tabela['Ponto'] == ponto]
+                        taxons = df_ponto['OTUFinal'].unique()
+                        df_taxons = pd.DataFrame(taxons, columns=[f'Táxon'])
+                        tabelas_taxons.append(df_taxons)
+                    try:
+                        df_taxons = pd.concat(tabelas_taxons).reset_index()
+                    except ValueError:
+                        pass
+
+                    df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts()).reset_index()
+                    df_ocorr = df_ocorr.rename(columns={'count': f'Detecções em {area}'})
+
+                    ocorr.setdefault(amostrador, []).append({area: df_ocorr})
+
+        return ocorr
+
+    elif amostradores and not areas:
+        for amostrador in dfs:
+            tabela = dfs[amostrador]
+            pontos = tabela['Ponto'].unique()
+            tabelas_taxons = []
+            for ponto in pontos:
+                df_ponto = tabela.loc[tabela['Ponto'] == ponto]
+                taxons = df_ponto['OTUFinal'].unique()
+                df_taxons = pd.DataFrame(taxons, columns=[f'Táxon'])
+                tabelas_taxons.append(df_taxons)
+            try:
+                df_taxons = pd.concat(tabelas_taxons).reset_index()
+            except ValueError:
+                pass
+
+            df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts())
+            df_ocorr = df_ocorr.rename(columns={'count': f'Detecções por {amostrador}'})
+
+            ocorr.setdefault(amostradores, []).append({amostrador: df_ocorr})
+
+        return ocorr
+
+    elif not amostradores and areas:
+        for area in dfs:
+            tabela = dfs[area]
+            pontos = tabela['Ponto'].unique()
+            tabelas_taxons = []
+            for ponto in pontos:
+                df_ponto = tabela.loc[tabela['Ponto'] == ponto]
+                taxons = df_ponto['OTUFinal'].unique()
+                df_taxons = pd.DataFrame(taxons, columns=[f'Táxon'])
+                tabelas_taxons.append(df_taxons)
+            try:
+                df_taxons = pd.concat(tabelas_taxons).reset_index()
+            except ValueError:
+                pass
+
+            df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts())
+            df_ocorr = df_ocorr.rename(columns={'count': f'Detecções por {area}'})
+
+            ocorr.setdefault(amostradores, []).append({area: df_ocorr})
+
+        return ocorr
+
+
 def conta_ocorrencias(dfs, amostrador=False, area=False):
     ocorr = {}
 
@@ -184,10 +256,10 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
         return reads_especie
 
 
-def constroi_tabela_final(df_reads_sp, df_deteccoes, amostrador=False, area=False):
+def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=False):
     tabelas_finais = {}
 
-    if amostrador and area:
+    if amostradores and areas:
         for amostrador in df_reads_sp:
             tabelas_reads = df_reads_sp[amostrador]
             tabelas_ocorr = df_deteccoes[amostrador]
@@ -204,7 +276,7 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostrador=False, area=Fals
                         continue
         return tabelas_finais
 
-    elif amostrador and not area:
+    elif amostradores and not areas:
         for amostrador in df_reads_sp:
             tabela_reads = df_reads_sp[amostrador]
             tabela_ocorr = df_deteccoes[amostrador]
@@ -213,7 +285,7 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostrador=False, area=Fals
 
         return tabelas_finais
 
-    elif not amostrador and area:
+    elif not amostradores and areas:
         for area in df_reads_sp:
             tabela_reads = df_reads_sp[area]
             tabela_ocorr = df_deteccoes[area]

@@ -108,8 +108,15 @@ class Janelas:
         botao_area = tk.Checkbutton(frame_separacao, text='Área', variable=var_area, font=('Arial', 14))
         botao_area.grid(row=2, column=2, sticky='w')
 
+        frame_aliquotas = tk.LabelFrame(frame, text='Alíquotas', font=('Arial', 15))
+        frame_aliquotas.grid(row=3, column=0)
+
+        var_aliquota = tk.BooleanVar(frame_aliquotas)
+        botao_area = tk.Checkbutton(frame_aliquotas, text='Caso tenha separado seus pontos amostrais em \nalíquotas selecione essa opção', variable=var_aliquota, font=('Arial', 14))
+        botao_area.grid(row=0, column=0, columnspan=3, sticky='w')
+
         frame_amostradores = tk.LabelFrame(frame, text='Definição dos amostradores', font=('Arial', 15))
-        frame_amostradores.grid(row=6, column=0)
+        frame_amostradores.grid(row=4, column=0)
 
         label_amostradores = tk.Label(frame_amostradores, text='Insira ao lado seus amostradores\ncomo você identificou em sua tabela\n(um por linha):', justify="left", font=('Arial', 14))
         label_amostradores.grid(row=1, column=0, padx=10, pady=10)
@@ -117,7 +124,7 @@ class Janelas:
         caixa_amostradores = tk.Text(frame_amostradores, font=('Arial', 14), width=10, height=5)
         caixa_amostradores.grid(row=1, column=1, padx=10, pady=10, columnspan=3)
 
-        botao_run = tk.Button(nova_janela, text='Rodar',  font=('Arial', 14), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area))
+        botao_run = tk.Button(nova_janela, text='Rodar',  font=('Arial', 14), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, var_aliquota))
         botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
 
     def seleciona_arquivo(self):
@@ -127,7 +134,7 @@ class Janelas:
         if caminho_arquivo:
             label_arquivo_selecionado['text'] = f'Arquivo Selecionado {caminho_arquivo}'
 
-    def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area):
+    def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, var_aliquotas):
         texto_amostradores = caixa_amostradores.get('1.0', tk.END)
         lista_amostradores = texto_amostradores.split('\n')
         lista_amostradores.pop(-1)
@@ -137,15 +144,19 @@ class Janelas:
 
         var_amostrador = var_amostrador.get()
         var_area = var_area.get()
+        var_aliquotas = var_aliquotas.get()
 
         if var_amostrador and not var_area:
             amostradores = separa_amostradores(df, lista_amostradores)
 
-            ocorrencias = conta_ocorrencias(amostradores, amostrador=True)
+            if not var_aliquotas:
+                ocorrencias = conta_ocorrencias(amostradores, amostrador=True)
+            else:
+                ocorrencias = conta_ocorrencia_aliquotas(amostradores, amostradores=True)
 
             reads_especie = calcula_reads_especie(amostradores, amostrador=True)
 
-            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostrador=True)
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
 
             caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
 
@@ -156,11 +167,14 @@ class Janelas:
 
             areas = separa_areas(lista_areas, df=df)
 
-            ocorrencias = conta_ocorrencias(areas, area=True)
+            if not var_aliquotas:
+                ocorrencias = conta_ocorrencias(areas, area=True)
+            else:
+                ocorrencias = conta_ocorrencia_aliquotas(areas, areas=True)
 
             reads_especie = calcula_reads_especie(areas, area=True)
 
-            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, area=True)
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
 
             caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
 
@@ -175,11 +189,14 @@ class Janelas:
 
             areas = separa_areas(lista_areas, amostradores=amostradores)
 
-            ocorrencias_area = conta_ocorrencias(areas, amostrador=True, area=True)
+            if not var_aliquotas:
+                ocorrencias_area = conta_ocorrencias(areas, amostrador=True, area=True)
+            else:
+                ocorrencias_area = conta_ocorrencia_aliquotas(areas, amostradores=True, areas=True)
 
             reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
 
-            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostrador=True, area=True)
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostradores=True, areas=True)
 
             caminho_lista_geral = asksaveasfilename(title='Salve as listas gerais', initialfile='listas_gerais', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
 
