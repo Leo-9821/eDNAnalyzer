@@ -46,16 +46,30 @@ class Janelas:
         nova_janela.focus_set()
         nova_janela.grab_set()
 
-        botao_run = tk.Button(nova_janela, text='Rodar', font=('Arial', 14), command=self.roda_analise_primaria)
-        botao_run.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+        label_threshold = tk.Label(nova_janela, text='Indique o threshold em porcentagem: \n(use ponto como separador decimal, valor padrão 0.05)', font=('Arial', 14))
+        label_threshold.grid(row=3, column=0, padx=10, pady=10, sticky='nsew')
 
-    def roda_analise_primaria(self):
+        caixa_threshold = tk.Entry(nova_janela, font=('Arial', 14))
+        caixa_threshold.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
+
+        botao_run = tk.Button(nova_janela, text='Rodar', font=('Arial', 14), command=lambda: self.roda_analise_primaria(caixa_threshold))
+        botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+
+    def roda_analise_primaria(self,  caixa_threshold):
         df = pd.read_excel(self.var_caminho_arquivo.get())
+
+        string_threshold = caixa_threshold.get()
+
+        if string_threshold == '':
+            threshold = 0.05
+        else:
+            threshold = float(string_threshold)
+
         self.principal.destroy()
 
         dfs_corridas = separa_corridas(df)
 
-        corridas_tratadas, thresholds = aplica_threshold(dfs_corridas)
+        corridas_tratadas, thresholds = aplica_threshold(dfs_corridas, threshold)
 
         resultado_tratado_geral = concatena_dfs(corridas_tratadas)
 

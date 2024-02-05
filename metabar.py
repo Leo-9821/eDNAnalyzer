@@ -22,7 +22,7 @@ def separa_corridas(df):
     return corridas
 
 
-def aplica_threshold(corridas):
+def aplica_threshold(corridas, threshold_perc):
     thresholds = {}
     corrs = {}
 
@@ -30,7 +30,7 @@ def aplica_threshold(corridas):
         df = corridas[corrida]
         reads = df['N_reads']
         total_reads = sum(reads)
-        threshold = total_reads * 0.05 / 100
+        threshold = total_reads * threshold_perc / 100
 
         thresholds[corrida] = threshold
 
