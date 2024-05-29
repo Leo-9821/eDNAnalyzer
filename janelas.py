@@ -97,7 +97,7 @@ class Janelas:
         elif idioma == 'pt-br':
             nova_janela.title("Processamento primário e threshold")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Processamento inicial e aplicação de treshold',
+            label_novo_titulo = tk.Label(nova_janela, text='Processamento inicial e aplicação de threshold',
                                          font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
             label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
 
@@ -122,7 +122,7 @@ class Janelas:
             caixa_threshold.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
 
             botao_run = tk.Button(nova_janela, text='Rodar', font=('Arial', 14),
-                                  command=lambda: self.roda_analise_primaria(caixa_threshold, lambda: self.proc_inicial_threshold('pt-br')))
+                                  command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br'))
             botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def roda_analise_primaria(self,  caixa_threshold, idioma):
@@ -189,7 +189,7 @@ class Janelas:
             label_selecionar_arquivo = tk.Label(frame_selecao_arquivo, text='Choose a file:', font=('Arial', 14))
             label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, columnspan=2)
 
-            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Click to choose', font=('Arial', 14), command=self.seleciona_arquivo)
+            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Click to choose', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
             botao_selecionar_arquivo.grid(row=1, column=2, padx=10, pady=10)
 
             label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file chosen', font=('Arial', 14))
@@ -247,7 +247,7 @@ class Janelas:
             label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, columnspan=2)
 
             botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Clique para selecionar', font=('Arial', 14),
-                                                 command=self.seleciona_arquivo)
+                                                 command=lambda: self.seleciona_arquivo('pt-br'))
             botao_selecionar_arquivo.grid(row=1, column=2, padx=10, pady=10)
 
             label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='Nenhum arquivo selecionado', font=('Arial', 14))
@@ -395,3 +395,11 @@ class Janelas:
             salva_resultados(tabelas_finais, caminho_resultado, amostrador=True, area=True)
 
 
+def main():
+    janela = Janelas()
+    janela.inicia_janela()
+    janela.idioma.mainloop()
+
+
+if __name__ == "__main__":
+    main()
