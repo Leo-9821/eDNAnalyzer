@@ -6,7 +6,6 @@ def separa_corridas(df):
 
     Parameters:
     df (pandas.core.frame.DataFrame): Base de dados com os resultados do metabarcoding após Blast.
-    lista_corridas (list, nump.array): Lista com os nomes das corridas.
 
     Returns:
     areas (dict): Dicionário com os dataframes identificados por chaves com os nomes informados na lista de corridas.
@@ -28,6 +27,17 @@ def separa_corridas(df):
 
 
 def aplica_threshold(corridas, threshold_perc):
+    """Calcula o threshold de reads para cada corrida e retira as OTUs que estiverem abaixo.
+
+    Parameters:
+    corridas (dict): Bases de dados para cada corrida organizadas em dicionário.
+    threshold_perc (float): valor da porcentagem para cálculo do threshold.
+
+    Returns:
+    selecionados (dict): Dicionário com os dataframes com OTUs selecionadas.
+    nao_selecionados (dict): Dicionário com dataframes com OTUs eliminadas.
+    df_thresholds (DataFrame): Dataframe com os valores dos thresholds calculados por corrida.
+    """
     thresholds = {}
     selecionados = {}
     nao_selecionados = {}
@@ -52,12 +62,28 @@ def aplica_threshold(corridas, threshold_perc):
 
 
 def concatena_dfs(dfs):
+    """Concatena dataframes de um dicionário.
+
+    Parameters:
+    dfs (dict): Dataframes organizados em um dicionário.
+
+    Returns:
+    tabelas_concatenadas (DataFrame): Dataframe resultante da concatenação dos dataframes.
+    """
     tabelas = dfs.values()
     tabelas_concatenadas = pd.concat(tabelas, ignore_index=True)
     return tabelas_concatenadas
 
 
 def define_areas(df):
+    """Cria lista de áreas amostrais.
+
+    Parameters:
+    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
+
+    Returns:
+    lista_areas (list): Lista de áreas amostrais.
+    """
     if 'Amostra' in df.columns:
         lista_amostras = df['Amostra'].unique()
     elif 'Sample' in df.columns:
@@ -77,6 +103,15 @@ def define_areas(df):
 
 
 def separa_amostradores(df, amostradores):
+    """Filtra tabela de OTUs de acordo com o amostrador.
+
+    Parameters:
+    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
+    amostradores (list): Lista com denominação dos amostradores.
+
+    Returns:
+    amst (dict): Dicionário com dataframes separados por amostrador.
+    """
     amst = {}
     for amostrador in amostradores:
         if 'Amostra' in df.columns:
@@ -88,6 +123,14 @@ def separa_amostradores(df, amostradores):
 
 
 def cria_listas_gerais(dfs):
+    """Cria lista de táxons geral por amostrador.
+
+    Parameters:
+    dfs (dict): Dicionário com dataframes separados por amostrador.
+
+    Returns:
+    listas_gerais (dict): Dicionário com dataframes finais com contagens de detecções e reads de cada táxons por amostrador.
+    """
     listas_gerais = {}
     for amostrador, df in dfs.items():
         if 'OTUFinal' in df.columns:
@@ -115,6 +158,16 @@ def cria_listas_gerais(dfs):
 
 
 def separa_areas(lista_areas, amostradores=None, df=None):
+    """Filtra tabela de OTUs de acordo com as áreas.
+
+    Parameters:
+    lista_areas (list): Lista das denominação das áreas
+    amostradores (list): Lista com denominação dos amostradores.
+    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
+
+    Returns:
+    amst (dict): Dicionário com dataframes separados por amostrador.
+    """
     if amostradores is not None:
         areas_amostradores = {}
         for amostrador in amostradores:
@@ -496,3 +549,11 @@ def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=Fals
                     tabela_final.to_excel(arquivo, sheet_name=area)
 
             i += 1
+
+
+def main():
+    pass
+
+
+if __name__ == "__main__":
+    main()

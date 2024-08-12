@@ -3,6 +3,18 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import pandas as pd
 from PIL import Image, ImageTk
+import os
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
 class Janelas:
@@ -15,11 +27,12 @@ class Janelas:
         self.idioma.columnconfigure([0, 1], weight=1)
 
     def inicia_janela(self):
+        """Inicia primeira janela, escolha de idioma."""
         label_titulo = tk.Label(self.idioma, text='Choose a language', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
         label_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=4)
 
-        bandeira_brasil = ImageTk.PhotoImage(Image.open('./img/bandeira-nacional-brasil.jpg').resize((50, 33)))
-        bandeira_uk = ImageTk.PhotoImage(Image.open('img/Flag-United-Kingdom.jpg').resize((50, 33)))
+        bandeira_brasil = ImageTk.PhotoImage(Image.open(resource_path('img/bandeira-nacional-brasil.jpg')).resize((50, 33)))
+        bandeira_uk = ImageTk.PhotoImage(Image.open(resource_path('img/Flag-United-Kingdom.jpg')).resize((50, 33)))
 
         botao_ptbr = tk.Button(self.idioma, text='Português \nbrasileiro', font=('Arial', 12), image=bandeira_brasil, compound='top', height=85, width=95, command=lambda: self.janela_principal('pt-br'))
         botao_ptbr.image = bandeira_brasil
@@ -30,38 +43,69 @@ class Janelas:
         botao_english.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
 
     def janela_principal(self, idioma):
+        """Inicia janela de abertura de manual e de processos
+
+        Parameters:
+        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        """
         principal = tk.Toplevel()
         principal.resizable(0, 0)
         principal.rowconfigure(0, weight=1)
         principal.columnconfigure([0, 1], weight=1)
 
         if idioma == 'eng':
-            principal.title("Primary processing and threshold")
+            principal.title("Choosing the process")
+
+            botao_selecionar_funcionalidade3 = tk.Button(principal, text='Open manual', font=('Arial', 16),
+                                                         command=lambda: self.abrir_manual('eng'))
+            botao_selecionar_funcionalidade3.grid(row=0, column=2, padx=10, pady=10, sticky='nsew')
 
             label_titulo = tk.Label(principal, text='Choose the process to run', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
-            label_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
+            label_titulo.grid(row=1, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
 
             botao_selecionar_funcionalidade = tk.Button(principal, text='Initial processing and threshold application', font=('Arial', 16), command=lambda: self.proc_inicial_threshold('eng'))
-            botao_selecionar_funcionalidade.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade.grid(row=2, column=2, padx=10, pady=10, sticky='nsew')
 
             botao_selecionar_funcionalidade2 = tk.Button(principal, text='Build table of consolidated results', font=('Arial', 16), command=lambda: self.proc_tabelas_consolidadas('eng'))
-            botao_selecionar_funcionalidade2.grid(row=2, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade2.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
+
         elif idioma == 'pt-br':
-            principal.title("Processamento primário e threshold")
+            principal.title("Escolhendo o processo")
+
+            botao_selecionar_funcionalidade3 = tk.Button(principal, text='Abrir manual',
+                                                         font=('Arial', 16),
+                                                         command=lambda: self.abrir_manual('pt-br'))
+            botao_selecionar_funcionalidade3.grid(row=0, column=2, padx=10, pady=10, sticky='nsew')
 
             label_titulo = tk.Label(principal, text='Escolha um processo para rodar', font=('Arial', 16, 'bold'),
                                     borderwidth=2, relief='solid')
-            label_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
+            label_titulo.grid(row=1, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
 
             botao_selecionar_funcionalidade = tk.Button(principal, text='Processamento inicial e aplicação do threshold',
                                                         font=('Arial', 16), command=lambda: self.proc_inicial_threshold('pt-br'))
-            botao_selecionar_funcionalidade.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade.grid(row=2, column=2, padx=10, pady=10, sticky='nsew')
 
-            botao_selecionar_funcionalidade2 = tk.Button(principal, text='Construção das tabelas de resultado final',
+            botao_selecionar_funcionalidade2 = tk.Button(principal, text='Construção das tabelas de resultados consolidados',
                                                          font=('Arial', 16), command=lambda: self.proc_tabelas_consolidadas('pt-br'))
-            botao_selecionar_funcionalidade2.grid(row=2, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade2.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
+
+    def abrir_manual(self, idioma):
+        """Abre arquivo com manual do programa.
+
+        Parameters:
+        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        """
+        if idioma == 'pt-br':
+            os.startfile(resource_path('manual_eDNAnalyzer_pt_br.pdf'))
+        elif idioma == 'eng':
+            os.startfile(resource_path('manual_eDNAnalyzer_eng.pdf'))
 
     def proc_inicial_threshold(self, idioma):
+        """Abre arquivo com manual do programa.
+
+        Parameters:
+        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        """
         global label_arquivo_selecionado
         nova_janela = tk.Toplevel()
         nova_janela.resizable(0, 0)
@@ -92,7 +136,7 @@ class Janelas:
             caixa_threshold = tk.Entry(nova_janela, font=('Arial', 14))
             caixa_threshold.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
 
-            botao_run = tk.Button(nova_janela, text='Run', font=('Arial', 14), command=lambda: self.roda_analise_primaria(caixa_threshold, 'eng'))
+            botao_run = tk.Button(nova_janela, text='RUN', font=('Arial', 14, 'bold'), command=lambda: self.roda_analise_primaria(caixa_threshold, 'eng'))
             botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
         elif idioma == 'pt-br':
             nova_janela.title("Processamento primário e threshold")
@@ -121,12 +165,17 @@ class Janelas:
             caixa_threshold = tk.Entry(nova_janela, font=('Arial', 14))
             caixa_threshold.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
 
-            botao_run = tk.Button(nova_janela, text='Rodar', font=('Arial', 14),
-                                  command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br'))
+            botao_run = tk.Button(nova_janela, text='RODAR', font=('Arial', 14, 'bold'),
+                                    command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br'))
             botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def roda_analise_primaria(self,  caixa_threshold, idioma):
+        """Roda processamento de threshold para as OTUs.
 
+        Parameters:
+        caixa_threshold (str): porcentagem para cálculo do threshold informada pelo usuário
+        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        """
         df = pd.read_excel(self.var_caminho_arquivo.get())
 
         string_threshold = caixa_threshold.get()
@@ -168,6 +217,12 @@ class Janelas:
             thresholds.to_excel(caminho_salvar_thresholds + ".xlsx")
 
     def proc_tabelas_consolidadas(self, idioma):
+        """Roda processamento de threshold para as OTUs.
+
+        Parameters:
+        caixa_threshold (str): porcentagem para cálculo do threshold informada pelo usuário
+        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        """
         global label_arquivo_selecionado
         nova_janela = tk.Toplevel()
         nova_janela.resizable(0,0)
@@ -205,11 +260,11 @@ class Janelas:
             label_separacoes.grid(row=1, column=0, padx=10, pady=10, columnspan=2)
 
             var_amostrador = tk.BooleanVar(frame_separacao)
-            botao_amostrador = tk.Checkbutton(frame_separacao, text='Sampler', variable=var_amostrador, font=('Arial', 14))
+            botao_amostrador = tk.Checkbutton(frame_separacao, text='Sampler', variable=var_amostrador, font=('Arial', 14, 'bold'))
             botao_amostrador.grid(row=1, column=2, sticky='w')
 
             var_area = tk.BooleanVar(frame_separacao)
-            botao_area = tk.Checkbutton(frame_separacao, text='Area', variable=var_area, font=('Arial', 14))
+            botao_area = tk.Checkbutton(frame_separacao, text='Area', variable=var_area, font=('Arial', 14, 'bold'))
             botao_area.grid(row=2, column=2, sticky='w')
 
             frame_aliquotas = tk.LabelFrame(frame, text='Aliquots', font=('Arial', 15))
@@ -222,18 +277,18 @@ class Janelas:
             frame_amostradores = tk.LabelFrame(frame, text='Samplers definition', font=('Arial', 15))
             frame_amostradores.grid(row=4, column=0)
 
-            label_amostradores = tk.Label(frame_amostradores, text='Insert your samplers as you identified \nthem in your table (one per row):', justify="left", font=('Arial', 14))
+            label_amostradores = tk.Label(frame_amostradores, text='Insert the samplers ID as identified \n in the table (one per row):', justify="left", font=('Arial', 14))
             label_amostradores.grid(row=1, column=0, padx=10, pady=10)
 
             caixa_amostradores = tk.Text(frame_amostradores, font=('Arial', 14), width=10, height=5)
             caixa_amostradores.grid(row=1, column=1, padx=10, pady=10, columnspan=3)
 
-            botao_run = tk.Button(nova_janela, text='Run',  font=('Arial', 14), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, var_aliquota, 'eng'))
+            botao_run = tk.Button(nova_janela, text='RUN',  font=('Arial', 14, 'bold'), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, var_aliquota, 'eng'))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
         elif idioma == 'pt-br':
-            nova_janela.title("Construção das tabelas de resultado final")
+            nova_janela.title("Construção das tabelas de resultados consolidados")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Construção das tabelas de resultado final',
+            label_novo_titulo = tk.Label(nova_janela, text='Construção das tabelas de resultados consolidados',
                                          font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
             label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, ipadx=3, columnspan=3)
 
@@ -243,7 +298,7 @@ class Janelas:
             frame_selecao_arquivo = tk.LabelFrame(frame, text='Seleção de arquivo', font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
 
-            label_selecionar_arquivo = tk.Label(frame_selecao_arquivo, text='Selecione um artigo:', font=('Arial', 14))
+            label_selecionar_arquivo = tk.Label(frame_selecao_arquivo, text='Selecione um arquivo:', font=('Arial', 14))
             label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, columnspan=2)
 
             botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Clique para selecionar', font=('Arial', 14),
@@ -264,11 +319,11 @@ class Janelas:
 
             var_amostrador = tk.BooleanVar(frame_separacao)
             botao_amostrador = tk.Checkbutton(frame_separacao, text='Amostrador', variable=var_amostrador,
-                                              font=('Arial', 14))
+                                              font=('Arial', 14, 'bold'))
             botao_amostrador.grid(row=1, column=2, sticky='w')
 
             var_area = tk.BooleanVar(frame_separacao)
-            botao_area = tk.Checkbutton(frame_separacao, text='Área', variable=var_area, font=('Arial', 14))
+            botao_area = tk.Checkbutton(frame_separacao, text='Área', variable=var_area, font=('Arial', 14, 'bold'))
             botao_area.grid(row=2, column=2, sticky='w')
 
             frame_aliquotas = tk.LabelFrame(frame, text='Alíquotas', font=('Arial', 15))
@@ -276,7 +331,7 @@ class Janelas:
 
             var_aliquota = tk.BooleanVar(frame_aliquotas)
             botao_area = tk.Checkbutton(frame_aliquotas,
-                                        text='Se você separou suas pontos \namostrais em alíquotas, selecione essa opção',
+                                        text='Se você separou os pontos \namostrais em alíquotas, selecione essa opção',
                                         variable=var_aliquota, font=('Arial', 14))
             botao_area.grid(row=0, column=0, columnspan=3, sticky='w')
 
@@ -284,19 +339,24 @@ class Janelas:
             frame_amostradores.grid(row=4, column=0)
 
             label_amostradores = tk.Label(frame_amostradores,
-                                          text='Insira seus amostradores como \nidentificou na tabela (um por linha):',
+                                          text='Insira o ID dos amostradores como \nidentificado na tabela (um por linha):',
                                           justify="left", font=('Arial', 14))
             label_amostradores.grid(row=1, column=0, padx=10, pady=10)
 
             caixa_amostradores = tk.Text(frame_amostradores, font=('Arial', 14), width=10, height=5)
             caixa_amostradores.grid(row=1, column=1, padx=10, pady=10, columnspan=3)
 
-            botao_run = tk.Button(nova_janela, text='Rodar', font=('Arial', 14), width=44,
+            botao_run = tk.Button(nova_janela, text='RODAR', font=('Arial', 14, 'bold'), width=44,
                                   command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador,
                                                                                var_area, var_aliquota, 'pt-br'))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
 
     def seleciona_arquivo(self, idioma):
+        """Abre caixa de diálogo para escolha do arquivo de entrada.
+
+        Parameters:
+        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        """
         if idioma == 'eng':
             tipos_de_arquivo = [('Excel file', '*.xlsx')]
             caminho_arquivo = askopenfilename(title='Choose an Excel file', filetypes=tipos_de_arquivo)
@@ -311,6 +371,15 @@ class Janelas:
                 label_arquivo_selecionado['text'] = f'Arquivo selecionado {caminho_arquivo}'
 
     def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, var_aliquotas, idioma):
+        """Roda segunda etapa do programa, filtra tabela de atribuição taxonômica .
+
+        Parameters:
+        caixa_amostradores (str): denominações para os amostradores
+        var_amostradores (bool): "True" filtrar por amostradores, "False" não filtrar por amostradores
+        var_area (bool): "True" filtrar por áreas, "False" não filtrar por áreas
+        var_aliquotas (bool): "True" considerar o uso de alíquotas, "False" não considerar uso de alíquotas
+        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        """
         texto_amostradores = caixa_amostradores.get('1.0', tk.END)
         lista_amostradores = texto_amostradores.split('\n')
         lista_amostradores.pop(-1)
@@ -396,6 +465,7 @@ class Janelas:
 
 
 def main():
+    """Inicia a interface gráfica e roda o programa"""
     janela = Janelas()
     janela.inicia_janela()
     janela.idioma.mainloop()
