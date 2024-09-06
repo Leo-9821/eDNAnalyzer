@@ -176,7 +176,11 @@ class Janelas:
         caixa_threshold (str): porcentagem para cálculo do threshold informada pelo usuário
         idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
         """
-        df = pd.read_excel(self.var_caminho_arquivo.get())
+
+        if '.xlsx' in self.var_caminho_arquivo.get():
+            df = pd.read_excel(self.var_caminho_arquivo.get())
+        elif '.csv' in self.var_caminho_arquivo.get():
+            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python')
 
         string_threshold = caixa_threshold.get()
 
@@ -193,28 +197,49 @@ class Janelas:
         nao_selecionados_geral = concatena_dfs(nao_selecionados)
 
         if idioma == 'eng':
-            caminho_salvar_resultado = asksaveasfilename(title='Save the results table', initialfile='processed_results', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+            caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
+                                                         initialfile='processed_results',
+                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
             resultado_tratado_geral.to_excel(caminho_salvar_resultado + ".xlsx", index=False)
 
-            caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs', initialfile='deleted_otus', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+            caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs',
+                                                         initialfile='deleted_otus',
+                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
             nao_selecionados_geral.to_excel(caminho_salvar_resultado + ".xlsx", index=False)
 
-            caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table', initialfile='thresholds', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+            caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
+                                                          initialfile='thresholds',
+                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
             thresholds.to_excel(caminho_salvar_thresholds + ".xlsx")
         elif idioma == 'pt-br':
             caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
                                                          initialfile='resultados_processados',
-                                                         filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
-            resultado_tratado_geral.to_excel(caminho_salvar_resultado + ".xlsx", index=False)
+                                                         defaultextension='.*',
+                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+            if ".xlsx" in caminho_salvar_resultado:
+                resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
+            elif ".csv" in caminho_salvar_resultado:
+                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', index=False)
 
             caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUs excluídas',
                                                          initialfile='otus_excluídas',
-                                                         filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
-            nao_selecionados_geral.to_excel(caminho_salvar_resultado + ".xlsx", index=False)
+                                                         defaultextension='.*',
+                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds', initialfile='thresholds',
-                                                          filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
-            thresholds.to_excel(caminho_salvar_thresholds + ".xlsx")
+            if ".xlsx" in caminho_salvar_resultado:
+                nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
+            elif ".csv" in caminho_salvar_resultado:
+                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', index=False)
+
+            caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds',
+                                                          initialfile='thresholds',
+                                                          defaultextension='.*',
+                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+
+            if ".xlsx" in caminho_salvar_resultado:
+                thresholds.to_excel(caminho_salvar_thresholds)
+            elif ".csv" in caminho_salvar_resultado:
+                thresholds.to_csv(caminho_salvar_thresholds, sep=';',)
 
     def proc_tabelas_consolidadas(self, idioma):
         """Roda processamento de threshold para as OTUs.
@@ -358,14 +383,14 @@ class Janelas:
         idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
         """
         if idioma == 'eng':
-            tipos_de_arquivo = [('Excel file', '*.xlsx')]
-            caminho_arquivo = askopenfilename(title='Choose an Excel file', filetypes=tipos_de_arquivo)
+            tipos_de_arquivo = [('Excel file', '*.xlsx'), ('CSV file', '*.csv')]
+            caminho_arquivo = askopenfilename(title='Choose a file', filetypes=tipos_de_arquivo)
             self.var_caminho_arquivo.set(caminho_arquivo)
             if caminho_arquivo:
                 label_arquivo_selecionado['text'] = f'Chosen file {caminho_arquivo}'
         elif idioma == 'pt-br':
-            tipos_de_arquivo = [('Arquivo de Excel', '*.xlsx')]
-            caminho_arquivo = askopenfilename(title='Escolha um arquivo Excel', filetypes=tipos_de_arquivo)
+            tipos_de_arquivo = [('Arquivo de Excel', '*.xlsx'), ('Arquivo CSV', '*.csv')]
+            caminho_arquivo = askopenfilename(title='Escolha um arquivo', filetypes=tipos_de_arquivo)
             self.var_caminho_arquivo.set(caminho_arquivo)
             if caminho_arquivo:
                 label_arquivo_selecionado['text'] = f'Arquivo selecionado {caminho_arquivo}'
@@ -384,11 +409,35 @@ class Janelas:
         lista_amostradores = texto_amostradores.split('\n')
         lista_amostradores.pop(-1)
 
-        df = pd.read_excel(self.var_caminho_arquivo.get())
+        if '.xlsx' in self.var_caminho_arquivo.get():
+            df = pd.read_excel(self.var_caminho_arquivo.get())
+        elif '.csv' in self.var_caminho_arquivo.get():
+            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python')
+
+        lista_areas = define_areas(df)
 
         var_amostrador = var_amostrador.get()
         var_area = var_area.get()
         var_aliquotas = var_aliquotas.get()
+
+        ocorrencias_geral = conta_ocorrencias_gerais(df, lista_areas)
+        reads_gerais = conta_reads_gerais(df)
+
+        lista_geral = cria_lista_geral(ocorrencias_geral, reads_gerais)
+
+        if idioma == 'eng':
+            caminho_lista_geral = asksaveasfilename(title='Save general list', initialfile='general_list',
+                                                    defaultextension='.*', filetypes=(
+                ("Excel files", "*.xlsx"), ("CSV file", "*.csv"), ("All files", "*.*")))
+        elif idioma == 'pt-br':
+            caminho_lista_geral = asksaveasfilename(title='Salve lista geral', initialfile='lista_geral',
+                                                    defaultextension='.*', filetypes=(
+                ("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+
+        if '.xlsx' in caminho_lista_geral:
+            lista_geral.to_excel(caminho_lista_geral)
+        elif '.csv' in caminho_lista_geral:
+            lista_geral.to_csv(caminho_lista_geral, sep=';')
 
         if var_amostrador and not var_area:
             amostradores = separa_amostradores(df, lista_amostradores)
@@ -399,20 +448,16 @@ class Janelas:
                 ocorrencias = conta_ocorrencia_aliquotas(amostradores, amostradores=True)
 
             reads_especie = calcula_reads_especie(amostradores, amostrador=True)
-
             tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
 
             if idioma == 'eng':
-                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
             elif idioma == 'pt-br':
-                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
-
+                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*',filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
 
             salva_resultados(tabelas_finais, caminho_resultado, amostrador=True)
 
         elif var_area and not var_amostrador:
-            lista_areas = define_areas(df)
-
             areas = separa_areas(lista_areas, df=df)
 
             if not var_aliquotas:
@@ -421,20 +466,18 @@ class Janelas:
                 ocorrencias = conta_ocorrencia_aliquotas(areas, areas=True)
 
             reads_especie = calcula_reads_especie(areas, area=True)
-
+            print(ocorrencias)
             tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
 
             if idioma == 'eng':
-                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
             elif idioma == 'pt-br':
-                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
 
             salva_resultados(tabelas_finais, caminho_resultado, area=True)
 
         elif var_amostrador and var_area:
             amostradores = separa_amostradores(df, lista_amostradores)
-
-            listas_gerais = cria_listas_gerais(amostradores)
 
             lista_areas = define_areas(df)
 
@@ -450,16 +493,9 @@ class Janelas:
             tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostradores=True, areas=True)
 
             if idioma == 'eng':
-                caminho_lista_geral = asksaveasfilename(title='Save general lists', initialfile='general_list', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
             elif idioma == 'pt-br':
-                caminho_lista_geral = asksaveasfilename(title='Salves as listas gerais', initialfile='listas_gerais', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
-
-            salva_listas_gerais(listas_gerais, caminho_lista_geral, amostrador=True, area=True)
-
-            if idioma == 'eng':
-                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
-            elif idioma == 'pt-br':
-                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', filetypes=(("Excel files", "*.xlsx"), ("All files", "*.*")))
+                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
 
             salva_resultados(tabelas_finais, caminho_resultado, amostrador=True, area=True)
 

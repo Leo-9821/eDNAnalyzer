@@ -1,4 +1,5 @@
 import pandas as pd
+import zipfile
 
 
 def separa_corridas(df):
@@ -122,39 +123,56 @@ def separa_amostradores(df, amostradores):
     return amst
 
 
-def cria_listas_gerais(dfs):
-    """Cria lista de táxons geral por amostrador.
+def conta_ocorrencias_gerais(df, lista_areas):
+    contagens = []
+
+    for area in lista_areas:
+        amst_areas = df[df['Amostra'].str.startswith(area)]
+
+        lista_pontos = list(amst_areas['Ponto'].unique())
+
+        for ponto in lista_pontos:
+            areas_ponto = amst_areas[amst_areas['Ponto'] == ponto]
+            taxons = areas_ponto['OTUFinal'].to_frame()
+            taxons = pd.DataFrame(taxons['OTUFinal'].unique())
+            contagens.append(taxons)
+
+    cont_ocorr = pd.concat(contagens, ignore_index=True)
+    cont_ocorr = cont_ocorr.value_counts()
+    cont_ocorr = pd.DataFrame(cont_ocorr)
+    cont_ocorr = cont_ocorr.sort_values(by='count', ascending=False).reset_index()
+    cont_ocorr = cont_ocorr.rename(columns={0: 'Táxon', 'count': f'Detecções'})
+
+    return cont_ocorr
+
+
+def conta_reads_gerais(df):
+    if 'OTUFinal' in df.columns:
+        df_read_sp = df[['N_reads', 'OTUFinal']]
+        df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
+        df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
+        df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_reads': 'Reads'})
+    elif 'FinalOTU' in df.columns:
+        df_read_sp = df[['N_reads', 'FinalOTU']]
+        df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
+        df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
+        df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_reads': 'Reads'})
+
+    return df_read_sp
+
+
+def cria_lista_geral(ocorrencias, reads):
+    """Cria lista de táxons geral.
 
     Parameters:
-    dfs (dict): Dicionário com dataframes separados por amostrador.
+    ocorrencias (DataFrame): DataFrame com contagem de detecções para cada táxon.
+    reads (DataFrame): DataFrame com contagem de reads para cada táxon.
 
     Returns:
-    listas_gerais (dict): Dicionário com dataframes finais com contagens de detecções e reads de cada táxons por amostrador.
+    lista_geral (DataFrame): Dataframe final com contagens de detecções e reads de cada táxon.
     """
-    listas_gerais = {}
-    for amostrador, df in dfs.items():
-        if 'OTUFinal' in df.columns:
-            lista_especies = df['OTUFinal'].value_counts()
-            lista_especies = pd.DataFrame(lista_especies).reset_index()
-            lista_especies = lista_especies.rename(columns={'OTUFinal': 'Táxon', 'count': 'Detecções'})
-            cont_reads = df[['N_reads', 'OTUFinal']]
-            cont_reads = cont_reads.groupby(by='OTUFinal').sum()
-            cont_reads = cont_reads.sort_values(by='N_reads', ascending=False).reset_index()
-            cont_reads = cont_reads.rename(columns={'OTUFinal': 'Táxon', 'N_reads': 'Reads'})
-            tabelas_concatenadas = lista_especies.merge(cont_reads, how='outer', on='Táxon').sort_values(by='Táxon').reset_index(drop=True)
-        elif 'FinalOTU' in df.columns:
-            lista_especies = df['FinalOTU'].value_counts()
-            lista_especies = pd.DataFrame(lista_especies).reset_index()
-            lista_especies = lista_especies.rename(columns={'FinalOTU': 'Taxon', 'count': 'Detections'})
-            cont_reads = df[['N_reads', 'FinalOTU']]
-            cont_reads = cont_reads.groupby(by='FinalOTU').sum()
-            cont_reads = cont_reads.sort_values(by='N_reads', ascending=False).reset_index()
-            cont_reads = cont_reads.rename(columns={'FinalOTU': 'Taxon', 'N_reads': 'Reads'})
-            tabelas_concatenadas = lista_especies.merge(cont_reads, how='outer', on='Taxon').sort_values(by='Taxon').reset_index(drop=True)
-
-        listas_gerais.setdefault(amostrador, tabelas_concatenadas)
-
-    return listas_gerais
+    lista_geral = ocorrencias.merge(reads, how='outer', on='Táxon')
+    return lista_geral
 
 
 def separa_areas(lista_areas, amostradores=None, df=None):
@@ -192,12 +210,13 @@ def separa_areas(lista_areas, amostradores=None, df=None):
 
 def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
     ocorr = {}
-
     if amostradores and areas:
         for amostrador in dfs:
             tabelas_areas = dfs[amostrador]
             for tabela_area in tabelas_areas:
                 for area, tabela in tabela_area.items():
+                    if tabela.empty:
+                        continue
                     if 'Ponto' in tabela.columns:
                         pontos = tabela['Ponto'].unique()
                         tabelas_taxons = []
@@ -206,10 +225,8 @@ def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
                             taxons = df_ponto['OTUFinal'].unique()
                             df_taxons = pd.DataFrame(taxons, columns=[f'Táxon'])
                             tabelas_taxons.append(df_taxons)
-                        try:
-                            df_taxons = pd.concat(tabelas_taxons).reset_index()
-                        except ValueError:
-                            pass
+
+                        df_taxons = pd.concat(tabelas_taxons).reset_index()
 
                         df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts()).reset_index()
                         df_ocorr = df_ocorr.rename(columns={'count': f'Detecções em {area}'})
@@ -223,16 +240,13 @@ def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
                             taxons = df_ponto['FinalOTU'].unique()
                             df_taxons = pd.DataFrame(taxons, columns=[f'Taxon'])
                             tabelas_taxons.append(df_taxons)
-                        try:
-                            df_taxons = pd.concat(tabelas_taxons).reset_index()
-                        except ValueError:
-                            pass
+
+                        df_taxons = pd.concat(tabelas_taxons).reset_index()
 
                         df_ocorr = pd.DataFrame(df_taxons['Taxon'].value_counts()).reset_index()
                         df_ocorr = df_ocorr.rename(columns={'count': f'Detections in {area}'})
 
                         ocorr.setdefault(amostrador, []).append({area: df_ocorr})
-
         return ocorr
 
     elif amostradores and not areas:
@@ -254,7 +268,7 @@ def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
                 df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts())
                 df_ocorr = df_ocorr.rename(columns={'count': f'Detecções por {amostrador}'})
 
-                ocorr.setdefault(amostradores, []).append({amostrador: df_ocorr})
+                ocorr.setdefault(amostrador, df_ocorr)
             elif 'Point' in tabela.columns:
                 pontos = tabela['Point'].unique()
                 tabelas_taxons = []
@@ -271,7 +285,7 @@ def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
                 df_ocorr = pd.DataFrame(df_taxons['Taxon'].value_counts())
                 df_ocorr = df_ocorr.rename(columns={'count': f'Detections by {amostrador}'})
 
-                ocorr.setdefault(amostradores, []).append({amostrador: df_ocorr})
+                ocorr.setdefault(amostrador, df_ocorr)
 
         return ocorr
 
@@ -294,7 +308,7 @@ def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
                 df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts())
                 df_ocorr = df_ocorr.rename(columns={'count': f'Detecções em {area}'})
 
-                ocorr.setdefault(amostradores, []).append({area: df_ocorr})
+                ocorr.setdefault(area, df_ocorr)
             elif 'Point' in tabela.columns:
                 pontos = tabela['Point'].unique()
                 tabelas_taxons = []
@@ -311,12 +325,12 @@ def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
                 df_ocorr = pd.DataFrame(df_taxons['Taxon'].value_counts())
                 df_ocorr = df_ocorr.rename(columns={'count': f'Detections in {area}'})
 
-                ocorr.setdefault(amostradores, []).append({area: df_ocorr})
+                ocorr.setdefault(area, df_ocorr)
 
         return ocorr
 
 
-def conta_ocorrencias(dfs, amostrador=False, area=False):
+def conta_ocorrencias(dfs, amostrador=False, area=False):  # Conferir se está funcionando certo, pois pode estar dando resultado errado, a função para alíquotas talvez seja a correta
     ocorr = {}
 
     if amostrador and area:
@@ -377,6 +391,9 @@ def conta_ocorrencias(dfs, amostrador=False, area=False):
         return ocorr
 
 
+
+
+
 def calcula_reads_especie(dfs, amostrador=False, area=False):
     reads_especie = {}
 
@@ -397,7 +414,6 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
                         df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
                         df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_reads': 'Reads'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
-
         return reads_especie
 
     elif amostrador and not area:
@@ -485,23 +501,6 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=F
         return tabelas_finais
 
 
-def salva_listas_gerais(listas_gerais, caminho_salvar, amostrador=False, area=False):
-    i = 0
-
-    if amostrador and area:
-        for amostrador in listas_gerais:
-            lista_geral = listas_gerais[amostrador]
-
-            if i == 0:
-                with pd.ExcelWriter(caminho_salvar + f'.xlsx', engine='openpyxl') as arquivo:
-                    lista_geral.to_excel(arquivo, sheet_name=amostrador)
-            else:
-                with pd.ExcelWriter(caminho_salvar + f'.xlsx', engine='openpyxl', mode='a') as arquivo:
-                    lista_geral.to_excel(arquivo, sheet_name=amostrador)
-
-            i += 1
-
-
 def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=False):
     if amostrador and area:
         for amostrador in tabelas_finais:
@@ -511,14 +510,27 @@ def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=Fals
                 area = list(tabela.keys())[0]
                 tabela_final = tabela[area]
 
-                if i == 0:
-                    with pd.ExcelWriter(caminho_salvar + f'_{amostrador}.xlsx', engine='openpyxl') as arquivo:
-                        tabela_final.to_excel(arquivo, sheet_name=area)
-                else:
-                    with pd.ExcelWriter(caminho_salvar + f'_{amostrador}.xlsx', engine='openpyxl', mode='a') as arquivo:
-                        tabela_final.to_excel(arquivo, sheet_name=area)
+                if '.xlsx' in caminho_salvar:
+                    caminho_salvar_tratado = caminho_salvar.replace('.xlsx', '')
+                    if i == 0:
+                        with pd.ExcelWriter(caminho_salvar_tratado + f'_{amostrador}.xlsx', engine='openpyxl') as arquivo:
+                            tabela_final.to_excel(arquivo, sheet_name=area)
+                    else:
+                        with pd.ExcelWriter(caminho_salvar_tratado + f'_{amostrador}.xlsx', engine='openpyxl', mode='a') as arquivo:
+                            tabela_final.to_excel(arquivo, sheet_name=area)
 
+                elif '.zip' in caminho_salvar:
+                    caminho_salvar_tratado = caminho_salvar.replace('.zip', '')
+                    if i == 0:
+                        with zipfile.ZipFile(caminho_salvar_tratado + f'_{amostrador}.zip', "w") as zf:
+                            with zf.open(f"{amostrador}_{area}.csv", "w") as buffer:
+                                tabela_final.to_csv(buffer, encoding='utf-8')
+                    else:
+                        with zipfile.ZipFile(caminho_salvar_tratado + f'_{amostrador}.zip', "a") as zf:
+                            with zf.open(f"{amostrador}_{area}.csv", "w") as buffer:
+                                tabela_final.to_csv(buffer, encoding='utf-8')
                 i += 1
+
 
     elif amostrador and not area:
         i = 0
@@ -526,12 +538,22 @@ def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=Fals
         for amostrador in tabelas_finais:
             tabela_final = tabelas_finais[amostrador]
 
-            if i == 0:
-                with pd.ExcelWriter(caminho_salvar + f'.xlsx', engine='openpyxl') as arquivo:
-                    tabela_final.to_excel(arquivo, sheet_name=amostrador)
-            else:
-                with pd.ExcelWriter(caminho_salvar + f'.xlsx', engine='openpyxl', mode='a') as arquivo:
-                    tabela_final.to_excel(arquivo, sheet_name=amostrador)
+            if '.xlsx' in caminho_salvar:
+                if i == 0:
+                    with pd.ExcelWriter(caminho_salvar, engine='openpyxl') as arquivo:
+                        tabela_final.to_excel(arquivo, sheet_name=amostrador)
+                else:
+                    with pd.ExcelWriter(caminho_salvar, engine='openpyxl', mode='a') as arquivo:
+                        tabela_final.to_excel(arquivo, sheet_name=amostrador)
+            elif '.zip' in caminho_salvar:
+                if i == 0:
+                    with zipfile.ZipFile(caminho_salvar, "w") as zf:
+                        with zf.open(f"{amostrador}.csv", "w") as buffer:
+                            tabela_final.to_csv(buffer, encoding='utf-8')
+                else:
+                    with zipfile.ZipFile(caminho_salvar, "a") as zf:
+                        with zf.open(f"{amostrador}.csv", "w") as buffer:
+                            tabela_final.to_csv(buffer, encoding='utf-8')
 
             i += 1
 
@@ -541,13 +563,22 @@ def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=Fals
         for area in tabelas_finais:
             tabela_final = tabelas_finais[area]
 
-            if i == 0:
-                with pd.ExcelWriter(caminho_salvar + f'.xlsx', engine='openpyxl') as arquivo:
-                    tabela_final.to_excel(arquivo, sheet_name=area)
-            else:
-                with pd.ExcelWriter(caminho_salvar + f'.xlsx', engine='openpyxl', mode='a') as arquivo:
-                    tabela_final.to_excel(arquivo, sheet_name=area)
-
+            if 'xlsx' in caminho_salvar:
+                if i == 0:
+                    with pd.ExcelWriter(caminho_salvar, engine='openpyxl') as arquivo:
+                        tabela_final.to_excel(arquivo, sheet_name=area)
+                else:
+                    with pd.ExcelWriter(caminho_salvar, engine='openpyxl', mode='a') as arquivo:
+                        tabela_final.to_excel(arquivo, sheet_name=area)
+            elif '.zip' in caminho_salvar:
+                if i == 0:
+                    with zipfile.ZipFile(caminho_salvar, "w") as zf:
+                        with zf.open(f"{area}.csv", "w") as buffer:
+                            tabela_final.to_csv(buffer, encoding='utf-8')
+                else:
+                    with zipfile.ZipFile(caminho_salvar, "a") as zf:
+                        with zf.open(f"{area}.csv", "w") as buffer:
+                            tabela_final.to_csv(buffer, encoding='utf-8')
             i += 1
 
 
