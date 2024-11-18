@@ -25,9 +25,12 @@ class Janelas:
         self.var_caminho_arquivo = tk.StringVar()
         self.idioma.rowconfigure(0, weight=1)
         self.idioma.columnconfigure([0, 1], weight=1)
+        self.logo = ImageTk.PhotoImage(Image.open(resource_path('img/logo_ednanalyzer_sem_nome.png')))
+        self.idioma.iconphoto(True, self.logo)
 
     def inicia_janela(self):
         """Inicia primeira janela, escolha de idioma."""
+
         label_titulo = tk.Label(self.idioma, text='Choose a language', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
         label_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=4)
 
@@ -199,18 +202,30 @@ class Janelas:
         if idioma == 'eng':
             caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
                                                          initialfile='processed_results',
+                                                         defaultextension='.*',
                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-            resultado_tratado_geral.to_excel(caminho_salvar_resultado + ".xlsx", index=False)
+            if ".xlsx" in caminho_salvar_resultado:
+                resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
+            elif ".csv" in caminho_salvar_resultado:
+                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', index=False)
 
             caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs',
                                                          initialfile='deleted_otus',
+                                                         defaultextension='.*',
                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-            nao_selecionados_geral.to_excel(caminho_salvar_resultado + ".xlsx", index=False)
+            if ".xlsx" in caminho_salvar_resultado:
+                nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
+            elif ".csv" in caminho_salvar_resultado:
+                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', index=False)
 
             caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
                                                           initialfile='thresholds',
+                                                          defaultextension='.*',
                                                           filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-            thresholds.to_excel(caminho_salvar_thresholds + ".xlsx")
+            if ".xlsx" in caminho_salvar_resultado:
+                thresholds.to_excel(caminho_salvar_thresholds)
+            elif ".csv" in caminho_salvar_resultado:
+                thresholds.to_csv(caminho_salvar_thresholds, sep=';', )
         elif idioma == 'pt-br':
             caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
                                                          initialfile='resultados_processados',
@@ -295,10 +310,6 @@ class Janelas:
             frame_aliquotas = tk.LabelFrame(frame, text='Aliquots', font=('Arial', 15))
             frame_aliquotas.grid(row=3, column=0)
 
-            var_aliquota = tk.BooleanVar(frame_aliquotas)
-            botao_area = tk.Checkbutton(frame_aliquotas, text='If you have separated your sample \npoints into aliquots, select this option', variable=var_aliquota, font=('Arial', 14))
-            botao_area.grid(row=0, column=0, columnspan=3, sticky='w')
-
             frame_amostradores = tk.LabelFrame(frame, text='Samplers definition', font=('Arial', 15))
             frame_amostradores.grid(row=4, column=0)
 
@@ -308,7 +319,7 @@ class Janelas:
             caixa_amostradores = tk.Text(frame_amostradores, font=('Arial', 14), width=10, height=5)
             caixa_amostradores.grid(row=1, column=1, padx=10, pady=10, columnspan=3)
 
-            botao_run = tk.Button(nova_janela, text='RUN',  font=('Arial', 14, 'bold'), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, var_aliquota, 'eng'))
+            botao_run = tk.Button(nova_janela, text='RUN',  font=('Arial', 14, 'bold'), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, 'eng'))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
         elif idioma == 'pt-br':
             nova_janela.title("Construção das tabelas de resultados consolidados")
@@ -354,12 +365,6 @@ class Janelas:
             frame_aliquotas = tk.LabelFrame(frame, text='Alíquotas', font=('Arial', 15))
             frame_aliquotas.grid(row=3, column=0)
 
-            var_aliquota = tk.BooleanVar(frame_aliquotas)
-            botao_area = tk.Checkbutton(frame_aliquotas,
-                                        text='Se você separou os pontos \namostrais em alíquotas, selecione essa opção',
-                                        variable=var_aliquota, font=('Arial', 14))
-            botao_area.grid(row=0, column=0, columnspan=3, sticky='w')
-
             frame_amostradores = tk.LabelFrame(frame, text='Definição dos amostradores', font=('Arial', 15))
             frame_amostradores.grid(row=4, column=0)
 
@@ -373,7 +378,7 @@ class Janelas:
 
             botao_run = tk.Button(nova_janela, text='RODAR', font=('Arial', 14, 'bold'), width=44,
                                   command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador,
-                                                                               var_area, var_aliquota, 'pt-br'))
+                                                                               var_area, 'pt-br'))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
 
     def seleciona_arquivo(self, idioma):
@@ -395,14 +400,13 @@ class Janelas:
             if caminho_arquivo:
                 label_arquivo_selecionado['text'] = f'Arquivo selecionado {caminho_arquivo}'
 
-    def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, var_aliquotas, idioma):
+    def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, idioma):
         """Roda segunda etapa do programa, filtra tabela de atribuição taxonômica .
 
         Parameters:
         caixa_amostradores (str): denominações para os amostradores
         var_amostradores (bool): "True" filtrar por amostradores, "False" não filtrar por amostradores
         var_area (bool): "True" filtrar por áreas, "False" não filtrar por áreas
-        var_aliquotas (bool): "True" considerar o uso de alíquotas, "False" não considerar uso de alíquotas
         idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
         """
         texto_amostradores = caixa_amostradores.get('1.0', tk.END)
@@ -418,7 +422,6 @@ class Janelas:
 
         var_amostrador = var_amostrador.get()
         var_area = var_area.get()
-        var_aliquotas = var_aliquotas.get()
 
         ocorrencias_geral = conta_ocorrencias_gerais(df, lista_areas)
         reads_gerais = conta_reads_gerais(df)
@@ -442,10 +445,7 @@ class Janelas:
         if var_amostrador and not var_area:
             amostradores = separa_amostradores(df, lista_amostradores)
 
-            if not var_aliquotas:
-                ocorrencias = conta_ocorrencias(amostradores, amostrador=True)
-            else:
-                ocorrencias = conta_ocorrencia_aliquotas(amostradores, amostradores=True)
+            ocorrencias = conta_ocorrencias(amostradores, amostradores=True)
 
             reads_especie = calcula_reads_especie(amostradores, amostrador=True)
             tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
@@ -460,13 +460,10 @@ class Janelas:
         elif var_area and not var_amostrador:
             areas = separa_areas(lista_areas, df=df)
 
-            if not var_aliquotas:
-                ocorrencias = conta_ocorrencias(areas, area=True)
-            else:
-                ocorrencias = conta_ocorrencia_aliquotas(areas, areas=True)
+            ocorrencias = conta_ocorrencias(areas, areas=True)
 
             reads_especie = calcula_reads_especie(areas, area=True)
-            print(ocorrencias)
+
             tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
 
             if idioma == 'eng':
@@ -483,10 +480,7 @@ class Janelas:
 
             areas = separa_areas(lista_areas, amostradores=amostradores)
 
-            if not var_aliquotas:
-                ocorrencias_area = conta_ocorrencias(areas, amostrador=True, area=True)
-            else:
-                ocorrencias_area = conta_ocorrencia_aliquotas(areas, amostradores=True, areas=True)
+            ocorrencias_area = conta_ocorrencias(areas, amostradores=True, areas=True)
 
             reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
 

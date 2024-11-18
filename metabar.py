@@ -11,18 +11,18 @@ def separa_corridas(df):
     Returns:
     areas (dict): Dicionário com os dataframes identificados por chaves com os nomes informados na lista de corridas.
     """
-    if 'Corrida' in df.columns:
-        lista_corridas = list(df['Corrida'].unique())
-    elif 'Run' in df.columns:
-        lista_corridas = list(df['Run'].unique())
+    if 'Amostra_sequenciamento' in df.columns:
+        lista_corridas = list(df['Amostra_sequenciamento'].unique())
+    elif 'Sequencing_sample' in df.columns:
+        lista_corridas = list(df['Sequencing_sample'].unique())
 
     corridas = {}
     for corrida in lista_corridas:
         nome_corrida = corrida
-        if 'Corrida' in df.columns:
-            corridas[nome_corrida] = df[df['Corrida'] == corrida]
-        elif 'Run' in df.columns:
-            corridas[nome_corrida] = df[df['Run'] == corrida]
+        if 'Amostra_sequenciamento' in df.columns:
+            corridas[nome_corrida] = df[df['Amostra_sequenciamento'] == corrida]
+        elif 'Sequencing_sample' in df.columns:
+            corridas[nome_corrida] = df[df['Sequencing_sample'] == corrida]
 
     return corridas
 
@@ -45,16 +45,16 @@ def aplica_threshold(corridas, threshold_perc):
 
     for corrida in corridas:
         df = corridas[corrida]
-        reads = df['N_reads']
+        reads = df['N_contigs']
         total_reads = sum(reads)
         threshold = total_reads * threshold_perc / 100
 
         thresholds[corrida] = threshold
 
-        selecionado = df.loc[df['N_reads'] > threshold]
+        selecionado = df.loc[df['N_contigs'] > threshold]
         selecionados[corrida] = selecionado
 
-        nao_selecionado = df.loc[df['N_reads'] <= threshold]
+        nao_selecionado = df.loc[df['N_contigs'] <= threshold]
         nao_selecionados[corrida] = nao_selecionado
 
     df_thresholds = pd.DataFrame.from_dict(thresholds, orient='index')
@@ -85,17 +85,17 @@ def define_areas(df):
     Returns:
     lista_areas (list): Lista de áreas amostrais.
     """
-    if 'Amostra' in df.columns:
-        lista_amostras = df['Amostra'].unique()
-    elif 'Sample' in df.columns:
-        lista_amostras = df['Sample'].unique()
+    if 'Area_amostrador' in df.columns:
+        lista_amostras = df['Area_amostrador'].unique()
+    elif 'Area_sampler' in df.columns:
+        lista_amostras = df['Area_sampler'].unique()
 
     for i in range(len(lista_amostras)):
         lista_amostras[i] = tuple(lista_amostras[i].split('_'))
 
     lista_areas = []
 
-    for area, parcela in lista_amostras:
+    for area, amostrador in lista_amostras:
         lista_areas.append(area)
 
     lista_areas = list(set(lista_areas))
@@ -115,48 +115,83 @@ def separa_amostradores(df, amostradores):
     """
     amst = {}
     for amostrador in amostradores:
-        if 'Amostra' in df.columns:
-            amst[amostrador] = df[df['Amostra'].str.contains(amostrador)]
-        elif 'Sample' in df.columns:
-            amst[amostrador] = df[df['Sample'].str.contains(amostrador)]
+        if 'Area_amostrador' in df.columns:
+            amst[amostrador] = df[df['Area_amostrador'].str.contains(amostrador)]
+        elif 'Area_sampler' in df.columns:
+            amst[amostrador] = df[df['Area_sampler'].str.contains(amostrador)]
 
     return amst
 
 
 def conta_ocorrencias_gerais(df, lista_areas):
+    """Conta detecções gerais dos táxons.
+
+    Parameters:
+    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
+    lista_areas (list): Lista de áreas amostrais.
+
+    Returns:
+    cont_ocorr (DataFrame): DataFrame com número de detecções gerais por táxon.
+    """
     contagens = []
+    if 'Area_amostrador' in df.columns:
+        for area in lista_areas:
+            amst_areas = df[df['Area_amostrador'].str.startswith(area)]
 
-    for area in lista_areas:
-        amst_areas = df[df['Amostra'].str.startswith(area)]
+            lista_pontos = list(amst_areas['Ponto'].unique())
 
-        lista_pontos = list(amst_areas['Ponto'].unique())
+            for ponto in lista_pontos:
+                areas_ponto = amst_areas[amst_areas['Ponto'] == ponto]
+                taxons = areas_ponto['OTUFinal'].to_frame()
+                taxons = pd.DataFrame(taxons['OTUFinal'].unique())
+                contagens.append(taxons)
 
-        for ponto in lista_pontos:
-            areas_ponto = amst_areas[amst_areas['Ponto'] == ponto]
-            taxons = areas_ponto['OTUFinal'].to_frame()
-            taxons = pd.DataFrame(taxons['OTUFinal'].unique())
-            contagens.append(taxons)
+            cont_ocorr = pd.concat(contagens, ignore_index=True)
+            cont_ocorr = cont_ocorr.value_counts()
+            cont_ocorr = pd.DataFrame(cont_ocorr)
+            cont_ocorr = cont_ocorr.sort_values(by='count', ascending=False).reset_index()
+            cont_ocorr = cont_ocorr.rename(columns={0: 'Táxon', 'count': f'Detecções'})
 
-    cont_ocorr = pd.concat(contagens, ignore_index=True)
-    cont_ocorr = cont_ocorr.value_counts()
-    cont_ocorr = pd.DataFrame(cont_ocorr)
-    cont_ocorr = cont_ocorr.sort_values(by='count', ascending=False).reset_index()
-    cont_ocorr = cont_ocorr.rename(columns={0: 'Táxon', 'count': f'Detecções'})
+    elif 'Area_sampler' in df.columns:
+        for area in lista_areas:
+            amst_areas = df[df['Area_sampler'].str.startswith(area)]
+
+            lista_pontos = list(amst_areas['Point'].unique())
+
+            for ponto in lista_pontos:
+                areas_ponto = amst_areas[amst_areas['Point'] == ponto]
+                taxons = areas_ponto['FinalOTU'].to_frame()
+                taxons = pd.DataFrame(taxons['FinalOTU'].unique())
+                contagens.append(taxons)
+
+        cont_ocorr = pd.concat(contagens, ignore_index=True)
+        cont_ocorr = cont_ocorr.value_counts()
+        cont_ocorr = pd.DataFrame(cont_ocorr)
+        cont_ocorr = cont_ocorr.sort_values(by='count', ascending=False).reset_index()
+        cont_ocorr = cont_ocorr.rename(columns={0: 'Taxon', 'count': f'Detections'})
 
     return cont_ocorr
 
 
 def conta_reads_gerais(df):
+    """Conta reads gerais dos táxons.
+
+    Parameters:
+    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
+
+    Returns:
+    df_reads_sp (DataFrame): DataFrame com soma de reads gerais por táxon.
+    """
     if 'OTUFinal' in df.columns:
-        df_read_sp = df[['N_reads', 'OTUFinal']]
+        df_read_sp = df[['N_contigs', 'OTUFinal']]
         df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
-        df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
-        df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_reads': 'Reads'})
+        df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
+        df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_contigs': 'Contigs'})
     elif 'FinalOTU' in df.columns:
-        df_read_sp = df[['N_reads', 'FinalOTU']]
+        df_read_sp = df[['N_contigs', 'FinalOTU']]
         df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
-        df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
-        df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_reads': 'Reads'})
+        df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
+        df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_contigs': 'Contigs'})
 
     return df_read_sp
 
@@ -171,7 +206,10 @@ def cria_lista_geral(ocorrencias, reads):
     Returns:
     lista_geral (DataFrame): Dataframe final com contagens de detecções e reads de cada táxon.
     """
-    lista_geral = ocorrencias.merge(reads, how='outer', on='Táxon')
+    if 'Táxon' in ocorrencias.columns:
+        lista_geral = ocorrencias.merge(reads, how='outer', on='Táxon')
+    if 'Taxon' in ocorrencias.columns:
+        lista_geral = ocorrencias.merge(reads, how='outer', on='Taxon')
     return lista_geral
 
 
@@ -191,24 +229,34 @@ def separa_areas(lista_areas, amostradores=None, df=None):
         for amostrador in amostradores:
             tabela_amst = amostradores[amostrador]
             for area in lista_areas:
-                if 'Amostra' in tabela_amst.columns:
-                    areas_amostradores.setdefault(amostrador, []).append({area: tabela_amst[tabela_amst['Amostra'].str.contains(area)]})
-                elif 'Sample' in tabela_amst.columns:
-                    areas_amostradores.setdefault(amostrador, []).append({area: tabela_amst[tabela_amst['Sample'].str.contains(area)]})
+                if 'Area_amostrador' in tabela_amst.columns:
+                    areas_amostradores.setdefault(amostrador, []).append({area: tabela_amst[tabela_amst['Area_amostrador'].str.contains(area)]})
+                elif 'Area_sampler' in tabela_amst.columns:
+                    areas_amostradores.setdefault(amostrador, []).append({area: tabela_amst[tabela_amst['Area_sampler'].str.contains(area)]})
 
         return areas_amostradores
     elif df is not None:
         areas = {}
         for area in lista_areas:
-            if 'Amostra' in df.columns:
-                areas[area] = df[df['Amostra'].str.contains(area)]
-            elif 'Sample' in df.columns:
-                areas[area] = df[df['Sample'].str.contains(area)]
+            if 'Area_amostrador' in df.columns:
+                areas[area] = df[df['Area_amostrador'].str.contains(area)]
+            elif 'Area_sampler' in df.columns:
+                areas[area] = df[df['Area_sampler'].str.contains(area)]
 
         return areas
 
 
-def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
+def conta_ocorrencias(dfs, amostradores=False, areas=False):
+    """Conta detecções dos táxons de acordo com filtragens escolhidas (amostradores e/ou áreas).
+
+    Parameters:
+    dfs (DataFrame): Dataframes com resultados filtrados da atribuição taxonômica
+    amostradores (bool): indica filtragem por amostrador.
+    areas (bool): indica filtragem por área.
+
+    Returns:
+    ocorr (dict): dicionário com DataFrames com número de detecções por táxon.
+    """
     ocorr = {}
     if amostradores and areas:
         for amostrador in dfs:
@@ -330,71 +378,17 @@ def conta_ocorrencia_aliquotas(dfs, amostradores=False, areas=False):
         return ocorr
 
 
-def conta_ocorrencias(dfs, amostrador=False, area=False):  # Conferir se está funcionando certo, pois pode estar dando resultado errado, a função para alíquotas talvez seja a correta
-    ocorr = {}
-
-    if amostrador and area:
-        for amostrador in dfs:
-            tabelas_areas = dfs[amostrador]
-            for tabela_area in tabelas_areas:
-                for area, tabela in tabela_area.items():
-                    if 'OTUFinal' in tabela.columns:
-                        df_area = tabela['OTUFinal'].value_counts()
-                        df_area = pd.DataFrame(df_area)
-                        df_area = df_area.sort_values(by='count').reset_index()
-                        df_area = df_area.rename(columns={'OTUFinal': 'Táxon', 'count': f'Detecções em {area}'})
-                        ocorr.setdefault(amostrador, []).append({area: df_area})
-                    elif 'FinalOTU' in tabela.columns:
-                        df_area = tabela['FinalOTU'].value_counts()
-                        df_area = pd.DataFrame(df_area)
-                        df_area = df_area.sort_values(by='count').reset_index()
-                        df_area = df_area.rename(columns={'FinalOTU': 'Taxon', 'count': f'Detections in {area}'})
-                        ocorr.setdefault(amostrador, []).append({area: df_area})
-
-        return ocorr
-
-    elif amostrador and not area:
-        for amostrador in dfs:
-            tabela = dfs[amostrador]
-            if 'OTUFinal' in tabela.columns:
-                df_area = tabela['OTUFinal'].value_counts()
-                df_area = pd.DataFrame(df_area)
-                df_area = df_area.sort_values(by='count').reset_index()
-                df_area = df_area.rename(columns={'OTUFinal': 'Táxon', 'count': f'Detecções com {amostrador}'})
-                ocorr.setdefault(amostrador, df_area)
-            elif 'FinalOTU' in tabela.columns:
-                df_area = tabela['FinalOTU'].value_counts()
-                df_area = pd.DataFrame(df_area)
-                df_area = df_area.sort_values(by='count').reset_index()
-                df_area = df_area.rename(columns={'FinalOTU': 'Taxon', 'count': f'Detections by {amostrador}'})
-                ocorr.setdefault(amostrador, df_area)
-
-
-        return ocorr
-
-    elif not amostrador and area:
-        for area in dfs:
-            tabela = dfs[area]
-            if 'OTUFinal' in tabela.columns:
-                df_area = tabela['OTUFinal'].value_counts()
-                df_area = pd.DataFrame(df_area)
-                df_area = df_area.sort_values(by='count').reset_index()
-                df_area = df_area.rename(columns={'OTUFinal': 'Táxon', 'count': f'Detecções em {area}'})
-                ocorr.setdefault(area, df_area)
-            elif 'FinalOTU' in tabela.columns:
-                df_area = tabela['FinalOTU'].value_counts()
-                df_area = pd.DataFrame(df_area)
-                df_area = df_area.sort_values(by='count').reset_index()
-                df_area = df_area.rename(columns={'FinalOTU': 'Taxon', 'count': f'Detections in {area}'})
-                ocorr.setdefault(area, df_area)
-
-        return ocorr
-
-
-
-
-
 def calcula_reads_especie(dfs, amostrador=False, area=False):
+    """Conta detecções dos táxons de acordo com filtragens escolhidas (amostradores e/ou áreas).
+
+    Parameters:
+    dfs (DataFrame): Dataframes filtrados com resultados da atribuição taxonômica
+    amostradores (bool): indica filtragem por amostrador.
+    areas (bool): indica filtragem por área.
+
+    Returns:
+    ocorr (dict): dicionário com DataFrames com número de detecções por táxon.
+    """
     reads_especie = {}
 
     if amostrador and area:
@@ -403,16 +397,16 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
             for tabela_area in tabelas_areas:
                 for area, tabela in tabela_area.items():
                     if 'OTUFinal' in tabela.columns:
-                        df_read_sp = tabela[['N_reads', 'OTUFinal']]
+                        df_read_sp = tabela[['N_contigs', 'OTUFinal']]
                         df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
-                        df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
-                        df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_reads': 'Reads'})
+                        df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
+                        df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_contigs': 'Contigs'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
                     elif 'FinalOTU' in tabela.columns:
-                        df_read_sp = tabela[['N_reads', 'FinalOTU']]
+                        df_read_sp = tabela[['N_contigs', 'FinalOTU']]
                         df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
-                        df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
-                        df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_reads': 'Reads'})
+                        df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
+                        df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_contigs': 'Contigs'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
         return reads_especie
 
@@ -420,16 +414,16 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
         for amostrador in dfs:
             tabela = dfs[amostrador]
             if 'OTUFinal' in tabela.columns:
-                df_read_sp = tabela[['N_reads', 'OTUFinal']]
+                df_read_sp = tabela[['N_contigs', 'OTUFinal']]
                 df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
-                df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_reads': 'Reads'})
+                df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_contigs': 'Contigs'})
                 reads_especie.setdefault(amostrador, df_read_sp)
             elif 'FinalOTU' in tabela.columns:
-                df_read_sp = tabela[['N_reads', 'FinalOTU']]
+                df_read_sp = tabela[['N_contigs', 'FinalOTU']]
                 df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
-                df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_reads': 'Reads'})
+                df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_contigs': 'Contigs'})
                 reads_especie.setdefault(amostrador, df_read_sp)
 
         return reads_especie
@@ -438,22 +432,33 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
         for area in dfs:
             tabela = dfs[area]
             if 'OTUFinal' in tabela.columns:
-                df_read_sp = tabela[['N_reads', 'OTUFinal']]
+                df_read_sp = tabela[['N_contigs', 'OTUFinal']]
                 df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
-                df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_reads': 'Reads'})
+                df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_contigs': 'Contigs'})
                 reads_especie.setdefault(area, df_read_sp)
             elif 'FinalOTU' in tabela.columns:
-                df_read_sp = tabela[['N_reads', 'FinalOTU']]
+                df_read_sp = tabela[['N_contigs', 'FinalOTU']]
                 df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
-                df_read_sp = df_read_sp.sort_values(by='N_reads', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_reads': 'Reads'})
+                df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_contigs': 'Contigs'})
                 reads_especie.setdefault(area, df_read_sp)
 
         return reads_especie
 
 
 def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=False):
+    """Conta detecções dos táxons de acordo com filtragens escolhidas (amostradores e/ou áreas).
+
+    Parameters:
+    df_reads_sp (dict): dicionário com DataFrames de número de reads por táxon.
+    df_deteccoes (dict): dicionário com DataFrames de número de detecções por táxon.
+    amostradores (bool): indica filtragem por amostrador.
+    areas (bool): indica filtragem por área.
+
+    Returns:
+    tabelas_finais (dict): dicionario com DataFrames que representam as tabelas finais com os resultados apresentados de acordo com as filtragens.
+    """
     tabelas_finais = {}
 
     if amostradores and areas:
@@ -502,6 +507,14 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=F
 
 
 def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=False):
+    """Conta detecções dos táxons de acordo com filtragens escolhidas (amostradores e/ou áreas).
+
+    Parameters:
+    tabelas_finais (dict): dicionario com DataFrames que representam as tabelas finais com os resultados apresentados de acordo com as filtragens.
+    caminho_salvar (str): caminho no qual será salvo o arquivo.
+    amostrador (bool): indica filtragem por amostrador.
+    area (bool): indica filtragem por área.
+    """
     if amostrador and area:
         for amostrador in tabelas_finais:
             i = 0
