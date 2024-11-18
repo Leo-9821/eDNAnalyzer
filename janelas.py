@@ -207,7 +207,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
             elif ".csv" in caminho_salvar_resultado:
-                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', index=False)
+                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8', index=False)
 
             caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs',
                                                          initialfile='deleted_otus',
@@ -216,7 +216,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
             elif ".csv" in caminho_salvar_resultado:
-                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', index=False)
+                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8', index=False)
 
             caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
                                                           initialfile='thresholds',
@@ -225,7 +225,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 thresholds.to_excel(caminho_salvar_thresholds)
             elif ".csv" in caminho_salvar_resultado:
-                thresholds.to_csv(caminho_salvar_thresholds, sep=';', )
+                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8')
         elif idioma == 'pt-br':
             caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
                                                          initialfile='resultados_processados',
@@ -234,7 +234,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
             elif ".csv" in caminho_salvar_resultado:
-                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', index=False)
+                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8', index=False)
 
             caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUs excluídas',
                                                          initialfile='otus_excluídas',
@@ -244,7 +244,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
             elif ".csv" in caminho_salvar_resultado:
-                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', index=False)
+                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8', index=False)
 
             caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds',
                                                           initialfile='thresholds',
@@ -254,7 +254,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 thresholds.to_excel(caminho_salvar_thresholds)
             elif ".csv" in caminho_salvar_resultado:
-                thresholds.to_csv(caminho_salvar_thresholds, sep=';',)
+                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8')
 
     def proc_tabelas_consolidadas(self, idioma):
         """Roda processamento de threshold para as OTUs.
