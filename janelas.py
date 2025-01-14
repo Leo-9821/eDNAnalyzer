@@ -61,16 +61,16 @@ class Janelas:
 
             botao_selecionar_funcionalidade3 = tk.Button(principal, text='Open manual', font=('Arial', 16),
                                                          command=lambda: self.abrir_manual('eng'))
-            botao_selecionar_funcionalidade3.grid(row=0, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade3.grid(row=0, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
             label_titulo = tk.Label(principal, text='Choose the process to run', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
             label_titulo.grid(row=1, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
 
-            botao_selecionar_funcionalidade = tk.Button(principal, text='Initial processing and threshold application', font=('Arial', 16), command=lambda: self.proc_inicial_threshold('eng'))
-            botao_selecionar_funcionalidade.grid(row=2, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade = tk.Button(principal, text='Threshold application', font=('Arial', 16), command=lambda: self.proc_inicial_threshold('eng'))
+            botao_selecionar_funcionalidade.grid(row=2, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-            botao_selecionar_funcionalidade2 = tk.Button(principal, text='Build table of consolidated results', font=('Arial', 16), command=lambda: self.proc_tabelas_consolidadas('eng'))
-            botao_selecionar_funcionalidade2.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade2 = tk.Button(principal, text='Results consolidation', font=('Arial', 16), command=lambda: self.proc_tabelas_consolidadas('eng'))
+            botao_selecionar_funcionalidade2.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
         elif idioma == 'pt-br':
             principal.title("Escolhendo o processo")
@@ -78,19 +78,19 @@ class Janelas:
             botao_selecionar_funcionalidade3 = tk.Button(principal, text='Abrir manual',
                                                          font=('Arial', 16),
                                                          command=lambda: self.abrir_manual('pt-br'))
-            botao_selecionar_funcionalidade3.grid(row=0, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade3.grid(row=0, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
             label_titulo = tk.Label(principal, text='Escolha um processo para rodar', font=('Arial', 16, 'bold'),
                                     borderwidth=2, relief='solid')
             label_titulo.grid(row=1, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
 
-            botao_selecionar_funcionalidade = tk.Button(principal, text='Processamento inicial e aplicação do threshold',
+            botao_selecionar_funcionalidade = tk.Button(principal, text='Aplicação do threshold',
                                                         font=('Arial', 16), command=lambda: self.proc_inicial_threshold('pt-br'))
-            botao_selecionar_funcionalidade.grid(row=2, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade.grid(row=2, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-            botao_selecionar_funcionalidade2 = tk.Button(principal, text='Construção das tabelas de resultados consolidados',
+            botao_selecionar_funcionalidade2 = tk.Button(principal, text='Consolidação dos resultados',
                                                          font=('Arial', 16), command=lambda: self.proc_tabelas_consolidadas('pt-br'))
-            botao_selecionar_funcionalidade2.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_funcionalidade2.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def abrir_manual(self, idioma):
         """Abre arquivo com manual do programa.
@@ -116,19 +116,19 @@ class Janelas:
         nova_janela.columnconfigure([0, 1], weight=1)
 
         if idioma == 'eng':
-            nova_janela.title("Primary processing and threshold")
+            nova_janela.title("Threshold application")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Initial processing and threshold application', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
-            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
+            label_novo_titulo = tk.Label(nova_janela, text='Threshold application', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
+            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=2)
 
             label_selecionar_arquivo = tk.Label(nova_janela, text='Choose a file', font=('Arial', 14))
-            label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, sticky='nsew', columnspan=2)
+            label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
 
             botao_selecionar_arquivo = tk.Button(nova_janela, text='Click to choose', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
-            botao_selecionar_arquivo.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_arquivo.grid(row=1, column=1, padx=10, pady=10, sticky='nsew')
 
             label_arquivo_selecionado = tk.Label(nova_janela, text='No file chosen', font=('Arial', 14))
-            label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, sticky='nsew', columnspan=2)
 
             nova_janela.focus_set()
             nova_janela.grab_set()
@@ -136,27 +136,27 @@ class Janelas:
             label_threshold = tk.Label(nova_janela, text='Indicate the threshold in percentage: \n(default value 0.05)', font=('Arial', 14))
             label_threshold.grid(row=3, column=0, padx=10, pady=10, sticky='nsew')
 
-            caixa_threshold = tk.Entry(nova_janela, font=('Arial', 14))
-            caixa_threshold.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
+            caixa_threshold = tk.Entry(nova_janela, width=10, font=('Arial', 14))
+            caixa_threshold.grid(row=3, column=1, padx=10, pady=10, sticky='nsew')
 
             botao_run = tk.Button(nova_janela, text='RUN', font=('Arial', 14, 'bold'), command=lambda: self.roda_analise_primaria(caixa_threshold, 'eng'))
-            botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=2)
         elif idioma == 'pt-br':
-            nova_janela.title("Processamento primário e threshold")
+            nova_janela.title("Aplicação do threshold")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Processamento inicial e aplicação de threshold',
+            label_novo_titulo = tk.Label(nova_janela, text='Aplicação do threshold',
                                          font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
-            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
+            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=2)
 
             label_selecionar_arquivo = tk.Label(nova_janela, text='Selecione um arquivo:', font=('Arial', 14))
-            label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, sticky='nsew', columnspan=2)
+            label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
 
             botao_selecionar_arquivo = tk.Button(nova_janela, text='Clique para selecionar', font=('Arial', 14),
                                                  command=lambda: self.seleciona_arquivo('pt-br'))
-            botao_selecionar_arquivo.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_arquivo.grid(row=1, column=1, padx=10, pady=10, sticky='nsew')
 
             label_arquivo_selecionado = tk.Label(nova_janela, text='Nenhum arquivo selecionado', font=('Arial', 14))
-            label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, sticky='nsew', columnspan=2)
 
             nova_janela.focus_set()
             nova_janela.grab_set()
@@ -165,12 +165,12 @@ class Janelas:
                                        font=('Arial', 14))
             label_threshold.grid(row=3, column=0, padx=10, pady=10, sticky='nsew')
 
-            caixa_threshold = tk.Entry(nova_janela, font=('Arial', 14))
-            caixa_threshold.grid(row=3, column=2, padx=10, pady=10, sticky='nsew')
+            caixa_threshold = tk.Entry(nova_janela, width=10, font=('Arial', 14))
+            caixa_threshold.grid(row=3, column=1, padx=10, pady=10, sticky='nsew')
 
             botao_run = tk.Button(nova_janela, text='RODAR', font=('Arial', 14, 'bold'),
                                     command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br'))
-            botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=2)
 
     def roda_analise_primaria(self,  caixa_threshold, idioma):
         """Roda processamento de threshold para as OTUs.
@@ -270,10 +270,10 @@ class Janelas:
         nova_janela.columnconfigure(0, weight=1)
 
         if idioma == 'eng':
-            nova_janela.title("Build table of consolidated results")
+            nova_janela.title("Results consolidation")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Build table of consolidated results', font=('Arial', 16, 'bold'), borderwidth=2,  relief='solid')
-            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, ipadx=3, columnspan=3)
+            label_novo_titulo = tk.Label(nova_janela, text='Results consolidation', font=('Arial', 16, 'bold'), borderwidth=2,  relief='solid')
+            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, ipadx=3, sticky='nsew', columnspan=3)
 
             frame = tk.Frame(nova_janela)
             frame.grid(row=1, column=0)
@@ -322,11 +322,11 @@ class Janelas:
             botao_run = tk.Button(nova_janela, text='RUN',  font=('Arial', 14, 'bold'), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, 'eng'))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
         elif idioma == 'pt-br':
-            nova_janela.title("Construção das tabelas de resultados consolidados")
+            nova_janela.title("Consolidação dos resultados")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Construção das tabelas de resultados consolidados',
+            label_novo_titulo = tk.Label(nova_janela, text='Consolidação dos resultados',
                                          font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
-            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, ipadx=3, columnspan=3)
+            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, ipadx=3, sticky='nsew', columnspan=3)
 
             frame = tk.Frame(nova_janela)
             frame.grid(row=1, column=0)

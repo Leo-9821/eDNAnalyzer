@@ -11,18 +11,18 @@ def separa_corridas(df):
     Returns:
     areas (dict): Dicionário com os dataframes identificados por chaves com os nomes informados na lista de corridas.
     """
-    if 'Amostra_sequenciamento' in df.columns:
-        lista_corridas = list(df['Amostra_sequenciamento'].unique())
-    elif 'Sequencing_sample' in df.columns:
-        lista_corridas = list(df['Sequencing_sample'].unique())
+    if 'amostra_sequenciamento' in df.columns:
+        lista_corridas = list(df['amostra_sequenciamento'].unique())
+    elif 'sequencing_sample' in df.columns:
+        lista_corridas = list(df['sequencing_sample'].unique())
 
     corridas = {}
     for corrida in lista_corridas:
         nome_corrida = corrida
-        if 'Amostra_sequenciamento' in df.columns:
-            corridas[nome_corrida] = df[df['Amostra_sequenciamento'] == corrida]
-        elif 'Sequencing_sample' in df.columns:
-            corridas[nome_corrida] = df[df['Sequencing_sample'] == corrida]
+        if 'amostra_sequenciamento' in df.columns:
+            corridas[nome_corrida] = df[df['amostra_sequenciamento'] == corrida]
+        elif 'sequencing_sample' in df.columns:
+            corridas[nome_corrida] = df[df['sequencing_sample'] == corrida]
 
     return corridas
 
@@ -45,16 +45,16 @@ def aplica_threshold(corridas, threshold_perc):
 
     for corrida in corridas:
         df = corridas[corrida]
-        reads = df['N_contigs']
+        reads = df['n_contigs']
         total_reads = sum(reads)
         threshold = total_reads * threshold_perc / 100
 
         thresholds[corrida] = threshold
 
-        selecionado = df.loc[df['N_contigs'] > threshold]
+        selecionado = df.loc[df['n_contigs'] > threshold]
         selecionados[corrida] = selecionado
 
-        nao_selecionado = df.loc[df['N_contigs'] <= threshold]
+        nao_selecionado = df.loc[df['n_contigs'] <= threshold]
         nao_selecionados[corrida] = nao_selecionado
 
     df_thresholds = pd.DataFrame.from_dict(thresholds, orient='index')
@@ -85,10 +85,10 @@ def define_areas(df):
     Returns:
     lista_areas (list): Lista de áreas amostrais.
     """
-    if 'Area_amostrador' in df.columns:
-        lista_amostras = df['Area_amostrador'].unique()
-    elif 'Area_sampler' in df.columns:
-        lista_amostras = df['Area_sampler'].unique()
+    if 'area_amostrador' in df.columns:
+        lista_amostras = df['area_amostrador'].unique()
+    elif 'area_sampler' in df.columns:
+        lista_amostras = df['area_sampler'].unique()
 
     for i in range(len(lista_amostras)):
         lista_amostras[i] = tuple(lista_amostras[i].split('_'))
@@ -115,10 +115,10 @@ def separa_amostradores(df, amostradores):
     """
     amst = {}
     for amostrador in amostradores:
-        if 'Area_amostrador' in df.columns:
-            amst[amostrador] = df[df['Area_amostrador'].str.contains(amostrador)]
-        elif 'Area_sampler' in df.columns:
-            amst[amostrador] = df[df['Area_sampler'].str.contains(amostrador)]
+        if 'area_amostrador' in df.columns:
+            amst[amostrador] = df[df['area_amostrador'].str.contains(amostrador)]
+        elif 'area_sampler' in df.columns:
+            amst[amostrador] = df[df['area_sampler'].str.contains(amostrador)]
 
     return amst
 
@@ -134,41 +134,41 @@ def conta_ocorrencias_gerais(df, lista_areas):
     cont_ocorr (DataFrame): DataFrame com número de detecções gerais por táxon.
     """
     contagens = []
-    if 'Area_amostrador' in df.columns:
+    if 'area_amostrador' in df.columns:
         for area in lista_areas:
-            amst_areas = df[df['Area_amostrador'].str.startswith(area)]
+            amst_areas = df[df['area_amostrador'].str.startswith(area)]
 
-            lista_pontos = list(amst_areas['Ponto'].unique())
+            lista_pontos = list(amst_areas['ponto'].unique())
 
             for ponto in lista_pontos:
-                areas_ponto = amst_areas[amst_areas['Ponto'] == ponto]
-                taxons = areas_ponto['OTUFinal'].to_frame()
-                taxons = pd.DataFrame(taxons['OTUFinal'].unique())
+                areas_ponto = amst_areas[amst_areas['ponto'] == ponto]
+                taxons = areas_ponto['otu_final'].to_frame()
+                taxons = pd.DataFrame(taxons['otu_final'].unique())
                 contagens.append(taxons)
 
             cont_ocorr = pd.concat(contagens, ignore_index=True)
             cont_ocorr = cont_ocorr.value_counts()
             cont_ocorr = pd.DataFrame(cont_ocorr)
             cont_ocorr = cont_ocorr.sort_values(by='count', ascending=False).reset_index()
-            cont_ocorr = cont_ocorr.rename(columns={0: 'Táxon', 'count': f'Detecções'})
+            cont_ocorr = cont_ocorr.rename(columns={0: 'taxon', 'count': f'Detecções'})
 
-    elif 'Area_sampler' in df.columns:
+    elif 'area_sampler' in df.columns:
         for area in lista_areas:
-            amst_areas = df[df['Area_sampler'].str.startswith(area)]
+            amst_areas = df[df['area_sampler'].str.startswith(area)]
 
-            lista_pontos = list(amst_areas['Point'].unique())
+            lista_pontos = list(amst_areas['point'].unique())
 
             for ponto in lista_pontos:
-                areas_ponto = amst_areas[amst_areas['Point'] == ponto]
-                taxons = areas_ponto['FinalOTU'].to_frame()
-                taxons = pd.DataFrame(taxons['FinalOTU'].unique())
+                areas_ponto = amst_areas[amst_areas['point'] == ponto]
+                taxons = areas_ponto['final_otu'].to_frame()
+                taxons = pd.DataFrame(taxons['final_otu'].unique())
                 contagens.append(taxons)
 
         cont_ocorr = pd.concat(contagens, ignore_index=True)
         cont_ocorr = cont_ocorr.value_counts()
         cont_ocorr = pd.DataFrame(cont_ocorr)
         cont_ocorr = cont_ocorr.sort_values(by='count', ascending=False).reset_index()
-        cont_ocorr = cont_ocorr.rename(columns={0: 'Taxon', 'count': f'Detections'})
+        cont_ocorr = cont_ocorr.rename(columns={0: 'taxon', 'count': f'Detections'})
 
     return cont_ocorr
 
@@ -182,16 +182,16 @@ def conta_reads_gerais(df):
     Returns:
     df_reads_sp (DataFrame): DataFrame com soma de reads gerais por táxon.
     """
-    if 'OTUFinal' in df.columns:
-        df_read_sp = df[['N_contigs', 'OTUFinal']]
-        df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
-        df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
-        df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_contigs': 'Contigs'})
-    elif 'FinalOTU' in df.columns:
-        df_read_sp = df[['N_contigs', 'FinalOTU']]
-        df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
-        df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
-        df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_contigs': 'Contigs'})
+    if 'otu_final' in df.columns:
+        df_read_sp = df[['n_contigs', 'otu_final']]
+        df_read_sp = df_read_sp.groupby(by='otu_final').sum()
+        df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
+        df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_contigs': 'Contigs'})
+    elif 'final_otu' in df.columns:
+        df_read_sp = df[['n_contigs', 'final_otu']]
+        df_read_sp = df_read_sp.groupby(by='final_otu').sum()
+        df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
+        df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_contigs': 'Contigs'})
 
     return df_read_sp
 
@@ -206,10 +206,10 @@ def cria_lista_geral(ocorrencias, reads):
     Returns:
     lista_geral (DataFrame): Dataframe final com contagens de detecções e reads de cada táxon.
     """
-    if 'Táxon' in ocorrencias.columns:
-        lista_geral = ocorrencias.merge(reads, how='outer', on='Táxon')
-    if 'Taxon' in ocorrencias.columns:
-        lista_geral = ocorrencias.merge(reads, how='outer', on='Taxon')
+    if 'taxon' in ocorrencias.columns:
+        lista_geral = ocorrencias.merge(reads, how='outer', on='taxon')
+    if 'taxon' in ocorrencias.columns:
+        lista_geral = ocorrencias.merge(reads, how='outer', on='taxon')
     return lista_geral
 
 
@@ -229,19 +229,19 @@ def separa_areas(lista_areas, amostradores=None, df=None):
         for amostrador in amostradores:
             tabela_amst = amostradores[amostrador]
             for area in lista_areas:
-                if 'Area_amostrador' in tabela_amst.columns:
-                    areas_amostradores.setdefault(amostrador, []).append({area: tabela_amst[tabela_amst['Area_amostrador'].str.contains(area)]})
-                elif 'Area_sampler' in tabela_amst.columns:
-                    areas_amostradores.setdefault(amostrador, []).append({area: tabela_amst[tabela_amst['Area_sampler'].str.contains(area)]})
+                if 'area_amostrador' in tabela_amst.columns:
+                    areas_amostradores.setdefault(amostrador, []).append({area: tabela_amst[tabela_amst['area_amostrador'].str.contains(area)]})
+                elif 'area_sampler' in tabela_amst.columns:
+                    areas_amostradores.setdefault(amostrador, []).append({area: tabela_amst[tabela_amst['area_sampler'].str.contains(area)]})
 
         return areas_amostradores
     elif df is not None:
         areas = {}
         for area in lista_areas:
-            if 'Area_amostrador' in df.columns:
-                areas[area] = df[df['Area_amostrador'].str.contains(area)]
-            elif 'Area_sampler' in df.columns:
-                areas[area] = df[df['Area_sampler'].str.contains(area)]
+            if 'area_amostrador' in df.columns:
+                areas[area] = df[df['area_amostrador'].str.contains(area)]
+            elif 'area_sampler' in df.columns:
+                areas[area] = df[df['area_sampler'].str.contains(area)]
 
         return areas
 
@@ -265,33 +265,33 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 for area, tabela in tabela_area.items():
                     if tabela.empty:
                         continue
-                    if 'Ponto' in tabela.columns:
-                        pontos = tabela['Ponto'].unique()
+                    if 'ponto' in tabela.columns:
+                        pontos = tabela['ponto'].unique()
                         tabelas_taxons = []
                         for ponto in pontos:
-                            df_ponto = tabela.loc[tabela['Ponto'] == ponto]
-                            taxons = df_ponto['OTUFinal'].unique()
-                            df_taxons = pd.DataFrame(taxons, columns=[f'Táxon'])
+                            df_ponto = tabela.loc[tabela['ponto'] == ponto]
+                            taxons = df_ponto['otu_final'].unique()
+                            df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                             tabelas_taxons.append(df_taxons)
 
                         df_taxons = pd.concat(tabelas_taxons).reset_index()
 
-                        df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts()).reset_index()
+                        df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts()).reset_index()
                         df_ocorr = df_ocorr.rename(columns={'count': f'Detecções em {area}'})
 
                         ocorr.setdefault(amostrador, []).append({area: df_ocorr})
-                    elif 'Point' in tabela.columns:
-                        pontos = tabela['Point'].unique()
+                    elif 'point' in tabela.columns:
+                        pontos = tabela['point'].unique()
                         tabelas_taxons = []
                         for ponto in pontos:
-                            df_ponto = tabela.loc[tabela['Point'] == ponto]
-                            taxons = df_ponto['FinalOTU'].unique()
-                            df_taxons = pd.DataFrame(taxons, columns=[f'Taxon'])
+                            df_ponto = tabela.loc[tabela['point'] == ponto]
+                            taxons = df_ponto['final_otu'].unique()
+                            df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                             tabelas_taxons.append(df_taxons)
 
                         df_taxons = pd.concat(tabelas_taxons).reset_index()
 
-                        df_ocorr = pd.DataFrame(df_taxons['Taxon'].value_counts()).reset_index()
+                        df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts()).reset_index()
                         df_ocorr = df_ocorr.rename(columns={'count': f'Detections in {area}'})
 
                         ocorr.setdefault(amostrador, []).append({area: df_ocorr})
@@ -300,37 +300,37 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
     elif amostradores and not areas:
         for amostrador in dfs:
             tabela = dfs[amostrador]
-            if 'Ponto' in tabela.columns:
-                pontos = tabela['Ponto'].unique()
+            if 'ponto' in tabela.columns:
+                pontos = tabela['ponto'].unique()
                 tabelas_taxons = []
                 for ponto in pontos:
-                    df_ponto = tabela.loc[tabela['Ponto'] == ponto]
-                    taxons = df_ponto['OTUFinal'].unique()
-                    df_taxons = pd.DataFrame(taxons, columns=[f'Táxon'])
+                    df_ponto = tabela.loc[tabela['ponto'] == ponto]
+                    taxons = df_ponto['otu_final'].unique()
+                    df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                     tabelas_taxons.append(df_taxons)
                 try:
                     df_taxons = pd.concat(tabelas_taxons).reset_index()
                 except ValueError:
                     pass
 
-                df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts())
+                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts())
                 df_ocorr = df_ocorr.rename(columns={'count': f'Detecções por {amostrador}'})
 
                 ocorr.setdefault(amostrador, df_ocorr)
-            elif 'Point' in tabela.columns:
-                pontos = tabela['Point'].unique()
+            elif 'point' in tabela.columns:
+                pontos = tabela['point'].unique()
                 tabelas_taxons = []
                 for ponto in pontos:
-                    df_ponto = tabela.loc[tabela['Point'] == ponto]
-                    taxons = df_ponto['FinalOTU'].unique()
-                    df_taxons = pd.DataFrame(taxons, columns=[f'Taxon'])
+                    df_ponto = tabela.loc[tabela['point'] == ponto]
+                    taxons = df_ponto['final_otu'].unique()
+                    df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                     tabelas_taxons.append(df_taxons)
                 try:
                     df_taxons = pd.concat(tabelas_taxons).reset_index()
                 except ValueError:
                     pass
 
-                df_ocorr = pd.DataFrame(df_taxons['Taxon'].value_counts())
+                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts())
                 df_ocorr = df_ocorr.rename(columns={'count': f'Detections by {amostrador}'})
 
                 ocorr.setdefault(amostrador, df_ocorr)
@@ -340,37 +340,37 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
     elif not amostradores and areas:
         for area in dfs:
             tabela = dfs[area]
-            if 'Ponto' in tabela.columns:
-                pontos = tabela['Ponto'].unique()
+            if 'ponto' in tabela.columns:
+                pontos = tabela['ponto'].unique()
                 tabelas_taxons = []
                 for ponto in pontos:
-                    df_ponto = tabela.loc[tabela['Ponto'] == ponto]
-                    taxons = df_ponto['OTUFinal'].unique()
-                    df_taxons = pd.DataFrame(taxons, columns=[f'Táxon'])
+                    df_ponto = tabela.loc[tabela['ponto'] == ponto]
+                    taxons = df_ponto['otu_final'].unique()
+                    df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                     tabelas_taxons.append(df_taxons)
                 try:
                     df_taxons = pd.concat(tabelas_taxons).reset_index()
                 except ValueError:
                     pass
 
-                df_ocorr = pd.DataFrame(df_taxons['Táxon'].value_counts())
+                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts())
                 df_ocorr = df_ocorr.rename(columns={'count': f'Detecções em {area}'})
 
                 ocorr.setdefault(area, df_ocorr)
-            elif 'Point' in tabela.columns:
-                pontos = tabela['Point'].unique()
+            elif 'point' in tabela.columns:
+                pontos = tabela['point'].unique()
                 tabelas_taxons = []
                 for ponto in pontos:
-                    df_ponto = tabela.loc[tabela['Point'] == ponto]
-                    taxons = df_ponto['FinalOTU'].unique()
-                    df_taxons = pd.DataFrame(taxons, columns=[f'Taxon'])
+                    df_ponto = tabela.loc[tabela['point'] == ponto]
+                    taxons = df_ponto['final_otu'].unique()
+                    df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                     tabelas_taxons.append(df_taxons)
                 try:
                     df_taxons = pd.concat(tabelas_taxons).reset_index()
                 except ValueError:
                     pass
 
-                df_ocorr = pd.DataFrame(df_taxons['Taxon'].value_counts())
+                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts())
                 df_ocorr = df_ocorr.rename(columns={'count': f'Detections in {area}'})
 
                 ocorr.setdefault(area, df_ocorr)
@@ -396,34 +396,34 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
             tabelas_areas = dfs[amostrador]
             for tabela_area in tabelas_areas:
                 for area, tabela in tabela_area.items():
-                    if 'OTUFinal' in tabela.columns:
-                        df_read_sp = tabela[['N_contigs', 'OTUFinal']]
-                        df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
-                        df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
-                        df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_contigs': 'Contigs'})
+                    if 'otu_final' in tabela.columns:
+                        df_read_sp = tabela[['n_contigs', 'otu_final']]
+                        df_read_sp = df_read_sp.groupby(by='otu_final').sum()
+                        df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
+                        df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_contigs': 'Contigs'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
-                    elif 'FinalOTU' in tabela.columns:
-                        df_read_sp = tabela[['N_contigs', 'FinalOTU']]
-                        df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
-                        df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
-                        df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_contigs': 'Contigs'})
+                    elif 'final_otu' in tabela.columns:
+                        df_read_sp = tabela[['n_contigs', 'final_otu']]
+                        df_read_sp = df_read_sp.groupby(by='final_otu').sum()
+                        df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
+                        df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_contigs': 'Contigs'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
         return reads_especie
 
     elif amostrador and not area:
         for amostrador in dfs:
             tabela = dfs[amostrador]
-            if 'OTUFinal' in tabela.columns:
-                df_read_sp = tabela[['N_contigs', 'OTUFinal']]
-                df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
-                df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_contigs': 'Contigs'})
+            if 'otu_final' in tabela.columns:
+                df_read_sp = tabela[['n_contigs', 'otu_final']]
+                df_read_sp = df_read_sp.groupby(by='otu_final').sum()
+                df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_contigs': 'Contigs'})
                 reads_especie.setdefault(amostrador, df_read_sp)
-            elif 'FinalOTU' in tabela.columns:
-                df_read_sp = tabela[['N_contigs', 'FinalOTU']]
-                df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
-                df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_contigs': 'Contigs'})
+            elif 'final_otu' in tabela.columns:
+                df_read_sp = tabela[['n_contigs', 'final_otu']]
+                df_read_sp = df_read_sp.groupby(by='final_otu').sum()
+                df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_contigs': 'Contigs'})
                 reads_especie.setdefault(amostrador, df_read_sp)
 
         return reads_especie
@@ -431,17 +431,17 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
     elif not amostrador and area:
         for area in dfs:
             tabela = dfs[area]
-            if 'OTUFinal' in tabela.columns:
-                df_read_sp = tabela[['N_contigs', 'OTUFinal']]
-                df_read_sp = df_read_sp.groupby(by='OTUFinal').sum()
-                df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'OTUFinal': 'Táxon', 'N_contigs': 'Contigs'})
+            if 'otu_final' in tabela.columns:
+                df_read_sp = tabela[['n_contigs', 'otu_final']]
+                df_read_sp = df_read_sp.groupby(by='otu_final').sum()
+                df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_contigs': 'Contigs'})
                 reads_especie.setdefault(area, df_read_sp)
-            elif 'FinalOTU' in tabela.columns:
-                df_read_sp = tabela[['N_contigs', 'FinalOTU']]
-                df_read_sp = df_read_sp.groupby(by='FinalOTU').sum()
-                df_read_sp = df_read_sp.sort_values(by='N_contigs', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'FinalOTU': 'Taxon', 'N_contigs': 'Contigs'})
+            elif 'final_otu' in tabela.columns:
+                df_read_sp = tabela[['n_contigs', 'final_otu']]
+                df_read_sp = df_read_sp.groupby(by='final_otu').sum()
+                df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_contigs': 'Contigs'})
                 reads_especie.setdefault(area, df_read_sp)
 
         return reads_especie
@@ -472,10 +472,10 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=F
                         ocorr_key = list(tabela_ocorr.keys())[0]
                         tbl_rds = tabela_reads[reads_key]
                         tbl_ocr = tabela_ocorr[ocorr_key]
-                        if 'Táxon' in tbl_rds.columns:
-                            tabela_unida = tbl_rds.merge(tbl_ocr, how='outer', on='Táxon')
-                        elif 'Taxon' in tbl_rds.columns:
-                            tabela_unida = tbl_rds.merge(tbl_ocr, how='outer', on='Taxon')
+                        if 'taxon' in tbl_rds.columns:
+                            tabela_unida = tbl_rds.merge(tbl_ocr, how='outer', on='taxon')
+                        elif 'taxon' in tbl_rds.columns:
+                            tabela_unida = tbl_rds.merge(tbl_ocr, how='outer', on='taxon')
                         tabelas_finais.setdefault(amostrador, []).append({reads_key: tabela_unida})
                     else:
                         continue
@@ -485,10 +485,10 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=F
         for amostrador in df_reads_sp:
             tabela_reads = df_reads_sp[amostrador]
             tabela_ocorr = df_deteccoes[amostrador]
-            if 'Táxon' in tabela_reads.columns:
-                tabela_unida = tabela_reads.merge(tabela_ocorr, how='outer', on='Táxon')
-            if 'Taxon' in tabela_reads.columns:
-                tabela_unida = tabela_reads.merge(tabela_ocorr, how='outer', on='Taxon')
+            if 'taxon' in tabela_reads.columns:
+                tabela_unida = tabela_reads.merge(tabela_ocorr, how='outer', on='taxon')
+            if 'taxon' in tabela_reads.columns:
+                tabela_unida = tabela_reads.merge(tabela_ocorr, how='outer', on='taxon')
             tabelas_finais.setdefault(amostrador, tabela_unida)
 
         return tabelas_finais
@@ -497,10 +497,10 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=F
         for area in df_reads_sp:
             tabela_reads = df_reads_sp[area]
             tabela_ocorr = df_deteccoes[area]
-            if 'Táxon' in tabela_reads.columns:
-                tabela_unida = tabela_reads.merge(tabela_ocorr, how='outer', on='Táxon')
-            if 'Taxon' in tabela_reads.columns:
-                tabela_unida = tabela_reads.merge(tabela_ocorr, how='outer', on='Taxon')
+            if 'taxon' in tabela_reads.columns:
+                tabela_unida = tabela_reads.merge(tabela_ocorr, how='outer', on='taxon')
+            if 'taxon' in tabela_reads.columns:
+                tabela_unida = tabela_reads.merge(tabela_ocorr, how='outer', on='taxon')
             tabelas_finais.setdefault(area, tabela_unida)
 
         return tabelas_finais
