@@ -507,7 +507,7 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=F
 
 
 def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=False):
-    """Conta detecções dos táxons de acordo com filtragens escolhidas (amostradores e/ou áreas).
+    """Salva tabelas de resultados.
 
     Parameters:
     tabelas_finais (dict): dicionario com DataFrames que representam as tabelas finais com os resultados apresentados de acordo com as filtragens.
