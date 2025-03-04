@@ -118,11 +118,20 @@ class Janelas:
         if idioma == 'eng':
             nova_janela.title("Threshold application")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Threshold application', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
-            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
-
             frame = tk.Frame(nova_janela)
-            frame.grid(row=1, column=0)
+            frame.grid(row=0, column=0)
+
+            frame_titulo = tk.LabelFrame(frame, font=('Arial', 15), borderwidth=0, highlightthickness=0)
+            frame_titulo.grid(row=0, column=0, sticky='nsew')
+            frame_titulo.rowconfigure(0, weight=1)
+            frame_titulo.columnconfigure([1, 2], weight=1)
+
+            botao_voltar = tk.Button(frame_titulo, text='\u2b8c', font=('Arial', 14, 'bold'),
+                                     command=lambda: nova_janela.destroy())
+            botao_voltar.grid(row=0, column=0, sticky='w')
+
+            label_novo_titulo = tk.Label(frame_titulo, text='Threshold application', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
+            label_novo_titulo.grid(row=0, column=1, padx=10, pady=5, sticky='nswe', columnspan=3)
 
             frame_selecao_arquivo = tk.LabelFrame(frame, text='File selection', font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
@@ -163,19 +172,24 @@ class Janelas:
             botao_run = tk.Button(nova_janela, text='RUN', font=('Arial', 14, 'bold'), command=lambda: self.roda_analise_primaria(caixa_threshold, 'eng'))
             botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-            botao_voltar = tk.Button(nova_janela, text='RETURN', font=('Arial', 14),
-                                  command=lambda: nova_janela.destroy())
-            botao_voltar.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-
         elif idioma == 'pt-br':
             nova_janela.title("Aplicação do threshold")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Aplicação do threshold',
-                                         font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
-            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=3)
-
             frame = tk.Frame(nova_janela)
-            frame.grid(row=1, column=0)
+            frame.grid(row=0, column=0)
+
+            frame_titulo = tk.LabelFrame(frame, font=('Arial', 15), borderwidth=0, highlightthickness=0)
+            frame_titulo.grid(row=0, column=0, sticky='nsew')
+            frame_titulo.rowconfigure(0, weight=1)
+            frame_titulo.columnconfigure([1, 2], weight=1)
+
+            botao_voltar = tk.Button(frame_titulo, text='\u2b8c', font=('Arial', 14, 'bold'),
+                                     command=lambda: nova_janela.destroy())
+            botao_voltar.grid(row=0, column=0, sticky='w')
+
+            label_novo_titulo = tk.Label(frame_titulo, text='Aplicação do threshold',
+                                         font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
+            label_novo_titulo.grid(row=0, column=1, padx=10, pady=5, sticky='nswe', columnspan=2)
 
             frame_selecao_arquivo = tk.LabelFrame(frame, text='Seleção de arquivo', font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
@@ -216,10 +230,6 @@ class Janelas:
             botao_run = tk.Button(nova_janela, text='RODAR', font=('Arial', 14, 'bold'),
                                     command=lambda: self.roda_analise_primaria(caixa_threshold, var_revisao, 'pt-br'))
             botao_run.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-
-            botao_voltar = tk.Button(nova_janela, text='VOLTAR', font=('Arial', 14),
-                                  command=lambda: nova_janela.destroy())
-            botao_voltar.grid(row=6, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def roda_analise_primaria(self, caixa_threshold, var_revisao, idioma):
         """Roda processamento de threshold para as OTUs.
@@ -319,8 +329,6 @@ class Janelas:
             elif ".csv" in caminho_salvar_resultado:
                 thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8')
 
-
-
     def proc_tabelas_consolidadas(self, idioma):
         """Roda processamento de threshold para as OTUs.
 
@@ -337,11 +345,21 @@ class Janelas:
         if idioma == 'eng':
             nova_janela.title("Results consolidation")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Results consolidation', font=('Arial', 16, 'bold'), borderwidth=2,  relief='solid')
-            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, ipadx=3, sticky='nsew', columnspan=3)
-
             frame = tk.Frame(nova_janela)
-            frame.grid(row=1, column=0)
+            frame.grid(row=0, column=0, sticky='nsew')
+            frame.columnconfigure(0, weight=1)
+
+            frame_titulo = tk.LabelFrame(frame, font=('Arial', 15), borderwidth=0, highlightthickness=0)
+            frame_titulo.grid(row=0, column=0, sticky='nsew')
+            frame_titulo.rowconfigure(0, weight=1)
+            frame_titulo.columnconfigure([1, 2], weight=1)
+
+            botao_voltar = tk.Button(frame_titulo, text='\u2b8c', font=('Arial', 14, 'bold'),
+                                     command=lambda: nova_janela.destroy())
+            botao_voltar.grid(row=0, column=0, sticky='w')
+
+            label_novo_titulo = tk.Label(frame_titulo, text='Results consolidation', font=('Arial', 16, 'bold'), borderwidth=2,  relief='solid')
+            label_novo_titulo.grid(row=0, column=1, padx=10, pady=5, sticky='nsew', columnspan=2)
 
             frame_selecao_arquivo = tk.LabelFrame(frame, text='File selection', font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
@@ -387,16 +405,25 @@ class Janelas:
             botao_run = tk.Button(nova_janela, text='RUN',  font=('Arial', 14, 'bold'), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, 'eng'))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
 
-            botao_voltar = tk.Button(nova_janela, text='RETURN', font=('Arial', 14),
-                                     command=lambda: nova_janela.destroy())
-            botao_voltar.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-
         elif idioma == 'pt-br':
             nova_janela.title("Consolidação dos resultados")
 
-            label_novo_titulo = tk.Label(nova_janela, text='Consolidação dos resultados',
+            frame = tk.Frame(nova_janela)
+            frame.grid(row=0, column=0, sticky='nsew')
+            frame.columnconfigure(0, weight=1)
+
+            frame_titulo = tk.LabelFrame(frame, font=('Arial', 15), borderwidth=0, highlightthickness=0)
+            frame_titulo.grid(row=0, column=0, sticky='nsew')
+            frame_titulo.rowconfigure(0, weight=1)
+            frame_titulo.columnconfigure([1, 2], weight=1)
+
+            botao_voltar = tk.Button(frame_titulo, text='\u2b8c', font=('Arial', 14, 'bold'),
+                                     command=lambda: nova_janela.destroy())
+            botao_voltar.grid(row=0, column=0, sticky='w')
+
+            label_novo_titulo = tk.Label(frame_titulo, text='Consolidação dos resultados',
                                          font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
-            label_novo_titulo.grid(row=0, column=0, padx=10, pady=5, ipadx=3, sticky='nsew', columnspan=3)
+            label_novo_titulo.grid(row=0, column=1, padx=10, pady=5, sticky='nsew', columnspan=2)
 
             frame = tk.Frame(nova_janela)
             frame.grid(row=1, column=0)
@@ -450,10 +477,6 @@ class Janelas:
                                   command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador,
                                                                                var_area, 'pt-br'))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
-
-            botao_voltar = tk.Button(nova_janela, text='VOLTAR', font=('Arial', 14),
-                                     command=lambda: nova_janela.destroy())
-            botao_voltar.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def seleciona_arquivo(self, idioma):
         """Abre caixa de diálogo para escolha do arquivo de entrada.
