@@ -45,16 +45,16 @@ def aplica_threshold(corridas, threshold_perc):
 
     for corrida in corridas:
         df = corridas[corrida]
-        reads = df['n_contigs']
+        reads = df['n_reads']
         total_reads = sum(reads)
         threshold = total_reads * threshold_perc / 100
 
         thresholds[corrida] = threshold
 
-        selecionado = df.loc[df['n_contigs'] > threshold]
+        selecionado = df.loc[df['n_reads'] > threshold]
         selecionados[corrida] = selecionado
 
-        nao_selecionado = df.loc[df['n_contigs'] <= threshold]
+        nao_selecionado = df.loc[df['n_reads'] <= threshold]
         nao_selecionados[corrida] = nao_selecionado
 
     df_thresholds = pd.DataFrame.from_dict(thresholds, orient='index')
@@ -183,15 +183,15 @@ def conta_reads_gerais(df):
     df_reads_sp (DataFrame): DataFrame com soma de reads gerais por táxon.
     """
     if 'otu_final' in df.columns:
-        df_read_sp = df[['n_contigs', 'otu_final']]
+        df_read_sp = df[['n_reads', 'otu_final']]
         df_read_sp = df_read_sp.groupby(by='otu_final').sum()
-        df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
-        df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_contigs': 'Contigs'})
+        df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
+        df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_reads': 'Reads'})
     elif 'final_otu' in df.columns:
-        df_read_sp = df[['n_contigs', 'final_otu']]
+        df_read_sp = df[['n_reads', 'final_otu']]
         df_read_sp = df_read_sp.groupby(by='final_otu').sum()
-        df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
-        df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_contigs': 'Contigs'})
+        df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
+        df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_reads': 'Reads'})
 
     return df_read_sp
 
@@ -397,16 +397,16 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
             for tabela_area in tabelas_areas:
                 for area, tabela in tabela_area.items():
                     if 'otu_final' in tabela.columns:
-                        df_read_sp = tabela[['n_contigs', 'otu_final']]
+                        df_read_sp = tabela[['n_reads', 'otu_final']]
                         df_read_sp = df_read_sp.groupby(by='otu_final').sum()
-                        df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
-                        df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_contigs': 'Contigs'})
+                        df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
+                        df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_reads': 'Reads'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
                     elif 'final_otu' in tabela.columns:
-                        df_read_sp = tabela[['n_contigs', 'final_otu']]
+                        df_read_sp = tabela[['n_reads', 'final_otu']]
                         df_read_sp = df_read_sp.groupby(by='final_otu').sum()
-                        df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
-                        df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_contigs': 'Contigs'})
+                        df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
+                        df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_reads': 'Reads'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
         return reads_especie
 
@@ -414,16 +414,16 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
         for amostrador in dfs:
             tabela = dfs[amostrador]
             if 'otu_final' in tabela.columns:
-                df_read_sp = tabela[['n_contigs', 'otu_final']]
+                df_read_sp = tabela[['n_reads', 'otu_final']]
                 df_read_sp = df_read_sp.groupby(by='otu_final').sum()
-                df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_contigs': 'Contigs'})
+                df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(amostrador, df_read_sp)
             elif 'final_otu' in tabela.columns:
-                df_read_sp = tabela[['n_contigs', 'final_otu']]
+                df_read_sp = tabela[['n_reads', 'final_otu']]
                 df_read_sp = df_read_sp.groupby(by='final_otu').sum()
-                df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_contigs': 'Contigs'})
+                df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(amostrador, df_read_sp)
 
         return reads_especie
@@ -432,16 +432,16 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
         for area in dfs:
             tabela = dfs[area]
             if 'otu_final' in tabela.columns:
-                df_read_sp = tabela[['n_contigs', 'otu_final']]
+                df_read_sp = tabela[['n_reads', 'otu_final']]
                 df_read_sp = df_read_sp.groupby(by='otu_final').sum()
-                df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_contigs': 'Contigs'})
+                df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'otu_final': 'taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(area, df_read_sp)
             elif 'final_otu' in tabela.columns:
-                df_read_sp = tabela[['n_contigs', 'final_otu']]
+                df_read_sp = tabela[['n_reads', 'final_otu']]
                 df_read_sp = df_read_sp.groupby(by='final_otu').sum()
-                df_read_sp = df_read_sp.sort_values(by='n_contigs', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_contigs': 'Contigs'})
+                df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
+                df_read_sp = df_read_sp.rename(columns={'final_otu': 'taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(area, df_read_sp)
 
         return reads_especie
