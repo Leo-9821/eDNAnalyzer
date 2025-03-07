@@ -35,13 +35,13 @@ class Janelas:
         label_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=4)
 
         bandeira_brasil = ImageTk.PhotoImage(Image.open(resource_path('img/bandeira-nacional-brasil.jpg')).resize((50, 33)))
-        bandeira_uk = ImageTk.PhotoImage(Image.open(resource_path('img/Flag-United-Kingdom.jpg')).resize((50, 33)))
+        bandeira_uk = ImageTk.PhotoImage(Image.open(resource_path('img/flag-usa.png')).resize((50, 33)))
 
-        botao_ptbr = tk.Button(self.idioma, text='Português \nbrasileiro', font=('Arial', 12), image=bandeira_brasil, compound='top', height=85, width=95, command=lambda: self.janela_principal('pt-br'))
+        botao_ptbr = tk.Button(self.idioma, text='Portuguese \n(pt-BR)', font=('Arial', 12), image=bandeira_brasil, compound='top', height=85, width=95, command=lambda: self.janela_principal('pt-br'))
         botao_ptbr.image = bandeira_brasil
         botao_ptbr.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
 
-        botao_english = tk.Button(self.idioma, text='English', font=('Arial', 12), image=bandeira_uk, compound='top', height=85, width=95, command=lambda: self.janela_principal('eng'))
+        botao_english = tk.Button(self.idioma, text='English \n(en-US)', font=('Arial', 12), image=bandeira_uk, compound='top', height=85, width=95, command=lambda: self.janela_principal('eng'))
         botao_english.image = bandeira_uk
         botao_english.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
 
@@ -133,16 +133,13 @@ class Janelas:
             label_novo_titulo = tk.Label(frame_titulo, text='Threshold application', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
             label_novo_titulo.grid(row=0, column=1, padx=10, pady=5, sticky='nswe', columnspan=3)
 
-            frame_selecao_arquivo = tk.LabelFrame(frame, text='File selection', font=('Arial', 15))
+            frame_selecao_arquivo = tk.LabelFrame(frame, font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
 
-            label_selecionar_arquivo = tk.Label(frame_selecao_arquivo, text='Select a file:', font=('Arial', 14))
-            label_selecionar_arquivo.grid(row=0, column=0, padx=10, pady=10, sticky='nsew')
+            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Upload a file', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
+            botao_selecionar_arquivo.grid(row=0, column=1, padx=10, pady=10, sticky='nsew')
 
-            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Click to select', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
-            botao_selecionar_arquivo.grid(row=0, column=1, padx=10, pady=10, sticky='nsew', columnspan=2)
-
-            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file selected', font=('Arial', 14))
+            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file uploaded', font=('Arial', 14))
             label_arquivo_selecionado.grid(row=1, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
             nova_janela.focus_set()
@@ -161,13 +158,6 @@ class Janelas:
                                        text='%',
                                        font=('Arial', 14))
             label_threshold.grid(row=0, column=2, padx=10, pady=10, sticky='nsew')
-
-            var_revisao = tk.BooleanVar()
-            botao_revisao = tk.Checkbutton(nova_janela,
-                                           text='Select this option if you will still review your taxon list.',
-                                           variable=var_revisao,
-                                           font=('Arial', 14, 'bold'))
-            botao_revisao.grid(row=3, column=0, pady=20, sticky='nsew', columnspan=3)
 
             botao_run = tk.Button(nova_janela, text='RUN', font=('Arial', 14, 'bold'), command=lambda: self.roda_analise_primaria(caixa_threshold, 'eng'))
             botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
@@ -191,17 +181,14 @@ class Janelas:
                                          font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
             label_novo_titulo.grid(row=0, column=1, padx=10, pady=5, sticky='nswe', columnspan=2)
 
-            frame_selecao_arquivo = tk.LabelFrame(frame, text='Seleção de arquivo', font=('Arial', 15))
+            frame_selecao_arquivo = tk.LabelFrame(frame, font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
 
-            label_selecionar_arquivo = tk.Label(frame_selecao_arquivo, text='Selecione um arquivo:', font=('Arial', 14))
-            label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
-
-            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Clique para selecionar', font=('Arial', 14),
+            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Carregue um arquivo', font=('Arial', 14),
                                                  command=lambda: self.seleciona_arquivo('pt-br'))
-            botao_selecionar_arquivo.grid(row=1, column=1, padx=10, pady=10, sticky='nsew', columnspan=2)
+            botao_selecionar_arquivo.grid(row=1, column=1, padx=10, pady=10, sticky='nsew')
 
-            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='Nenhum arquivo selecionado', font=('Arial', 14))
+            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='Nenhum arquivo carregado', font=('Arial', 14))
             label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
             nova_janela.focus_set()
@@ -222,16 +209,11 @@ class Janelas:
                                        font=('Arial', 14))
             label_threshold.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
 
-            var_revisao = tk.BooleanVar()
-            botao_revisao = tk.Checkbutton(nova_janela, text='Selecione essa opção caso ainda irá revisar sua lista de táxons', variable=var_revisao,
-                                              font=('Arial', 14, 'bold'))
-            botao_revisao.grid(row=3, column=0, pady=20, sticky='nsew', columnspan=3)
-
             botao_run = tk.Button(nova_janela, text='RODAR', font=('Arial', 14, 'bold'),
-                                    command=lambda: self.roda_analise_primaria(caixa_threshold, var_revisao, 'pt-br'))
+                                    command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br'))
             botao_run.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-    def roda_analise_primaria(self, caixa_threshold, var_revisao, idioma):
+    def roda_analise_primaria(self, caixa_threshold, idioma):
         """Roda processamento de threshold para as OTUs.
 
         Parameters:
@@ -258,18 +240,13 @@ class Janelas:
         resultado_tratado_geral = concatena_dfs(selecionados)
         nao_selecionados_geral = concatena_dfs(nao_selecionados)
 
-        var_revisao = var_revisao.get()
-
         if idioma == 'eng':
             caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
                                                          initialfile='processed_results',
                                                          defaultextension='.*',
                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            if var_revisao:
-                resultado_tratado_geral['final_otu'] = ''
-            else:
-                resultado_tratado_geral = resultado_tratado_geral.rename(columns={'taxon': 'final_otu'})
+            resultado_tratado_geral = resultado_tratado_geral.rename(columns={'taxon': 'final_otu'})
 
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
@@ -299,10 +276,7 @@ class Janelas:
                                                          defaultextension='.*',
                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            if var_revisao:
-                resultado_tratado_geral['otu_final'] = ''
-            else:
-                resultado_tratado_geral = resultado_tratado_geral.rename(columns={'taxon': 'otu_final'})
+            resultado_tratado_geral = resultado_tratado_geral.rename(columns={'taxon': 'otu_final'})
 
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
@@ -361,17 +335,14 @@ class Janelas:
             label_novo_titulo = tk.Label(frame_titulo, text='Results consolidation', font=('Arial', 16, 'bold'), borderwidth=2,  relief='solid')
             label_novo_titulo.grid(row=0, column=1, padx=10, pady=5, sticky='nsew', columnspan=2)
 
-            frame_selecao_arquivo = tk.LabelFrame(frame, text='File selection', font=('Arial', 15))
+            frame_selecao_arquivo = tk.LabelFrame(frame, font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
 
-            label_selecionar_arquivo = tk.Label(frame_selecao_arquivo, text='Select a file:', font=('Arial', 14))
-            label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, columnspan=2)
+            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Upload a file', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
+            botao_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
 
-            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Click to select', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
-            botao_selecionar_arquivo.grid(row=1, column=2, padx=10, pady=10)
-
-            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file selected', font=('Arial', 14))
-            label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
+            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file uploaded', font=('Arial', 14))
+            label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, sticky='nsew')
 
             nova_janela.focus_set()
             nova_janela.grab_set()
@@ -428,18 +399,15 @@ class Janelas:
             frame = tk.Frame(nova_janela)
             frame.grid(row=1, column=0)
 
-            frame_selecao_arquivo = tk.LabelFrame(frame, text='Seleção de arquivo', font=('Arial', 15))
+            frame_selecao_arquivo = tk.LabelFrame(frame, font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
 
-            label_selecionar_arquivo = tk.Label(frame_selecao_arquivo, text='Selecione um arquivo:', font=('Arial', 14))
-            label_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, columnspan=2)
-
-            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Clique para selecionar', font=('Arial', 14),
+            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Carregue um arquivo', font=('Arial', 14),
                                                  command=lambda: self.seleciona_arquivo('pt-br'))
-            botao_selecionar_arquivo.grid(row=1, column=2, padx=10, pady=10)
+            botao_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
 
-            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='Nenhum arquivo selecionado', font=('Arial', 14))
-            label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
+            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='Nenhum arquivo carregado', font=('Arial', 14))
+            label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, sticky='nsew')
 
             nova_janela.focus_set()
             nova_janela.grab_set()
