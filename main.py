@@ -361,11 +361,8 @@ class Janelas:
             botao_area = tk.Checkbutton(frame_separacao, text='Area', variable=var_area, font=('Arial', 14, 'bold'))
             botao_area.grid(row=2, column=2, sticky='w')
 
-            frame_aliquotas = tk.LabelFrame(frame, text='Aliquots', font=('Arial', 15))
-            frame_aliquotas.grid(row=3, column=0)
-
             frame_amostradores = tk.LabelFrame(frame, text='Samplers definition', font=('Arial', 15))
-            frame_amostradores.grid(row=4, column=0)
+            frame_amostradores.grid(row=3, column=0)
 
             label_amostradores = tk.Label(frame_amostradores, text='Insert the samplers ID as identified \n in the table (one per row):', justify="left", font=('Arial', 14))
             label_amostradores.grid(row=1, column=0, padx=10, pady=10)
@@ -427,11 +424,8 @@ class Janelas:
             botao_area = tk.Checkbutton(frame_separacao, text='Área', variable=var_area, font=('Arial', 14, 'bold'))
             botao_area.grid(row=2, column=2, sticky='w')
 
-            frame_aliquotas = tk.LabelFrame(frame, text='Alíquotas', font=('Arial', 15))
-            frame_aliquotas.grid(row=3, column=0)
-
             frame_amostradores = tk.LabelFrame(frame, text='Definição dos amostradores', font=('Arial', 15))
-            frame_amostradores.grid(row=4, column=0)
+            frame_amostradores.grid(row=3, column=0)
 
             label_amostradores = tk.Label(frame_amostradores,
                                           text='Insira o ID dos amostradores como \nidentificado na tabela (um por linha):',
@@ -454,16 +448,16 @@ class Janelas:
         """
         if idioma == 'eng':
             tipos_de_arquivo = [('Excel file', '*.xlsx'), ('CSV file', '*.csv')]
-            caminho_arquivo = askopenfilename(title='Choose a file', filetypes=tipos_de_arquivo)
+            caminho_arquivo = askopenfilename(title='Upload a file', filetypes=tipos_de_arquivo)
             self.var_caminho_arquivo.set(caminho_arquivo)
             if caminho_arquivo:
-                label_arquivo_selecionado['text'] = f'Chosen file {caminho_arquivo}'
+                label_arquivo_selecionado['text'] = f'Uploaded file {caminho_arquivo}'
         elif idioma == 'pt-br':
             tipos_de_arquivo = [('Arquivo de Excel', '*.xlsx'), ('Arquivo CSV', '*.csv')]
-            caminho_arquivo = askopenfilename(title='Escolha um arquivo', filetypes=tipos_de_arquivo)
+            caminho_arquivo = askopenfilename(title='Carregue um arquivo', filetypes=tipos_de_arquivo)
             self.var_caminho_arquivo.set(caminho_arquivo)
             if caminho_arquivo:
-                label_arquivo_selecionado['text'] = f'Arquivo selecionado {caminho_arquivo}'
+                label_arquivo_selecionado['text'] = f'Arquivo carregado {caminho_arquivo}'
 
     def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, idioma):
         """Roda segunda etapa do programa, filtra tabela de atribuição taxonômica .
