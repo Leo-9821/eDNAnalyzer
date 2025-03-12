@@ -224,7 +224,7 @@ class Janelas:
         if '.xlsx' in self.var_caminho_arquivo.get():
             df = pd.read_excel(self.var_caminho_arquivo.get())
         elif '.csv' in self.var_caminho_arquivo.get():
-            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python')
+            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python', encoding='utf-8-sig')
 
         string_threshold = caixa_threshold.get()
 
