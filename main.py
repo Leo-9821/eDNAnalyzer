@@ -246,7 +246,7 @@ class Janelas:
                                                          defaultextension='.*',
                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            resultado_tratado_geral['final_otu'] = resultado_tratado_geral['taxon']
+            resultado_tratado_geral['final_otu_curated'] = ''
 
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
@@ -276,7 +276,7 @@ class Janelas:
                                                          defaultextension='.*',
                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            resultado_tratado_geral['otu_final'] = resultado_tratado_geral['taxon']
+            resultado_tratado_geral['otu_final_curada'] = ''
 
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
