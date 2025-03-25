@@ -11,6 +11,12 @@
 This repository contains the program's executable file, which can be downloaded and used normally, but the files with the source code are also available.  
 The program's manual explains how to make the input files and how to use its interface.
 
+**How to cite eDNAnalyzer?**  
+Olimpio, L.W.G.F.; Gestich, C.C.; Saranholi, B.H.;
+Galetti Jr, P.M.; Freitas, P.D. 2025. eDNAnalyzer: a fast and user-friendly
+computational tool for processing massive taxonomic assignment data derived
+from eDNA and iDNA metabarcoding (doi: ).
+
 ---
 
 <img src='img/logo_ednanalyzer_nome.png' width="150"/>
@@ -25,3 +31,9 @@ The program's manual explains how to make the input files and how to use its int
 
 Nesse repositório está depositado o arquivo executável do programa que pode ser baixado e utilizado normalmente, porém também estão disponíveis os arquivos com o código-fonte.  
 O manual do programa explica como devem ser feitos os arquivos de entrada e como utilizar sua interface.
+
+**Como citar eDNAnalyzer?**  
+Olimpio, L.W.G.F.; Gestich, C.C.; Saranholi, B.H.;
+Galetti Jr, P.M.; Freitas, P.D. 2025. eDNAnalyzer: a fast and user-friendly
+computational tool for processing massive taxonomic assignment data derived
+from eDNA and iDNA metabarcoding (doi: ).
