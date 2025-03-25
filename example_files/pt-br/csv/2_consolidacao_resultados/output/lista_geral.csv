@@ -1,0 +1,55 @@
+;taxon;Detecções;Reads
+0; Columba livia;1;2474
+1;Alouatta guariba;3;155
+2;Amazilia sp.;1;153
+3;Ateles belzebuth;4;1127
+4;Ateles paniscus;1;301
+5;Bos taurus;4;3019
+6;Bradypus tridactylus;1;421
+7;Bubulcus ibis;1;25
+8;Cairina moschata;1;39
+9;Callicebus nigrifrons;2;1544
+10;Callithrix penicillata;1;118
+11;Callithrix sp.;1;63
+12;Canidae;3;572
+13;Canis lupus familiaris;8;6707
+14;Cavia porcellus;1;37
+15;Cervidae;1;22
+16;Chiroptera;1;21
+17;Chrysocyon brachyurus;1;19
+18;Cingulata;2;213
+19;Coendou insidiosus;7;2600
+20;Columba livia;2;233
+21;Coryphospingus cucullatus;1;49
+22;Dasypus novemcinctus;3;113
+23;Didelphis albiventris;2;121
+24;Didelphis sp.;2;167
+25;Equus caballus;1;455
+26;Euphractus sexcinctus;3;669
+27;Gallus gallus;3;1288
+28;Hydrochaeris hydrochaeris;3;2620
+29;Hydrochoerus hydrochaeris;1;2268
+30;Lama sp.;1;4136
+31;Lycalopex vettulus;5;3229
+32;Mazama gouazoupira;1;16
+33;Myocastor coypus;1;35
+34;Nasua nasua;1;44
+35;Nycticorax nycticorax;2;793
+36;Nymphicus hollandicus;1;18
+37;Oncorhynchus clarkii;1;704
+38;Pecari tajacu;2;326
+39;Pitheciidae;3;1893
+40;Procyon cancrivorus;1;48
+41;Puma concolor;4;491
+42;Rattus norvegicus;1;466
+43;Rattus rattus;1;177
+44;Rhea americana;3;4415
+45;Saguinus midas;1;99
+46;Sardinella sp.;1;24
+47;Sus scrofa ;4;2841
+48;Sylvilagus brasiliensis;1;271
+49;Tamandua tetradactyla;2;300
+50;Tapirus terrestris;2;4251
+51;Thraupis sayaca;1;65
+52;Trinomys sp.;1;114
+53;Turdus rufiventris;1;141

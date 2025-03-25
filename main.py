@@ -475,7 +475,7 @@ class Janelas:
         if '.xlsx' in self.var_caminho_arquivo.get():
             df = pd.read_excel(self.var_caminho_arquivo.get())
         elif '.csv' in self.var_caminho_arquivo.get():
-            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python')
+            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, encoding='utf-8', engine='python')
 
         lista_areas = define_areas(df)
 
