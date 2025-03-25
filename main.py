@@ -251,7 +251,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
             elif ".csv" in caminho_salvar_resultado:
-                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8', index=False)
+                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
             caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs',
                                                          initialfile='deleted_otus',
@@ -260,7 +260,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
             elif ".csv" in caminho_salvar_resultado:
-                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8', index=False)
+                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
             caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
                                                           initialfile='thresholds',
@@ -269,7 +269,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 thresholds.to_excel(caminho_salvar_thresholds)
             elif ".csv" in caminho_salvar_resultado:
-                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8')
+                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
         elif idioma == 'pt-br':
             caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
                                                          initialfile='resultados_processados',
@@ -281,7 +281,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
             elif ".csv" in caminho_salvar_resultado:
-                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8', index=False)
+                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
             caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUs excluídas',
                                                          initialfile='otus_excluídas',
@@ -291,7 +291,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
             elif ".csv" in caminho_salvar_resultado:
-                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8', index=False)
+                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
             caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds',
                                                           initialfile='thresholds',
@@ -301,7 +301,7 @@ class Janelas:
             if ".xlsx" in caminho_salvar_resultado:
                 thresholds.to_excel(caminho_salvar_thresholds)
             elif ".csv" in caminho_salvar_resultado:
-                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8')
+                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
 
     def proc_tabelas_consolidadas(self, idioma):
         """Roda processamento de threshold para as OTUs.
@@ -475,7 +475,7 @@ class Janelas:
         if '.xlsx' in self.var_caminho_arquivo.get():
             df = pd.read_excel(self.var_caminho_arquivo.get())
         elif '.csv' in self.var_caminho_arquivo.get():
-            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, encoding='utf-8', engine='python')
+            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, encoding='utf-8-sig', engine='python')
 
         lista_areas = define_areas(df)
 
@@ -499,7 +499,7 @@ class Janelas:
         if '.xlsx' in caminho_lista_geral:
             lista_geral.to_excel(caminho_lista_geral)
         elif '.csv' in caminho_lista_geral:
-            lista_geral.to_csv(caminho_lista_geral, sep=';')
+            lista_geral.to_csv(caminho_lista_geral, sep=';', encoding='utf-8-sig')
 
         if var_amostrador and not var_area:
             amostradores = separa_amostradores(df, lista_amostradores)

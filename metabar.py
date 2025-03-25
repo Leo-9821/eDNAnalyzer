@@ -531,11 +531,11 @@ def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=Fals
                     if i == 0:
                         with zipfile.ZipFile(caminho_salvar_tratado + f'_{amostrador}.zip', "w") as zf:
                             with zf.open(f"{amostrador}_{area}.csv", "w") as buffer:
-                                tabela_final.to_csv(buffer, sep=';', encoding='utf-8')
+                                tabela_final.to_csv(buffer, sep=';', encoding='utf-8-sig')
                     else:
                         with zipfile.ZipFile(caminho_salvar_tratado + f'_{amostrador}.zip', "a") as zf:
                             with zf.open(f"{amostrador}_{area}.csv", "w") as buffer:
-                                tabela_final.to_csv(buffer, sep=';', encoding='utf-8')
+                                tabela_final.to_csv(buffer, sep=';', encoding='utf-8-sig')
                 i += 1
 
 
@@ -556,11 +556,11 @@ def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=Fals
                 if i == 0:
                     with zipfile.ZipFile(caminho_salvar, "w") as zf:
                         with zf.open(f"{amostrador}.csv", "w") as buffer:
-                            tabela_final.to_csv(buffer, sep=';', encoding='utf-8')
+                            tabela_final.to_csv(buffer, sep=';', encoding='utf-8-sig')
                 else:
                     with zipfile.ZipFile(caminho_salvar, "a") as zf:
                         with zf.open(f"{amostrador}.csv", "w") as buffer:
-                            tabela_final.to_csv(buffer, sep=';', encoding='utf-8')
+                            tabela_final.to_csv(buffer, sep=';', encoding='utf-8-sig')
 
             i += 1
 
@@ -581,11 +581,11 @@ def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=Fals
                 if i == 0:
                     with zipfile.ZipFile(caminho_salvar, "w") as zf:
                         with zf.open(f"{area}.csv", "w") as buffer:
-                            tabela_final.to_csv(buffer, sep=';', encoding='utf-8')
+                            tabela_final.to_csv(buffer, sep=';', encoding='utf-8-sig')
                 else:
                     with zipfile.ZipFile(caminho_salvar, "a") as zf:
                         with zf.open(f"{area}.csv", "w") as buffer:
-                            tabela_final.to_csv(buffer, sep=';', encoding='utf-8')
+                            tabela_final.to_csv(buffer, sep=';', encoding='utf-8-sig')
             i += 1
 
 
