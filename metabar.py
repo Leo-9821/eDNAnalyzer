@@ -3,13 +3,13 @@ import zipfile
 
 
 def separa_corridas(df):
-    """Separa o dataframe completo nas suas corridas.
+    """Splits the complete dataframe into its individual sequencing samples.
 
     Parameters:
-    df (pandas.core.frame.DataFrame): Base de dados com os resultados do metabarcoding após Blast.
+    df (pandas.core.frame.DataFrame): Database with metabarcoding results after Blast.
 
     Returns:
-    areas (dict): Dicionário com os dataframes identificados por chaves com os nomes informados na lista de corridas.
+    areas (dict): Dictionary with dataframes identified by keys containing the names listed in the sequencing sample list.
     """
     if 'amostra_sequenciamento' in df.columns:
         lista_corridas = list(df['amostra_sequenciamento'].unique())
@@ -28,16 +28,16 @@ def separa_corridas(df):
 
 
 def aplica_threshold(corridas, threshold_perc):
-    """Calcula o threshold de reads para cada corrida e retira as OTUs que estiverem abaixo.
+    """Calculates the read threshold for each sequencing sample and removes OTUs below it.
 
     Parameters:
-    corridas (dict): Bases de dados para cada corrida organizadas em dicionário.
-    threshold_perc (float): valor da porcentagem para cálculo do threshold.
+    corridas (dict): Databases for each sequencing sample organized in a dictionary.
+    threshold_perc (float): Percentage value for threshold calculation.
 
     Returns:
-    selecionados (dict): Dicionário com os dataframes com OTUs selecionadas.
-    nao_selecionados (dict): Dicionário com dataframes com OTUs eliminadas.
-    df_thresholds (DataFrame): Dataframe com os valores dos thresholds calculados por corrida.
+    selecionados (dict): Dictionary with dataframes containing selected OTUs.
+    nao_selecionados (dict): Dictionary with dataframes containing removed OTUs.
+    df_thresholds (DataFrame): Dataframe with calculated threshold values per sequencing sample.
     """
     thresholds = {}
     selecionados = {}
@@ -63,13 +63,13 @@ def aplica_threshold(corridas, threshold_perc):
 
 
 def concatena_dfs(dfs):
-    """Concatena dataframes de um dicionário.
+    """Concatenates dataframes from a dictionary.
 
     Parameters:
-    dfs (dict): Dataframes organizados em um dicionário.
+    dfs (dict): Dataframes organized in a dictionary.
 
     Returns:
-    tabelas_concatenadas (DataFrame): Dataframe resultante da concatenação dos dataframes.
+    tabelas_concatenadas (DataFrame): Dataframe resulting from the concatenation of the dataframes.
     """
     tabelas = dfs.values()
     tabelas_concatenadas = pd.concat(tabelas, ignore_index=True)
@@ -77,13 +77,13 @@ def concatena_dfs(dfs):
 
 
 def define_areas(df):
-    """Cria lista de áreas amostrais.
+    """Creates a list of sampling areas.
 
     Parameters:
-    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
 
     Returns:
-    lista_areas (list): Lista de áreas amostrais.
+    lista_areas (list): List of sampling areas.
     """
     if 'area_amostrador' in df.columns:
         lista_amostras = df['area_amostrador'].unique()
@@ -104,14 +104,14 @@ def define_areas(df):
 
 
 def separa_amostradores(df, amostradores):
-    """Filtra tabela de OTUs de acordo com o amostrador.
+    """Filters the OTU table according to the sampler.
 
     Parameters:
-    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
-    amostradores (list): Lista com denominação dos amostradores.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
+    amostradores (list): List with sampler designations.
 
     Returns:
-    amst (dict): Dicionário com dataframes separados por amostrador.
+    amst (dict): Dictionary with dataframes separated by sampler.
     """
     amst = {}
     for amostrador in amostradores:
@@ -124,14 +124,14 @@ def separa_amostradores(df, amostradores):
 
 
 def conta_ocorrencias_gerais(df, lista_areas):
-    """Conta detecções gerais dos táxons.
+    """Counts general taxon detections.
 
     Parameters:
-    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
-    lista_areas (list): Lista de áreas amostrais.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
+    lista_areas (list): List of sampling areas.
 
     Returns:
-    cont_ocorr (DataFrame): DataFrame com número de detecções gerais por táxon.
+    cont_ocorr (DataFrame): Dataframe with general detection counts per taxon.
     """
     contagens = []
     if 'area_amostrador' in df.columns:
@@ -174,13 +174,13 @@ def conta_ocorrencias_gerais(df, lista_areas):
 
 
 def conta_reads_gerais(df):
-    """Conta reads gerais dos táxons.
+    """Counts general taxon reads.
 
     Parameters:
-    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
 
     Returns:
-    df_reads_sp (DataFrame): DataFrame com soma de reads gerais por táxon.
+    df_reads_sp (DataFrame): Dataframe with total reads per taxon.
     """
     if 'otu_final_curada' in df.columns:
         df_read_sp = df[['n_reads', 'otu_final_curada']]
@@ -197,14 +197,14 @@ def conta_reads_gerais(df):
 
 
 def cria_lista_geral(ocorrencias, reads):
-    """Cria lista de táxons geral.
+    """Creates a general taxon list.
 
     Parameters:
-    ocorrencias (DataFrame): DataFrame com contagem de detecções para cada táxon.
-    reads (DataFrame): DataFrame com contagem de reads para cada táxon.
+    ocorrencias (DataFrame): Dataframe with detection counts for each taxon.
+    reads (DataFrame): Dataframe with read counts for each taxon.
 
     Returns:
-    lista_geral (DataFrame): Dataframe final com contagens de detecções e reads de cada táxon.
+    lista_geral (DataFrame): Final dataframe with detection and read counts for each taxon.
     """
     if 'taxon' in ocorrencias.columns:
         lista_geral = ocorrencias.merge(reads, how='outer', on='taxon')
@@ -214,15 +214,15 @@ def cria_lista_geral(ocorrencias, reads):
 
 
 def separa_areas(lista_areas, amostradores=None, df=None):
-    """Filtra tabela de OTUs de acordo com as áreas.
+    """Filters the OTU table according to the areas.
 
     Parameters:
-    lista_areas (list): Lista das denominação das áreas
-    amostradores (list): Lista com denominação dos amostradores.
-    df (DataFrame): Dataframes com resultados da atribuição taxonômica e com retirada das OTUs abaixo do threshold de reads.
+    lista_areas (list): List of area designations.
+    amostradores (list): List with sampler designations.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
 
     Returns:
-    amst (dict): Dicionário com dataframes separados por amostrador.
+    amst (dict): Dictionary with dataframes separated by sampler.
     """
     if amostradores is not None:
         areas_amostradores = {}
@@ -247,15 +247,15 @@ def separa_areas(lista_areas, amostradores=None, df=None):
 
 
 def conta_ocorrencias(dfs, amostradores=False, areas=False):
-    """Conta detecções dos táxons de acordo com filtragens escolhidas (amostradores e/ou áreas).
+    """Counts taxon detections according to chosen filters (samplers and/or areas).
 
     Parameters:
-    dfs (DataFrame): Dataframes com resultados filtrados da atribuição taxonômica
-    amostradores (bool): indica filtragem por amostrador.
-    areas (bool): indica filtragem por área.
+    dfs (DataFrame): Filtered dataframes with taxonomic assignment results.
+    amostradores (bool): Indicates filtering by sampler.
+    areas (bool): Indicates filtering by area.
 
     Returns:
-    ocorr (dict): dicionário com DataFrames com número de detecções por táxon.
+    ocorr (dict): Dictionary with dataframes containing detection counts per taxon.
     """
     ocorr = {}
     if amostradores and areas:
@@ -379,15 +379,15 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
 
 
 def calcula_reads_especie(dfs, amostrador=False, area=False):
-    """Conta detecções dos táxons de acordo com filtragens escolhidas (amostradores e/ou áreas).
+    """Counts taxon detections according to chosen filters (samplers and/or areas).
 
     Parameters:
-    dfs (DataFrame): Dataframes filtrados com resultados da atribuição taxonômica
-    amostradores (bool): indica filtragem por amostrador.
-    areas (bool): indica filtragem por área.
+    dfs (DataFrame): Filtered dataframes with taxonomic assignment results.
+    amostradores (bool): Indicates filtering by sampler.
+    areas (bool): Indicates filtering by area.
 
     Returns:
-    ocorr (dict): dicionário com DataFrames com número de detecções por táxon.
+    ocorr (dict): Dictionary with dataframes containing detection counts per taxon.
     """
     reads_especie = {}
 
@@ -448,16 +448,16 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
 
 
 def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=False):
-    """Conta detecções dos táxons de acordo com filtragens escolhidas (amostradores e/ou áreas).
+    """Build tables with consolidated results.
 
     Parameters:
-    df_reads_sp (dict): dicionário com DataFrames de número de reads por táxon.
-    df_deteccoes (dict): dicionário com DataFrames de número de detecções por táxon.
-    amostradores (bool): indica filtragem por amostrador.
-    areas (bool): indica filtragem por área.
+    df_reads_sp (dict): Dictionary with dataframes of read counts per taxon.
+    df_deteccoes (dict): Dictionary with dataframes of detection counts per taxon.
+    amostradores (bool): Indicates filtering by sampler.
+    areas (bool): Indicates filtering by area.
 
     Returns:
-    tabelas_finais (dict): dicionario com DataFrames que representam as tabelas finais com os resultados apresentados de acordo com as filtragens.
+    tabelas_finais (dict): Dictionary with dataframes representing the final tables with results displayed according to the filters.
     """
     tabelas_finais = {}
 
@@ -501,13 +501,13 @@ def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=F
 
 
 def salva_resultados(tabelas_finais, caminho_salvar, amostrador=False, area=False):
-    """Salva tabelas de resultados.
+    """Saves result tables.
 
     Parameters:
-    tabelas_finais (dict): dicionario com DataFrames que representam as tabelas finais com os resultados apresentados de acordo com as filtragens.
-    caminho_salvar (str): caminho no qual será salvo o arquivo.
-    amostrador (bool): indica filtragem por amostrador.
-    area (bool): indica filtragem por área.
+    tabelas_finais (dict): Dictionary with dataframes representing the final tables with results displayed according to the filters.
+    caminho_salvar (str): Path where the file will be saved.
+    amostrador (bool): Indicates filtering by sampler.
+    area (bool): Indicates filtering by area.
     """
     if amostrador and area:
         for amostrador in tabelas_finais:

@@ -29,7 +29,7 @@ class Janelas:
         self.idioma.iconphoto(True, self.logo)
 
     def inicia_janela(self):
-        """Inicia primeira janela, escolha de idioma."""
+        """Initialize the first window for language selection."""
 
         label_titulo = tk.Label(self.idioma, text='Choose a language', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
         label_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=4)
@@ -46,10 +46,10 @@ class Janelas:
         botao_english.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
 
     def janela_principal(self, idioma):
-        """Inicia janela de abertura de manual e de processos
+        """Initialize the window for process selection and manual access.
 
         Parameters:
-        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
         """
         principal = tk.Toplevel()
         principal.resizable(0, 0)
@@ -93,10 +93,10 @@ class Janelas:
             botao_selecionar_funcionalidade2.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def abrir_manual(self, idioma):
-        """Abre arquivo com manual do programa.
+        """Open the program manual file.
 
         Parameters:
-        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
         """
         if idioma == 'pt-br':
             os.startfile(resource_path('manual_eDNAnalyzer_pt_br.pdf'))
@@ -104,10 +104,10 @@ class Janelas:
             os.startfile(resource_path('manual_eDNAnalyzer_eng.pdf'))
 
     def proc_inicial_threshold(self, idioma):
-        """Abre arquivo com manual do programa.
+        """Open the threshold application process window.
 
         Parameters:
-        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
         """
         global label_arquivo_selecionado
         nova_janela = tk.Toplevel()
@@ -214,13 +214,12 @@ class Janelas:
             botao_run.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def roda_analise_primaria(self, caixa_threshold, idioma):
-        """Roda processamento de threshold para as OTUs.
+        """Run threshold processing for OTUs.
 
         Parameters:
-        caixa_threshold (str): porcentagem para cálculo do threshold informada pelo usuário
-        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        caixa_threshold (str): Percentage for threshold calculation provided by the user.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
         """
-
         if '.xlsx' in self.var_caminho_arquivo.get():
             df = pd.read_excel(self.var_caminho_arquivo.get())
         elif '.csv' in self.var_caminho_arquivo.get():
@@ -304,11 +303,10 @@ class Janelas:
                 thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
 
     def proc_tabelas_consolidadas(self, idioma):
-        """Roda processamento de threshold para as OTUs.
+        """Run the results consolidation process.
 
         Parameters:
-        caixa_threshold (str): porcentagem para cálculo do threshold informada pelo usuário
-        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
         """
         global label_arquivo_selecionado
         nova_janela = tk.Toplevel()
@@ -441,10 +439,10 @@ class Janelas:
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
 
     def seleciona_arquivo(self, idioma):
-        """Abre caixa de diálogo para escolha do arquivo de entrada.
+        """Open a dialog box for selecting the input file.
 
         Parameters:
-        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
         """
         if idioma == 'eng':
             tipos_de_arquivo = [('Excel file', '*.xlsx'), ('CSV file', '*.csv')]
@@ -460,13 +458,13 @@ class Janelas:
                 label_arquivo_selecionado['text'] = f'Arquivo carregado {caminho_arquivo}'
 
     def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, idioma):
-        """Roda segunda etapa do programa, filtra tabela de atribuição taxonômica .
+        """Run the second process of the program, filtering the taxonomic assignment table.
 
         Parameters:
-        caixa_amostradores (str): denominações para os amostradores
-        var_amostradores (bool): "True" filtrar por amostradores, "False" não filtrar por amostradores
-        var_area (bool): "True" filtrar por áreas, "False" não filtrar por áreas
-        idioma (str): indica qual o idioma escolhido, Português ("pt-br") ou Inglês ("eng")
+        caixa_amostradores (str): Designations for the samplers.
+        var_amostrador (bool): "True" to filter by samplers, "False" to not filter by samplers.
+        var_area (bool): "True" to filter by areas, "False" to not filter by areas.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
         """
         texto_amostradores = caixa_amostradores.get('1.0', tk.END)
         lista_amostradores = texto_amostradores.split('\n')
@@ -554,7 +552,7 @@ class Janelas:
 
 
 def main():
-    """Inicia a interface gráfica e roda o programa"""
+    """Initialize the graphical interface and run the program."""
     janela = Janelas()
     janela.inicia_janela()
     janela.idioma.mainloop()
