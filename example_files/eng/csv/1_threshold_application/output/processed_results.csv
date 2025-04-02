@@ -1,4 +1,4 @@
-sequencing_sample;barcode;tag;area_sampler;point;aliquot;otu;n_reads;%_id;taxon;final_otu_curated
+﻿sequencing_sample;barcode;tag;area_sampler;point;aliquot;otu;n_reads;%_id;taxon;final_otu_curated
 P08;12SrRNA;TA;P1_MQ;1;1;1;233;100.0;Nycticorax nycticorax;
 P08;12SrRNA;TB;P2_MC;2;1;1;50;99.26;Bos taurus;
 P08;12SrRNA;TB;P2_MC;2;1;2;41;99.25;Canis lupus;
