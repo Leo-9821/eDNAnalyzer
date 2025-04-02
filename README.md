@@ -5,6 +5,7 @@
 ![Python](https://img.shields.io/badge/python-3670A0?style=Flat&logo=python&logoColor=ffdd54)
 ![PyCharm](https://img.shields.io/badge/pycharm-143?style=Flat&logo=pycharm&logoColor=black&color=black&labelColor=green)
 ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=Flat&logo=pandas&logoColor=white)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15127152.svg)](https://doi.org/10.5281/zenodo.15127152)
 
 ## Applies reads threshold and generates tables with taxon lists from the raw table of taxonomic assignments in .xlsx or .csv.
 
@@ -26,6 +27,7 @@ from eDNA and iDNA metabarcoding (doi: ).
 ![Python](https://img.shields.io/badge/python-3670A0?style=Flat&logo=python&logoColor=ffdd54)
 ![PyCharm](https://img.shields.io/badge/pycharm-143?style=Flat&logo=pycharm&logoColor=black&color=black&labelColor=green)
 ![Pandas](https://img.shields.io/badge/pandas-%23150458.svg?style=Flat&logo=pandas&logoColor=white)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15127152.svg)](https://doi.org/10.5281/zenodo.15127152)
 
 ## Aplica threshold de reads e gera tabelas com as listas de táxons a partir de tabela bruta das atribuições taxonômicas em .xlsx ou .csv
 
