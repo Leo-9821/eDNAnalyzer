@@ -1,9 +1,11 @@
 from metabar import *
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
+from tkinter import ttk
 import pandas as pd
 from PIL import Image, ImageTk
 import os
+from ctypes import windll
 
 
 def resource_path(relative_path):
@@ -18,9 +20,14 @@ def resource_path(relative_path):
 
 
 class Janelas:
+    windll.shcore.SetProcessDpiAwareness(1)
+
     def __init__(self):
         self.idioma = tk.Tk()
-        self.idioma.resizable(0,0)
+        self.idioma.resizable(False, False)
+        scaleFactor = windll.shcore.GetScaleFactorForDevice(0) / 100
+        print(scaleFactor)
+        self.idioma.tk.call('tk', 'scaling', 1.75)
         self.idioma.title('eDNAnalyzer')
         self.var_caminho_arquivo = tk.StringVar()
         self.idioma.rowconfigure(0, weight=1)
@@ -136,10 +143,10 @@ class Janelas:
             frame_selecao_arquivo = tk.LabelFrame(frame, font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
 
-            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Upload a file', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
+            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Load a file', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
             botao_selecionar_arquivo.grid(row=0, column=1, padx=10, pady=10, sticky='nsew')
 
-            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file uploaded', font=('Arial', 14))
+            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file loaded', font=('Arial', 14))
             label_arquivo_selecionado.grid(row=1, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
             nova_janela.focus_set()
@@ -159,8 +166,8 @@ class Janelas:
                                        font=('Arial', 14))
             label_threshold.grid(row=0, column=2, padx=10, pady=10, sticky='nsew')
 
-            botao_run = tk.Button(nova_janela, text='RUN', font=('Arial', 14, 'bold'), command=lambda: self.roda_analise_primaria(caixa_threshold, 'eng'))
-            botao_run.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            botao_run = tk.Button(nova_janela, text='RUN', font=('Arial', 14, 'bold'), command=lambda: self.roda_analise_primaria(caixa_threshold, 'eng', nova_janela))
+            botao_run.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
         elif idioma == 'pt-br':
             nova_janela.title("Aplicação do threshold")
@@ -210,97 +217,141 @@ class Janelas:
             label_threshold.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
 
             botao_run = tk.Button(nova_janela, text='RODAR', font=('Arial', 14, 'bold'),
-                                    command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br'))
-            botao_run.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+                                    command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br', nova_janela))
+            botao_run.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-    def roda_analise_primaria(self, caixa_threshold, idioma):
+    def roda_analise_primaria(self, caixa_threshold, idioma, contexto):
         """Run threshold processing for OTUs.
 
         Parameters:
         caixa_threshold (str): Percentage for threshold calculation provided by the user.
         idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): context to add new widgets to the GUI.
         """
-        if '.xlsx' in self.var_caminho_arquivo.get():
-            df = pd.read_excel(self.var_caminho_arquivo.get())
-        elif '.csv' in self.var_caminho_arquivo.get():
-            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python', encoding='utf-8-sig')
+        try:
+            progressbar = ttk.Progressbar(contexto, mode='indeterminate')
+            progressbar.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-        string_threshold = caixa_threshold.get()
+            progressbar.start()
 
-        if string_threshold == '':
-            threshold = 0.05
+            if '.xlsx' in self.var_caminho_arquivo.get():
+                df = pd.read_excel(self.var_caminho_arquivo.get())
+            elif '.csv' in self.var_caminho_arquivo.get():
+                df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python', encoding='utf-8-sig')
+
+            string_threshold = caixa_threshold.get()
+
+            if string_threshold == '':
+                threshold = 0.05
+            else:
+                threshold = float(string_threshold)
+
+            dfs_corridas = separa_corridas(df)
+
+            selecionados, nao_selecionados, thresholds = aplica_threshold(dfs_corridas, threshold)
+
+            resultado_tratado_geral = concatena_dfs(selecionados)
+            nao_selecionados_geral = concatena_dfs(nao_selecionados)
+
+            if idioma == 'eng':
+                msg_fim = tk.Label(contexto, text='Processing completed successfully!', font=('Arial', 14, 'bold'), fg='#009900')
+                msg_fim.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            elif idioma == 'pt-br':
+                msg_fim = tk.Label(contexto, text='Processamento concluído com sucesso!', font=('Arial', 14, 'bold'), fg='#009900')
+                msg_fim.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+
+            progressbar.stop()
+        except UnboundLocalError:
+            progressbar.grid_forget()
+            if idioma == 'eng':
+                msg_erro = tk.Label(contexto, text='ERROR: No file loaded or invalid input!', font=('Arial', 14, 'bold'), fg='#ff0000')
+                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            elif idioma == 'pt-br':
+                msg_erro = tk.Label(contexto, text='ERRO: Nenhum arquivo carregado ou input inválido!', font=('Arial', 14, 'bold'), fg='#ff0000')
+                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+        except ValueError:
+            progressbar.grid_forget()
+            if idioma == 'eng':
+                msg_erro = tk.Label(contexto, text='ERROR: Invalid threshold value!', font=('Arial', 14, 'bold'),
+                                    fg='#ff0000')
+                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            elif idioma == 'pt-br':
+                msg_erro = tk.Label(contexto, text='ERRO: Valor inválido para threshold!',
+                                    font=('Arial', 14, 'bold'), fg='#ff0000')
+                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+        except:
+            progressbar.grid_forget()
+            if idioma == 'eng':
+                msg_erro = tk.Label(contexto, text='An ERROR occurred!', font=('Arial', 14, 'bold'),
+                                    fg='#ff0000')
+                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            elif idioma == 'pt-br':
+                msg_erro = tk.Label(contexto, text='Houve algum ERRO!',
+                                    font=('Arial', 14, 'bold'), fg='#ff0000')
+                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
         else:
-            threshold = float(string_threshold)
+            if idioma == 'eng':
+                caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
+                                                             initialfile='processed_results',
+                                                             defaultextension='.*',
+                                                             filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-        dfs_corridas = separa_corridas(df)
+                resultado_tratado_geral['final_otu_curated'] = ''
 
-        selecionados, nao_selecionados, thresholds = aplica_threshold(dfs_corridas, threshold)
+                if ".xlsx" in caminho_salvar_resultado:
+                    resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
+                elif ".csv" in caminho_salvar_resultado:
+                    resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-        resultado_tratado_geral = concatena_dfs(selecionados)
-        nao_selecionados_geral = concatena_dfs(nao_selecionados)
+                caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs',
+                                                             initialfile='deleted_otus',
+                                                             defaultextension='.*',
+                                                             filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+                if ".xlsx" in caminho_salvar_resultado:
+                    nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
+                elif ".csv" in caminho_salvar_resultado:
+                    nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-        if idioma == 'eng':
-            caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
-                                                         initialfile='processed_results',
-                                                         defaultextension='.*',
-                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+                caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
+                                                              initialfile='thresholds',
+                                                              defaultextension='.*',
+                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+                if ".xlsx" in caminho_salvar_resultado:
+                    thresholds.to_excel(caminho_salvar_thresholds)
+                elif ".csv" in caminho_salvar_resultado:
+                    thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
+            elif idioma == 'pt-br':
+                caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
+                                                             initialfile='resultados_processados',
+                                                             defaultextension='.*',
+                                                             filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            resultado_tratado_geral['final_otu_curated'] = ''
+                resultado_tratado_geral['otu_final_curada'] = ''
 
-            if ".xlsx" in caminho_salvar_resultado:
-                resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
-            elif ".csv" in caminho_salvar_resultado:
-                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+                if ".xlsx" in caminho_salvar_resultado:
+                    resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
+                elif ".csv" in caminho_salvar_resultado:
+                    resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-            caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs',
-                                                         initialfile='deleted_otus',
-                                                         defaultextension='.*',
-                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-            if ".xlsx" in caminho_salvar_resultado:
-                nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
-            elif ".csv" in caminho_salvar_resultado:
-                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+                caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUs excluídas',
+                                                             initialfile='otus_excluídas',
+                                                             defaultextension='.*',
+                                                             filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
-                                                          initialfile='thresholds',
-                                                          defaultextension='.*',
-                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-            if ".xlsx" in caminho_salvar_resultado:
-                thresholds.to_excel(caminho_salvar_thresholds)
-            elif ".csv" in caminho_salvar_resultado:
-                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
-        elif idioma == 'pt-br':
-            caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
-                                                         initialfile='resultados_processados',
-                                                         defaultextension='.*',
-                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+                if ".xlsx" in caminho_salvar_resultado:
+                    nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
+                elif ".csv" in caminho_salvar_resultado:
+                    nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-            resultado_tratado_geral['otu_final_curada'] = ''
+                caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds',
+                                                              initialfile='thresholds',
+                                                              defaultextension='.*',
+                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            if ".xlsx" in caminho_salvar_resultado:
-                resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
-            elif ".csv" in caminho_salvar_resultado:
-                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
-
-            caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUs excluídas',
-                                                         initialfile='otus_excluídas',
-                                                         defaultextension='.*',
-                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-
-            if ".xlsx" in caminho_salvar_resultado:
-                nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
-            elif ".csv" in caminho_salvar_resultado:
-                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
-
-            caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds',
-                                                          initialfile='thresholds',
-                                                          defaultextension='.*',
-                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-
-            if ".xlsx" in caminho_salvar_resultado:
-                thresholds.to_excel(caminho_salvar_thresholds)
-            elif ".csv" in caminho_salvar_resultado:
-                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
+                if ".xlsx" in caminho_salvar_resultado:
+                    thresholds.to_excel(caminho_salvar_thresholds)
+                elif ".csv" in caminho_salvar_resultado:
+                    thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
 
     def proc_tabelas_consolidadas(self, idioma):
         """Run the results consolidation process.
@@ -336,10 +387,10 @@ class Janelas:
             frame_selecao_arquivo = tk.LabelFrame(frame, font=('Arial', 15))
             frame_selecao_arquivo.grid(row=1, column=0)
 
-            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Upload a file', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
+            botao_selecionar_arquivo = tk.Button(frame_selecao_arquivo, text='Load a file', font=('Arial', 14), command=lambda: self.seleciona_arquivo('eng'))
             botao_selecionar_arquivo.grid(row=1, column=0, padx=10, pady=10, sticky='nsew')
 
-            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file uploaded', font=('Arial', 14))
+            label_arquivo_selecionado = tk.Label(frame_selecao_arquivo, text='No file loaded', font=('Arial', 14))
             label_arquivo_selecionado.grid(row=2, column=0, padx=10, pady=10, sticky='nsew')
 
             nova_janela.focus_set()
@@ -368,7 +419,7 @@ class Janelas:
             caixa_amostradores = tk.Text(frame_amostradores, font=('Arial', 14), width=10, height=5)
             caixa_amostradores.grid(row=1, column=1, padx=10, pady=10, columnspan=3)
 
-            botao_run = tk.Button(nova_janela, text='RUN',  font=('Arial', 14, 'bold'), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, 'eng'))
+            botao_run = tk.Button(nova_janela, text='RUN',  font=('Arial', 14, 'bold'), width=44, command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador, var_area, 'eng', nova_janela))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
 
         elif idioma == 'pt-br':
@@ -435,7 +486,7 @@ class Janelas:
 
             botao_run = tk.Button(nova_janela, text='RODAR', font=('Arial', 14, 'bold'), width=44,
                                   command=lambda: self.roda_analise_secundaria(caixa_amostradores, var_amostrador,
-                                                                               var_area, 'pt-br'))
+                                                                               var_area, 'pt-br', nova_janela))
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
 
     def seleciona_arquivo(self, idioma):
@@ -446,10 +497,10 @@ class Janelas:
         """
         if idioma == 'eng':
             tipos_de_arquivo = [('Excel file', '*.xlsx'), ('CSV file', '*.csv')]
-            caminho_arquivo = askopenfilename(title='Upload a file', filetypes=tipos_de_arquivo)
+            caminho_arquivo = askopenfilename(title='Load a file', filetypes=tipos_de_arquivo)
             self.var_caminho_arquivo.set(caminho_arquivo)
             if caminho_arquivo:
-                label_arquivo_selecionado['text'] = f'Uploaded file {caminho_arquivo}'
+                label_arquivo_selecionado['text'] = f'Loaded file {caminho_arquivo}'
         elif idioma == 'pt-br':
             tipos_de_arquivo = [('Arquivo de Excel', '*.xlsx'), ('Arquivo CSV', '*.csv')]
             caminho_arquivo = askopenfilename(title='Carregue um arquivo', filetypes=tipos_de_arquivo)
@@ -457,7 +508,7 @@ class Janelas:
             if caminho_arquivo:
                 label_arquivo_selecionado['text'] = f'Arquivo carregado {caminho_arquivo}'
 
-    def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, idioma):
+    def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, idioma, contexto):
         """Run the second process of the program, filtering the taxonomic assignment table.
 
         Parameters:
@@ -465,90 +516,108 @@ class Janelas:
         var_amostrador (bool): "True" to filter by samplers, "False" to not filter by samplers.
         var_area (bool): "True" to filter by areas, "False" to not filter by areas.
         idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): context to add new widgets to the GUI.
         """
-        texto_amostradores = caixa_amostradores.get('1.0', tk.END)
-        lista_amostradores = texto_amostradores.split('\n')
-        lista_amostradores.pop(-1)
+        try:
+            texto_amostradores = caixa_amostradores.get('1.0', tk.END)
+            lista_amostradores = texto_amostradores.split('\n')
+            lista_amostradores.pop(-1)
 
-        if '.xlsx' in self.var_caminho_arquivo.get():
-            df = pd.read_excel(self.var_caminho_arquivo.get())
-        elif '.csv' in self.var_caminho_arquivo.get():
-            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, encoding='utf-8-sig', engine='python')
-
-        lista_areas = define_areas(df)
-
-        var_amostrador = var_amostrador.get()
-        var_area = var_area.get()
-
-        ocorrencias_geral = conta_ocorrencias_gerais(df, lista_areas)
-        reads_gerais = conta_reads_gerais(df)
-
-        lista_geral = cria_lista_geral(ocorrencias_geral, reads_gerais)
-
-        if idioma == 'eng':
-            caminho_lista_geral = asksaveasfilename(title='Save general list', initialfile='general_list',
-                                                    defaultextension='.*', filetypes=(
-                ("Excel files", "*.xlsx"), ("CSV file", "*.csv"), ("All files", "*.*")))
-        elif idioma == 'pt-br':
-            caminho_lista_geral = asksaveasfilename(title='Salve lista geral', initialfile='lista_geral',
-                                                    defaultextension='.*', filetypes=(
-                ("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-
-        if '.xlsx' in caminho_lista_geral:
-            lista_geral.to_excel(caminho_lista_geral)
-        elif '.csv' in caminho_lista_geral:
-            lista_geral.to_csv(caminho_lista_geral, sep=';', encoding='utf-8-sig')
-
-        if var_amostrador and not var_area:
-            amostradores = separa_amostradores(df, lista_amostradores)
-
-            ocorrencias = conta_ocorrencias(amostradores, amostradores=True)
-
-            reads_especie = calcula_reads_especie(amostradores, amostrador=True)
-            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
-
-            if idioma == 'eng':
-                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-            elif idioma == 'pt-br':
-                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*',filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-
-            salva_resultados(tabelas_finais, caminho_resultado, amostrador=True)
-
-        elif var_area and not var_amostrador:
-            areas = separa_areas(lista_areas, df=df)
-
-            ocorrencias = conta_ocorrencias(areas, areas=True)
-
-            reads_especie = calcula_reads_especie(areas, area=True)
-
-            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
-
-            if idioma == 'eng':
-                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-            elif idioma == 'pt-br':
-                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-
-            salva_resultados(tabelas_finais, caminho_resultado, area=True)
-
-        elif var_amostrador and var_area:
-            amostradores = separa_amostradores(df, lista_amostradores)
+            if '.xlsx' in self.var_caminho_arquivo.get():
+                df = pd.read_excel(self.var_caminho_arquivo.get())
+            elif '.csv' in self.var_caminho_arquivo.get():
+                df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, encoding='utf-8-sig', engine='python')
 
             lista_areas = define_areas(df)
 
-            areas = separa_areas(lista_areas, amostradores=amostradores)
+            var_amostrador = var_amostrador.get()
+            var_area = var_area.get()
 
-            ocorrencias_area = conta_ocorrencias(areas, amostradores=True, areas=True)
+            ocorrencias_geral = conta_ocorrencias_gerais(df, lista_areas)
+            reads_gerais = conta_reads_gerais(df)
 
-            reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
-
-            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostradores=True, areas=True)
+            lista_geral = cria_lista_geral(ocorrencias_geral, reads_gerais)
 
             if idioma == 'eng':
-                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+                caminho_lista_geral = asksaveasfilename(title='Save general list', initialfile='general_list',
+                                                        defaultextension='.*', filetypes=(
+                    ("Excel files", "*.xlsx"), ("CSV file", "*.csv"), ("All files", "*.*")))
             elif idioma == 'pt-br':
-                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+                caminho_lista_geral = asksaveasfilename(title='Salve lista geral', initialfile='lista_geral',
+                                                        defaultextension='.*', filetypes=(
+                    ("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-            salva_resultados(tabelas_finais, caminho_resultado, amostrador=True, area=True)
+            if '.xlsx' in caminho_lista_geral:
+                lista_geral.to_excel(caminho_lista_geral)
+            elif '.csv' in caminho_lista_geral:
+                lista_geral.to_csv(caminho_lista_geral, sep=';', encoding='utf-8-sig')
+
+            if var_amostrador and not var_area:
+                amostradores = separa_amostradores(df, lista_amostradores)
+
+                ocorrencias = conta_ocorrencias(amostradores, amostradores=True)
+
+                reads_especie = calcula_reads_especie(amostradores, amostrador=True)
+                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
+
+                if idioma == 'eng':
+                    caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+                elif idioma == 'pt-br':
+                    caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*',filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+
+                salva_resultados(tabelas_finais, caminho_resultado, amostrador=True)
+
+            elif var_area and not var_amostrador:
+                areas = separa_areas(lista_areas, df=df)
+
+                ocorrencias = conta_ocorrencias(areas, areas=True)
+
+                reads_especie = calcula_reads_especie(areas, area=True)
+
+                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
+
+                if idioma == 'eng':
+                    caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+                elif idioma == 'pt-br':
+                    caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+
+                salva_resultados(tabelas_finais, caminho_resultado, area=True)
+
+            elif var_amostrador and var_area:
+                amostradores = separa_amostradores(df, lista_amostradores)
+
+                lista_areas = define_areas(df)
+
+                areas = separa_areas(lista_areas, amostradores=amostradores)
+
+                ocorrencias_area = conta_ocorrencias(areas, amostradores=True, areas=True)
+
+                reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
+
+                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostradores=True, areas=True)
+
+                if idioma == 'eng':
+                    caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+                elif idioma == 'pt-br':
+                    caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+
+                salva_resultados(tabelas_finais, caminho_resultado, amostrador=True, area=True)
+        except (UnboundLocalError, KeyError):
+            if idioma == 'eng':
+                msg_erro = tk.Label(contexto, text='ERROR: No file loaded, invalid input or invalid samplers entered!', font=('Arial', 14, 'bold'), fg='#ff0000')
+                msg_erro.grid(row=8, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            elif idioma == 'pt-br':
+                msg_erro = tk.Label(contexto, text='ERRO: Nenhum arquivo carregado, input inválido ou amostradores informados inválidos!', font=('Arial', 14, 'bold'), fg='#ff0000')
+                msg_erro.grid(row=8, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+        except:
+            if idioma == 'eng':
+                msg_erro = tk.Label(contexto, text='An ERROR occurred!', font=('Arial', 14, 'bold'),
+                                    fg='#ff0000')
+                msg_erro.grid(row=8, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            elif idioma == 'pt-br':
+                msg_erro = tk.Label(contexto, text='Houve algum ERRO!',
+                                    font=('Arial', 14, 'bold'), fg='#ff0000')
+                msg_erro.grid(row=8, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
 
 def main():
