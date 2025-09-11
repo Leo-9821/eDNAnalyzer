@@ -5,7 +5,6 @@ from tkinter import ttk
 import pandas as pd
 from PIL import Image, ImageTk
 import os
-from ctypes import windll
 
 
 def resource_path(relative_path):
@@ -20,14 +19,9 @@ def resource_path(relative_path):
 
 
 class Janelas:
-    windll.shcore.SetProcessDpiAwareness(1)
-
     def __init__(self):
         self.idioma = tk.Tk()
         self.idioma.resizable(False, False)
-        scaleFactor = windll.shcore.GetScaleFactorForDevice(0) / 100
-        print(scaleFactor)
-        self.idioma.tk.call('tk', 'scaling', 1.75)
         self.idioma.title('eDNAnalyzer')
         self.var_caminho_arquivo = tk.StringVar()
         self.idioma.rowconfigure(0, weight=1)

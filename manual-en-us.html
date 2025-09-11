@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eDNAnalyzer manual</title>
+    <link rel="stylesheet" href="styleManual.css" />
+  </head>
+  <body>
+    <main>
+      <h1>
+        <img
+          src="img/logo_ednanalyzer_nome.png"
+          alt="eDNAnalyzer logo"
+          id="ednanalyzer-logo"
+        />eDNAnalyzer MANUAL
+      </h1>
+
+      <p>
+        <strong
+          >eDNAnalyzer is a user-friendly and open-access computational
+          tool</strong
+        >
+        developed to process and filter taxonomic assignment data from
+        metabarcoding studies, particularly derived from environmental DNA
+        (eDNA) and invertebrate-derived DNA (iDNA) approaches.
+      </p>
+
+      <h2>How to cite eDNAnalyzer?</h2>
+      <p>
+        Olimpio, L.W.G.F.; Gestich, C.C.; Saranholi, B.H.; Galetti Jr, P.M.;
+        Freitas, P.D. 2025. eDNAnalyzer: a fast and user-friendly computational
+        tool for processing massive taxonomic assignment data derived from eDNA
+        and iDNA metabarcoding (doi: ).
+      </p>
+
+      <h2>How to access the eDNAnalyzer?</h2>
+      <p>
+        You can find the eDNAnalyzer tool by accessing the GitHub repository at
+        <a href="https://github.com/Leo-9821/eDNAnalyzer" target="_blank"
+          >https://github.com/Leo-9821/eDNAnalyzer</a
+        >.
+      </p>
+      <p>
+        The executable file (<span class="code">.exe</span>) is available for
+        Windows®, while the Python source code (<span class="code">.py</span>
+        files) can be used to run the program on Linux® or macOS®. In this case,
+        download the "main.py" and "metabar.py" files and "img" folder to the
+        same directory in your computer.
+      </p>
+
+      <h2>How does eDNAnalyzer work?</h2>
+      <p>
+        The software provides two main functions: "Threshold application" and
+        "Results consolidation", each requiring a specific input file. Examples
+        of input and output files are available in the repository
+        <a
+          href="https://github.com/Leo-9821/eDNAnalyzer/tree/master/example_files"
+          target="_blank"
+          >https://github.com/Leo-9821/eDNAnalyzer/tree/master/example_files</a
+        >.
+      </p>
+      <p>
+        An overview of the general operation of the program, showing its
+        interfaces, is provided at the end of this manual, along with more
+        detailed initial instructions for performing the two main functions of
+        eDNAnalyzer: "threshold application" and "results consolidation".
+      </p>
+
+      <h2>Choosing the option Threshold Application</h2>
+      <p>
+        This option processes data from prior taxonomic assignments by
+        calculating the total number of reads per OTU per sequencing sample,
+        filtering out OTUs according to an adopted threshold value (default ≥
+        0.05), and generating outputs following selected filters.
+      </p>
+
+      <h3>Process Overview:</h3>
+      <ol>
+        <li>
+          Calculate the total number of reads per OTU per sequencing sample,
+          based on previous taxonomic assignments provided (input file).
+        </li>
+        <li>
+          Filter OTUs according to an adopted cutoff value (default: ≥ 0.05%).
+        </li>
+        <li>
+          Generate files (output files) containing the total number of reads per
+          OTU, the OTUs that did not pass by the threshold value and the OTUs
+          that passed.
+        </li>
+      </ol>
+
+      <h3>Input File:</h3>
+      <p>
+        A file in <span class="code">.xlsx</span> or
+        <span class="code">.csv</span> format (e.g.,
+        <a
+          href="https://github.com/Leo-9821/eDNAnalyzer/blob/master/example_files/eng/xlsx/1_threshold_application/input/input_example.xlsx"
+          target="_blank"
+          >example_input.xlsx</a
+        >), containing the taxonomic assignment data, must be provided with the
+        following required columns:
+      </p>
+      <ul>
+        <li>
+          <span class="code">sequencing_sample</span> (identification of
+          sequencing samples)
+        </li>
+        <li>
+          <span class="code">area_sampler</span> (indicating the collection area
+          and DNA sampler - e.g., water sample, soil sample, invertebrate used
+          as sampler, etc. - and ensure that both areas and samplers are
+          unambiguously identified to avoid errors during separation. Use an
+          underscore to separate the area from the sampler: area_sampler)
+        </li>
+        <li>
+          <span class="code">point</span> (indicating the collection point)
+        </li>
+        <li><span class="code">n_reads</span> (number of reads per OTU)</li>
+        <li>
+          <span class="code">taxon</span> (taxon determined from taxonomic
+          assignment)
+        </li>
+      </ul>
+      <p>
+        Extra columns containing additional information can also be included in
+        the table, as shown in Table 1.
+      </p>
+
+      <h3>
+        Table 1: Summary table of an input file showing the general information
+        to perform the threshold application step.
+      </h3>
+      <img
+        src="img/manual_img/en-us/table1.png"
+        class="tables"
+        alt="Input table"
+      />
+
+      <h3>Output Files:</h3>
+      <p>
+        All tables can be saved in <span class="code">.xlsx</span> and
+        <span class="code">.csv</span> format. See an example of a file provided
+        in this step in Table 2.
+      </p>
+
+      <h3>
+        Table 2: Summary table of an output file showing the data processed
+        after running the threshold application step.
+      </h3>
+      <img
+        src="img/manual_img/en-us/table2.png"
+        class="tables"
+        alt="Output table"
+      />
+
+      <h2>Choosing the option Results Consolidation</h2>
+      <p>
+        This process will provide tables with the results, lists of species with
+        their number of detections and reads. The tables can be generated by
+        separating the lists by sampler, area, or both.
+      </p>
+
+      <h3>Process Overview:</h3>
+      <ol>
+        <li>
+          Edit the table containing the OTUs of interest by completing the
+          <span class="code">final_otu_curated</span> column with the selected
+          taxonomic assignment after manual curation. This step aims to review
+          and refine taxonomic identification to correct possible
+          inconsistencies in assignment; for this, data on species distribution
+          and field observations must be incorporated for better accuracy.
+        </li>
+        <li>
+          Input the curated table (input file) into eDNAnalyzer, and the program
+          will process the data and then return the information of interest
+          according to the filters selected by the user (e.g.; sampler, area, or
+          sampler and area).
+        </li>
+        <li>
+          Generate files with consolidated results (output files) in
+          <span class="code">.xlsx</span> and
+          <span class="code">.csv</span> formats. When necessary,
+          <span class="code">.csv</span> files in a
+          <span class="code">.zip</span> file will be provided.
+        </li>
+      </ol>
+
+      <h3>Input File:</h3>
+      <p>
+        The input file (Table 3) for the "results consolidation" step is a table
+        (in <span class="code">.xlsx</span> or
+        <span class="code">.csv</span> format) containing the final OTU data
+        from the previous threshold application step and the curated OTU list.
+      </p>
+
+      <h3>
+        Table 3: Summary table of an input file showing the general information
+        to perform the consolidation step.
+      </h3>
+      <img
+        src="img/manual_img/en-us/table3.png"
+        class="tables"
+        alt="Input table"
+      />
+
+      <h3>Output File:</h3>
+      <p>
+        All tables can be saved in <span class="code">.xlsx</span> and
+        <span class="code">.csv</span> formats. See an example of a file
+        provided in this step in Table 4.
+      </p>
+
+      <h3>
+        Table 4: Summary table of an output file showing the consolidated
+        results after running the consolidation step.
+      </h3>
+      <p class="note">
+        Note that the taxon list is presented according to the filter selected
+        in different guides of the datasheet.
+      </p>
+      <img
+        src="img/manual_img/en-us/table4.png"
+        class="tables"
+        alt="Output file"
+      />
+
+      <h2>General Operation of the eDNAnalyzer Program</h2>
+      <p>
+        After accessing the program at
+        <a href="https://github.com/Leo-9821/eDNAnalyzer" target="_blank"
+          >https://github.com/Leo-9821/eDNAnalyzer</a
+        >, follow the steps by clicking on the options available.
+      </p>
+
+      <div class="step">
+        <h3>Step 1: Select the language</h3>
+        <p>Choose a language</p>
+        <img
+          src="img/manual_img/en-us/screenshot01.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 2: Read the manual and then choose one of the two processing
+          options
+        </h3>
+        <p>
+          Choose the process to run: Threshold application or Results
+          consolidation
+        </p>
+        <img
+          src="img/manual_img/en-us/screenshot02.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>Step 3: Choose the option threshold application</h3>
+        <p>Select "Threshold application" from the menu</p>
+        <img
+          src="img/manual_img/en-us/screenshot02.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>Step 4: Load a file containing the taxonomic assignment data</h3>
+        <p>Click on "Load a file" and select your input file</p>
+        <img
+          src="img/manual_img/en-us/screenshot03.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 5: Check the provided folder directory to ensure that the file
+          was loaded correctly
+        </h3>
+        <p>Verify the file path displayed on the screen</p>
+        <img
+          src="img/manual_img/en-us/screenshot04.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 6: Insert a threshold value in percentage or keep empty to use
+          the default (0.05%) and run the Threshold application step
+        </h3>
+        <p>
+          Enter your desired threshold value or use the default, then click
+          "RUN"
+        </p>
+        <img
+          src="img/manual_img/en-us/screenshot05.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 7: After running the threshold application, three output files
+          will be generated
+        </h3>
+        <p>
+          Save at least the file with OTUs with reads equal to or greater than
+          the adopted threshold in <span class="code">.xlsx</span> or
+          <span class="code">.csv</span> format for manual curation and use as
+          input for the results consolidation step.
+        </p>
+        <img
+          src="img/manual_img/en-us/screenshot06.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>Step 8: Choose the option results consolidation</h3>
+        <p>Return to the main menu and select "Results consolidation"</p>
+        <img
+          src="img/manual_img/en-us/screenshot02.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 9: Load a file containing a curated table after running the
+          threshold application step
+        </h3>
+        <p>Click on "Load a file" and select your curated file</p>
+        <img
+          src="img/manual_img/en-us/screenshot07.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 10: Check the provided folder directory to ensure that the file
+          was loaded correctly
+        </h3>
+        <p>Verify the file path displayed on the screen</p>
+        <img
+          src="img/manual_img/en-us/screenshot08.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 11: Select the options to filter the data by sampler and/or area
+        </h3>
+        <p>Check the appropriate boxes for "Sampler" and/or "Area"</p>
+        <img
+          src="img/manual_img/en-us/screenshot09.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 12: If you selected the "sampler" option, type the sampler IDs
+        </h3>
+        <p>
+          Enter the sampler IDs, separating them by pressing "Enter". If you
+          didn't select "Sampler", leave this field blank.
+        </p>
+        <img
+          src="img/manual_img/en-us/screenshot10.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Step 13: Save the tables generated with the data selected according to
+          the chosen filters
+        </h3>
+        <p>
+          To compress all the generated tables in
+          <span class="code">.csv</span> format into a single
+          <span class="code">.zip</span> file, select the ZIP option. This will
+          save the consolidated results with the final list of taxa, and
+          information about the number of reads that each taxon presented and
+          the number of times it was detected.
+        </p>
+        <img
+          src="img/manual_img/en-us/screenshot11.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+    </main>
+  </body>
+</html>
