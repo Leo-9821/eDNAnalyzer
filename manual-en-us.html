@@ -70,23 +70,23 @@
       <h2>Choosing the option Threshold Application</h2>
       <p>
         This option processes data from prior taxonomic assignments by
-        calculating the total number of reads per OTU per sequencing sample,
-        filtering out OTUs according to an adopted threshold value (default ≥
+        calculating the total number of reads per OTUs/ASVs/ASV per sequencing sample,
+        filtering out OTUs/ASVs according to an adopted threshold value (default ≥
         0.05), and generating outputs following selected filters.
       </p>
 
       <h3>Process Overview:</h3>
       <ol>
         <li>
-          Calculate the total number of reads per OTU per sequencing sample,
+          Calculate the total number of reads per OTUs/ASVs/ASV per sequencing sample,
           based on previous taxonomic assignments provided (input file).
         </li>
         <li>
-          Filter OTUs according to an adopted cutoff value (default: ≥ 0.05%).
+          Filter OTUs/ASVs according to an adopted cutoff value (default: ≥ 0.05%).
         </li>
         <li>
           Generate files (output files) containing the total number of reads per
-          OTU, the OTUs that did not pass by the threshold value and the OTUs
+          OTUs/ASVs/ASV, the OTUs/ASVs that did not pass by the threshold value and the OTUs/ASVs
           that passed.
         </li>
       </ol>
@@ -117,7 +117,7 @@
         <li>
           <span class="code">point</span> (indicating the collection point)
         </li>
-        <li><span class="code">n_reads</span> (number of reads per OTU)</li>
+        <li><span class="code">n_reads</span> (number of reads per OTUs/ASVs/ASV)</li>
         <li>
           <span class="code">taxon</span> (taxon determined from taxonomic
           assignment)
@@ -165,8 +165,8 @@
       <h3>Process Overview:</h3>
       <ol>
         <li>
-          Edit the table containing the OTUs of interest by completing the
-          <span class="code">final_otu_curated</span> column with the selected
+          Edit the table containing the OTUs/ASVs of interest by completing the
+          <span class="code">final_otu/asv_curated</span> column with the selected
           taxonomic assignment after manual curation. This step aims to review
           and refine taxonomic identification to correct possible
           inconsistencies in assignment; for this, data on species distribution
@@ -191,8 +191,8 @@
       <p>
         The input file (Table 3) for the "results consolidation" step is a table
         (in <span class="code">.xlsx</span> or
-        <span class="code">.csv</span> format) containing the final OTU data
-        from the previous threshold application step and the curated OTU list.
+        <span class="code">.csv</span> format) containing the final OTUs/ASVs/ASV data
+        from the previous threshold application step and the curated OTUs/ASVs/ASV list.
       </p>
 
       <h3>
@@ -315,7 +315,7 @@
           will be generated
         </h3>
         <p>
-          Save at least the file with OTUs with reads equal to or greater than
+          Save at least the file with OTUs/ASVs with reads equal to or greater than
           the adopted threshold in <span class="code">.xlsx</span> or
           <span class="code">.csv</span> format for manual curation and use as
           input for the results consolidation step.
