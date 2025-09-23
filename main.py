@@ -290,7 +290,7 @@ class Janelas:
                                                              defaultextension='.*',
                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-                resultado_tratado_geral['final_otu_curated'] = ''
+                resultado_tratado_geral['final_otu/asv_curated'] = ''
 
                 if ".xlsx" in caminho_salvar_resultado:
                     resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
@@ -298,7 +298,7 @@ class Janelas:
                     resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
                 caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs',
-                                                             initialfile='deleted_otus',
+                                                             initialfile='deleted_otus/asvs',
                                                              defaultextension='.*',
                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
                 if ".xlsx" in caminho_salvar_resultado:
@@ -320,7 +320,7 @@ class Janelas:
                                                              defaultextension='.*',
                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
-                resultado_tratado_geral['otu_final_curada'] = ''
+                resultado_tratado_geral['otu/asv_final_curada'] = ''
 
                 if ".xlsx" in caminho_salvar_resultado:
                     resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
@@ -328,7 +328,7 @@ class Janelas:
                     resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
                 caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUs excluídas',
-                                                             initialfile='otus_excluídas',
+                                                             initialfile='otus/asvs_excluídas',
                                                              defaultextension='.*',
                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 

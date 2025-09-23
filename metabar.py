@@ -28,15 +28,15 @@ def separa_corridas(df):
 
 
 def aplica_threshold(corridas, threshold_perc):
-    """Calculates the read threshold for each sequencing sample and removes OTUs below it.
+    """Calculates the read threshold for each sequencing sample and removes OTUs/ASVs equal or below it.
 
     Parameters:
     corridas (dict): Databases for each sequencing sample organized in a dictionary.
     threshold_perc (float): Percentage value for threshold calculation.
 
     Returns:
-    selecionados (dict): Dictionary with dataframes containing selected OTUs.
-    nao_selecionados (dict): Dictionary with dataframes containing removed OTUs.
+    selecionados (dict): Dictionary with dataframes containing selected OTUs/ASVs.
+    nao_selecionados (dict): Dictionary with dataframes containing removed OTUs/ASVs.
     df_thresholds (DataFrame): Dataframe with calculated threshold values per sequencing sample.
     """
     thresholds = {}
@@ -80,7 +80,7 @@ def define_areas(df):
     """Creates a list of sampling areas.
 
     Parameters:
-    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs/ASVs equal or below the read threshold removed.
 
     Returns:
     lista_areas (list): List of sampling areas.
@@ -104,10 +104,10 @@ def define_areas(df):
 
 
 def separa_amostradores(df, amostradores):
-    """Filters the OTU table according to the sampler.
+    """Filters the OTU/ASV table according to the sampler.
 
     Parameters:
-    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs/ASVs equal or below the read threshold removed.
     amostradores (list): List with sampler designations.
 
     Returns:
@@ -127,7 +127,7 @@ def conta_ocorrencias_gerais(df, lista_areas):
     """Counts general taxon detections.
 
     Parameters:
-    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs/ASVs equal or below the read threshold removed.
     lista_areas (list): List of sampling areas.
 
     Returns:
@@ -177,7 +177,7 @@ def conta_reads_gerais(df):
     """Counts general taxon reads.
 
     Parameters:
-    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs/ASVs equal or below the read threshold removed.
 
     Returns:
     df_reads_sp (DataFrame): Dataframe with total reads per taxon.
@@ -214,12 +214,12 @@ def cria_lista_geral(ocorrencias, reads):
 
 
 def separa_areas(lista_areas, amostradores=None, df=None):
-    """Filters the OTU table according to the areas.
+    """Filters the OTU/ASV table according to the areas.
 
     Parameters:
     lista_areas (list): List of area designations.
     amostradores (list): List with sampler designations.
-    df (DataFrame): Dataframe with taxonomic assignment results and OTUs below the read threshold removed.
+    df (DataFrame): Dataframe with taxonomic assignment results and OTUs/ASVs equal or below the read threshold removed.
 
     Returns:
     amst (dict): Dictionary with dataframes separated by sampler.
