@@ -215,7 +215,7 @@ class Janelas:
             botao_run.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def roda_analise_primaria(self, caixa_threshold, idioma, contexto):
-        """Run threshold processing for OTUs.
+        """Run threshold processing for OTUS/ASVs.
 
         Parameters:
         caixa_threshold (str): Percentage for threshold calculation provided by the user.
@@ -297,7 +297,7 @@ class Janelas:
                 elif ".csv" in caminho_salvar_resultado:
                     resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-                caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUs',
+                caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUS/ASVs',
                                                              initialfile='deleted_otus/asvs',
                                                              defaultextension='.*',
                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
@@ -327,7 +327,7 @@ class Janelas:
                 elif ".csv" in caminho_salvar_resultado:
                     resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-                caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUs excluídas',
+                caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUS/ASVs excluídas',
                                                              initialfile='otus/asvs_excluídas',
                                                              defaultextension='.*',
                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
