@@ -298,7 +298,7 @@ class Janelas:
                     resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
                 caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUS/ASVs',
-                                                             initialfile='deleted_otus/asvs',
+                                                             initialfile='deleted_otus_asvs',
                                                              defaultextension='.*',
                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
                 if ".xlsx" in caminho_salvar_resultado:
@@ -328,7 +328,7 @@ class Janelas:
                     resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
                 caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUS/ASVs excluídas',
-                                                             initialfile='otus/asvs_excluídas',
+                                                             initialfile='otus_asvs_excluídas',
                                                              defaultextension='.*',
                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
