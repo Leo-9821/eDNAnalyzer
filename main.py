@@ -5,6 +5,10 @@ from tkinter import ttk
 import pandas as pd
 from PIL import Image, ImageTk
 import os
+import psutil
+import time
+import threading
+import queue
 
 
 def resource_path(relative_path):
@@ -214,138 +218,345 @@ class Janelas:
                                     command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br', nova_janela))
             botao_run.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
+    # def roda_analise_primaria(self, caixa_threshold, idioma, contexto):
+    #     """Run threshold processing for OTUS/ASVs.
+    #
+    #     Parameters:
+    #     caixa_threshold (str): Percentage for threshold calculation provided by the user.
+    #     idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+    #     contexto (tkinter Toplevel widget): context to add new widgets to the GUI.
+    #     """
+    #
+    #     process = psutil.Process(os.getpid())
+    #     inicio = time.perf_counter()
+    #
+    #     try:
+    #         progressbar = ttk.Progressbar(contexto, mode='indeterminate')
+    #         progressbar.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #
+    #         progressbar.start()
+    #
+    #         if '.xlsx' in self.var_caminho_arquivo.get():
+    #             df = pd.read_excel(self.var_caminho_arquivo.get())
+    #         elif '.csv' in self.var_caminho_arquivo.get():
+    #             df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python', encoding='utf-8-sig')
+    #
+    #         string_threshold = caixa_threshold.get()
+    #
+    #         if string_threshold == '':
+    #             threshold = 0.05
+    #         else:
+    #             threshold = float(string_threshold)
+    #
+    #         dfs_corridas = separa_corridas(df)
+    #
+    #         selecionados, nao_selecionados, thresholds = aplica_threshold(dfs_corridas, threshold)
+    #
+    #         resultado_tratado_geral = concatena_dfs(selecionados)
+    #         nao_selecionados_geral = concatena_dfs(nao_selecionados)
+    #
+    #         memory_info = process.memory_info()
+    #         rss_mb = memory_info.rss / (1024 * 1024)
+    #         print(f"Uso de RAM: {rss_mb:.2f} MB")
+    #
+    #         fim = time.perf_counter()
+    #         tempo_execucao = fim - inicio
+    #         print(f"O tempo de execução foi de: {tempo_execucao:.4f} segundos")
+    #
+    #         if idioma == 'eng':
+    #             msg_fim = tk.Label(contexto, text='Processing completed successfully!', font=('Arial', 14, 'bold'), fg='#009900')
+    #             msg_fim.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #         elif idioma == 'pt-br':
+    #             msg_fim = tk.Label(contexto, text='Processamento concluído com sucesso!', font=('Arial', 14, 'bold'), fg='#009900')
+    #             msg_fim.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #
+    #         progressbar.stop()
+    #     except UnboundLocalError:
+    #         progressbar.grid_forget()
+    #         if idioma == 'eng':
+    #             msg_erro = tk.Label(contexto, text='ERROR: No file loaded or invalid input!', font=('Arial', 14, 'bold'), fg='#ff0000')
+    #             msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #         elif idioma == 'pt-br':
+    #             msg_erro = tk.Label(contexto, text='ERRO: Nenhum arquivo carregado ou input inválido!', font=('Arial', 14, 'bold'), fg='#ff0000')
+    #             msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #     except ValueError:
+    #         progressbar.grid_forget()
+    #         if idioma == 'eng':
+    #             msg_erro = tk.Label(contexto, text='ERROR: Invalid threshold value!', font=('Arial', 14, 'bold'),
+    #                                 fg='#ff0000')
+    #             msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #         elif idioma == 'pt-br':
+    #             msg_erro = tk.Label(contexto, text='ERRO: Valor inválido para threshold!',
+    #                                 font=('Arial', 14, 'bold'), fg='#ff0000')
+    #             msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #     except:
+    #         progressbar.grid_forget()
+    #         if idioma == 'eng':
+    #             msg_erro = tk.Label(contexto, text='An ERROR occurred!', font=('Arial', 14, 'bold'),
+    #                                 fg='#ff0000')
+    #             msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #         elif idioma == 'pt-br':
+    #             msg_erro = tk.Label(contexto, text='Houve algum ERRO!',
+    #                                 font=('Arial', 14, 'bold'), fg='#ff0000')
+    #             msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+    #     else:
+    #         if idioma == 'eng':
+    #             caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
+    #                                                          initialfile='processed_results',
+    #                                                          defaultextension='.*',
+    #                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+    #
+    #             resultado_tratado_geral['final_otu/asv_curated'] = ''
+    #
+    #             if ".xlsx" in caminho_salvar_resultado:
+    #                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
+    #             elif ".csv" in caminho_salvar_resultado:
+    #                 resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+    #
+    #             caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUS/ASVs',
+    #                                                          initialfile='deleted_otus_asvs',
+    #                                                          defaultextension='.*',
+    #                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+    #             if ".xlsx" in caminho_salvar_resultado:
+    #                 nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
+    #             elif ".csv" in caminho_salvar_resultado:
+    #                 nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+    #
+    #             caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
+    #                                                           initialfile='thresholds',
+    #                                                           defaultextension='.*',
+    #                                                           filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+    #             if ".xlsx" in caminho_salvar_resultado:
+    #                 thresholds.to_excel(caminho_salvar_thresholds)
+    #             elif ".csv" in caminho_salvar_resultado:
+    #                 thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
+    #         elif idioma == 'pt-br':
+    #             caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
+    #                                                          initialfile='resultados_processados',
+    #                                                          defaultextension='.*',
+    #                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+    #
+    #             resultado_tratado_geral['otu/asv_final_curada'] = ''
+    #
+    #             if ".xlsx" in caminho_salvar_resultado:
+    #                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
+    #             elif ".csv" in caminho_salvar_resultado:
+    #                 resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+    #
+    #             caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUS/ASVs excluídas',
+    #                                                          initialfile='otus_asvs_excluídas',
+    #                                                          defaultextension='.*',
+    #                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+    #
+    #             if ".xlsx" in caminho_salvar_resultado:
+    #                 nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
+    #             elif ".csv" in caminho_salvar_resultado:
+    #                 nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+    #
+    #             caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds',
+    #                                                           initialfile='thresholds',
+    #                                                           defaultextension='.*',
+    #                                                           filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+    #
+    #             if ".xlsx" in caminho_salvar_resultado:
+    #                 thresholds.to_excel(caminho_salvar_thresholds)
+    #             elif ".csv" in caminho_salvar_resultado:
+    #                 thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
+
     def roda_analise_primaria(self, caixa_threshold, idioma, contexto):
-        """Run threshold processing for OTUS/ASVs.
+        """Run threshold processing for OTUS/ASVs usando threading."""
+        self.fila_resultados = queue.Queue()
 
-        Parameters:
-        caixa_threshold (str): Percentage for threshold calculation provided by the user.
-        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
-        contexto (tkinter Toplevel widget): context to add new widgets to the GUI.
-        """
+        progressbar = ttk.Progressbar(contexto, mode='indeterminate')
+        progressbar.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+        progressbar.start()
+
+        botao_run = contexto.grid_slaves(row=3, column=0)[0]
+        botao_run.config(state='disabled')
+
+        caminho_arquivo = self.var_caminho_arquivo.get()
+        string_threshold = caixa_threshold.get()
+
+        thread_processamento = threading.Thread(
+            target=self._processamento_primario_thread,
+            args=(caminho_arquivo, string_threshold, idioma, contexto)
+        )
+        thread_processamento.daemon = True
+        thread_processamento.start()
+
+        contexto.after(100, self._verifica_processamento_primario, progressbar, botao_run, idioma, contexto)
+
+    def _processamento_primario_thread(self, caminho_arquivo, string_threshold, idioma, contexto):
+        """Função que roda em thread separada para o processamento pesado."""
         try:
-            progressbar = ttk.Progressbar(contexto, mode='indeterminate')
-            progressbar.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            # MEDIÇÃO INICIAL - dentro da thread, ANTES do processamento
+            process = psutil.Process(os.getpid())
+            memoria_inicio = process.memory_info().rss / (1024 * 1024)
+            inicio = time.perf_counter()
 
-            progressbar.start()
+            print("═" * 50)
+            print("🚀 INICIANDO PROCESSAMENTO (Thread)")
+            print(f"📦 Memória inicial: {memoria_inicio:.2f} MB")
+            print("═" * 50)
 
-            if '.xlsx' in self.var_caminho_arquivo.get():
-                df = pd.read_excel(self.var_caminho_arquivo.get())
-            elif '.csv' in self.var_caminho_arquivo.get():
-                df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, engine='python', encoding='utf-8-sig')
+            if '.xlsx' in caminho_arquivo:
+                df = pd.read_excel(caminho_arquivo)
+            elif '.csv' in caminho_arquivo:
+                df = pd.read_csv(caminho_arquivo, sep=None, engine='python', encoding='utf-8-sig')
 
-            string_threshold = caixa_threshold.get()
-
-            if string_threshold == '':
-                threshold = 0.05
-            else:
-                threshold = float(string_threshold)
+            threshold = 0.05 if string_threshold == '' else float(string_threshold)
 
             dfs_corridas = separa_corridas(df)
-
             selecionados, nao_selecionados, thresholds = aplica_threshold(dfs_corridas, threshold)
 
             resultado_tratado_geral = concatena_dfs(selecionados)
             nao_selecionados_geral = concatena_dfs(nao_selecionados)
 
-            if idioma == 'eng':
-                msg_fim = tk.Label(contexto, text='Processing completed successfully!', font=('Arial', 14, 'bold'), fg='#009900')
-                msg_fim.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-            elif idioma == 'pt-br':
-                msg_fim = tk.Label(contexto, text='Processamento concluído com sucesso!', font=('Arial', 14, 'bold'), fg='#009900')
-                msg_fim.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+            # MEDIÇÃO FINAL - depois do processamento
+            fim = time.perf_counter()
+            memoria_fim = process.memory_info().rss / (1024 * 1024)
+            tempo_execucao = fim - inicio
+            memoria_utilizada = memoria_fim - memoria_inicio
+
+            # Relatório detalhado
+            print("✅ PROCESSAMENTO CONCLUÍDO (Thread)")
+            print(f"⏱️  Tempo total: {tempo_execucao:.4f} segundos")
+            print(f"📊 Memória utilizada: {memoria_utilizada:.2f} MB")
+            print(f"📈 Memória final: {memoria_fim:.2f} MB")
+            print("═" * 50)
+
+            self.fila_resultados.put(('sucesso', resultado_tratado_geral, nao_selecionados_geral, thresholds))
+
+        except UnboundLocalError:
+            self.fila_resultados.put(('erro', 'UnboundLocalError'))
+        except ValueError:
+            self.fila_resultados.put(('erro', 'ValueError'))
+        except Exception as e:
+            print(f"Erro: {e}")
+            self.fila_resultados.put(('erro', 'Exception'))
+
+    def _verifica_processamento_primario(self, progressbar, botao_run, idioma, contexto):
+        """Verifica periodicamente se o processamento terminou."""
+        try:
+            resultado = self.fila_resultados.get_nowait()
+            status, *dados = resultado
 
             progressbar.stop()
-        except UnboundLocalError:
             progressbar.grid_forget()
-            if idioma == 'eng':
-                msg_erro = tk.Label(contexto, text='ERROR: No file loaded or invalid input!', font=('Arial', 14, 'bold'), fg='#ff0000')
-                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-            elif idioma == 'pt-br':
-                msg_erro = tk.Label(contexto, text='ERRO: Nenhum arquivo carregado ou input inválido!', font=('Arial', 14, 'bold'), fg='#ff0000')
-                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-        except ValueError:
-            progressbar.grid_forget()
-            if idioma == 'eng':
-                msg_erro = tk.Label(contexto, text='ERROR: Invalid threshold value!', font=('Arial', 14, 'bold'),
-                                    fg='#ff0000')
-                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-            elif idioma == 'pt-br':
-                msg_erro = tk.Label(contexto, text='ERRO: Valor inválido para threshold!',
-                                    font=('Arial', 14, 'bold'), fg='#ff0000')
-                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-        except:
-            progressbar.grid_forget()
-            if idioma == 'eng':
-                msg_erro = tk.Label(contexto, text='An ERROR occurred!', font=('Arial', 14, 'bold'),
-                                    fg='#ff0000')
-                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-            elif idioma == 'pt-br':
-                msg_erro = tk.Label(contexto, text='Houve algum ERRO!',
-                                    font=('Arial', 14, 'bold'), fg='#ff0000')
-                msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+
+            botao_run.config(state='normal')
+
+            if status == 'sucesso':
+                resultado_tratado_geral, nao_selecionados_geral, thresholds = dados
+
+                if idioma == 'eng':
+                    msg_fim = tk.Label(contexto, text='Processing completed successfully!',
+                                       font=('Arial', 14, 'bold'), fg='#009900')
+                else:
+                    msg_fim = tk.Label(contexto, text='Processamento concluído com sucesso!',
+                                       font=('Arial', 14, 'bold'), fg='#009900')
+                msg_fim.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+
+                self._salvar_arquivos_primarios(resultado_tratado_geral, nao_selecionados_geral, thresholds, idioma)
+
+            else:
+                tipo_erro = dados[0]
+                self._mostrar_erro_primario(tipo_erro, idioma, contexto)
+
+        except queue.Empty:
+            contexto.after(100, self._verifica_processamento_primario, progressbar, botao_run, idioma, contexto)
+
+    def _mostrar_erro_primario(self, tipo_erro, idioma, contexto):
+        """Mostra mensagens de erro."""
+        if idioma == 'eng':
+            if tipo_erro == 'UnboundLocalError':
+                texto = 'ERROR: No file loaded or invalid input!'
+            elif tipo_erro == 'ValueError':
+                texto = 'ERROR: Invalid threshold value!'
+            else:
+                texto = 'An ERROR occurred!'
         else:
-            if idioma == 'eng':
-                caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
-                                                             initialfile='processed_results',
-                                                             defaultextension='.*',
-                                                             filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+            if tipo_erro == 'UnboundLocalError':
+                texto = 'ERRO: Nenhum arquivo carregado ou input inválido!'
+            elif tipo_erro == 'ValueError':
+                texto = 'ERRO: Valor inválido para threshold!'
+            else:
+                texto = 'Houve algum ERRO!'
 
-                resultado_tratado_geral['final_otu/asv_curated'] = ''
+        msg_erro = tk.Label(contexto, text=texto, font=('Arial', 14, 'bold'), fg='#ff0000')
+        msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-                if ".xlsx" in caminho_salvar_resultado:
-                    resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
-                elif ".csv" in caminho_salvar_resultado:
-                    resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+    def _salvar_arquivos_primarios(self, resultado_tratado_geral, nao_selecionados_geral, thresholds, idioma):
+        """Função para salvar os arquivos (pode ser otimizada se necessário)."""
 
-                caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUS/ASVs',
-                                                             initialfile='deleted_otus_asvs',
-                                                             defaultextension='.*',
-                                                             filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-                if ".xlsx" in caminho_salvar_resultado:
-                    nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
-                elif ".csv" in caminho_salvar_resultado:
-                    nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+        if idioma == 'eng':
+            caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
+                                                         initialfile='processed_results',
+                                                         defaultextension='.*',
+                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"),
+                                                                    ("All files", "*.*")))
 
-                caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
-                                                              initialfile='thresholds',
-                                                              defaultextension='.*',
-                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
-                if ".xlsx" in caminho_salvar_resultado:
-                    thresholds.to_excel(caminho_salvar_thresholds)
-                elif ".csv" in caminho_salvar_resultado:
-                    thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
-            elif idioma == 'pt-br':
-                caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
-                                                             initialfile='resultados_processados',
-                                                             defaultextension='.*',
-                                                             filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+            resultado_tratado_geral['final_otu/asv_curated'] = ''
 
-                resultado_tratado_geral['otu/asv_final_curada'] = ''
+            if ".xlsx" in caminho_salvar_resultado:
+                resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
+            elif ".csv" in caminho_salvar_resultado:
+                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-                if ".xlsx" in caminho_salvar_resultado:
-                    resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
-                elif ".csv" in caminho_salvar_resultado:
-                    resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+            caminho_salvar_resultado = asksaveasfilename(title='Save the table with deleted OTUS/ASVs',
+                                                         initialfile='deleted_otus_asvs',
+                                                         defaultextension='.*',
+                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"),
+                                                                    ("All files", "*.*")))
+            if ".xlsx" in caminho_salvar_resultado:
+                nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
+            elif ".csv" in caminho_salvar_resultado:
+                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-                caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUS/ASVs excluídas',
-                                                             initialfile='otus_asvs_excluídas',
-                                                             defaultextension='.*',
-                                                             filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+            caminho_salvar_thresholds = asksaveasfilename(title='Save the thresholds table',
+                                                          initialfile='thresholds',
+                                                          defaultextension='.*',
+                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"),
+                                                                     ("All files", "*.*")))
+            if ".xlsx" in caminho_salvar_resultado:
+                thresholds.to_excel(caminho_salvar_thresholds)
+            elif ".csv" in caminho_salvar_resultado:
+                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
+        elif idioma == 'pt-br':
+            caminho_salvar_resultado = asksaveasfilename(title='Salve as tabelas dos resultados',
+                                                         initialfile='resultados_processados',
+                                                         defaultextension='.*',
+                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"),
+                                                                    ("All files", "*.*")))
 
-                if ".xlsx" in caminho_salvar_resultado:
-                    nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
-                elif ".csv" in caminho_salvar_resultado:
-                    nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+            resultado_tratado_geral['otu/asv_final_curada'] = ''
 
-                caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds',
-                                                              initialfile='thresholds',
-                                                              defaultextension='.*',
-                                                              filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
+            if ".xlsx" in caminho_salvar_resultado:
+                resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
+            elif ".csv" in caminho_salvar_resultado:
+                resultado_tratado_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
 
-                if ".xlsx" in caminho_salvar_resultado:
-                    thresholds.to_excel(caminho_salvar_thresholds)
-                elif ".csv" in caminho_salvar_resultado:
-                    thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
+            caminho_salvar_resultado = asksaveasfilename(title='Salve tabelas com as OTUS/ASVs excluídas',
+                                                         initialfile='otus_asvs_excluídas',
+                                                         defaultextension='.*',
+                                                         filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"),
+                                                                    ("All files", "*.*")))
+
+            if ".xlsx" in caminho_salvar_resultado:
+                nao_selecionados_geral.to_excel(caminho_salvar_resultado, index=False)
+            elif ".csv" in caminho_salvar_resultado:
+                nao_selecionados_geral.to_csv(caminho_salvar_resultado, sep=';', encoding='utf-8-sig', index=False)
+
+            caminho_salvar_thresholds = asksaveasfilename(title='Salve a tabela de thresholds',
+                                                          initialfile='thresholds',
+                                                          defaultextension='.*',
+                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"),
+                                                                     ("All files", "*.*")))
+
+            if ".xlsx" in caminho_salvar_resultado:
+                thresholds.to_excel(caminho_salvar_thresholds)
+            elif ".csv" in caminho_salvar_resultado:
+                thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
 
     def proc_tabelas_consolidadas(self, idioma):
         """Run the results consolidation process.
