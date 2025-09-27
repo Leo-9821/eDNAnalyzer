@@ -244,16 +244,6 @@ class Janelas:
     def _processamento_primario_thread(self, caminho_arquivo, string_threshold, idioma, contexto):
         """Função que roda em thread separada para o processamento pesado."""
         try:
-            # MEDIÇÃO INICIAL - dentro da thread, ANTES do processamento
-            process = psutil.Process(os.getpid())
-            memoria_inicio = process.memory_info().rss / (1024 * 1024)
-            inicio = time.perf_counter()
-
-            print("═" * 50)
-            print("🚀 INICIANDO PROCESSAMENTO (Thread)")
-            print(f"📦 Memória inicial: {memoria_inicio:.2f} MB")
-            print("═" * 50)
-
             if '.xlsx' in caminho_arquivo:
                 df = pd.read_excel(caminho_arquivo)
             elif '.csv' in caminho_arquivo:
@@ -266,19 +256,6 @@ class Janelas:
 
             resultado_tratado_geral = concatena_dfs(selecionados)
             nao_selecionados_geral = concatena_dfs(nao_selecionados)
-
-            # MEDIÇÃO FINAL - depois do processamento
-            fim = time.perf_counter()
-            memoria_fim = process.memory_info().rss / (1024 * 1024)
-            tempo_execucao = fim - inicio
-            memoria_utilizada = memoria_fim - memoria_inicio
-
-            # Relatório detalhado
-            print("✅ PROCESSAMENTO CONCLUÍDO (Thread)")
-            print(f"⏱️  Tempo total: {tempo_execucao:.4f} segundos")
-            print(f"📊 Memória utilizada: {memoria_utilizada:.2f} MB")
-            print(f"📈 Memória final: {memoria_fim:.2f} MB")
-            print("═" * 50)
 
             self.fila_resultados.put(('sucesso', resultado_tratado_geral, nao_selecionados_geral, thresholds))
 
@@ -569,20 +546,35 @@ class Janelas:
                 label_arquivo_selecionado['text'] = f'Arquivo carregado {caminho_arquivo}'
 
     def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, idioma, contexto):
-        """Run the second process of the program, filtering the taxonomic assignment table.
+        """Run the second process of the program using threading."""
+        self.fila_resultados_secundaria = queue.Queue()
 
-        Parameters:
-        caixa_amostradores (str): Designations for the samplers.
-        var_amostrador (bool): "True" to filter by samplers, "False" to not filter by samplers.
-        var_area (bool): "True" to filter by areas, "False" to not filter by areas.
-        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
-        contexto (tkinter Toplevel widget): context to add new widgets to the GUI.
-        """
+        progressbar = ttk.Progressbar(contexto, mode='indeterminate')
+        progressbar.grid(row=4, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+        progressbar.start()
+
+        botao_run = contexto.grid_slaves(row=2, column=0)[0]
+        botao_run.config(state='disabled')
+
+        texto_amostradores = caixa_amostradores.get('1.0', tk.END)
+        lista_amostradores = texto_amostradores.split('\n')
+        lista_amostradores.pop(-1)  # Remove última linha vazia
+
+        var_amostrador_val = var_amostrador.get()
+        var_area_val = var_area.get()
+
+        thread_processamento = threading.Thread(
+            target=self._processamento_secundario_thread,
+            args=(lista_amostradores, var_amostrador_val, var_area_val, idioma)
+        )
+        thread_processamento.daemon = True
+        thread_processamento.start()
+
+        contexto.after(100, self._verifica_processamento_secundario, progressbar, botao_run, idioma, contexto)
+
+    def _processamento_secundario_thread(self, lista_amostradores, var_amostrador, var_area, idioma):
+        """Função que roda em thread separada para o processamento secundário."""
         try:
-            texto_amostradores = caixa_amostradores.get('1.0', tk.END)
-            lista_amostradores = texto_amostradores.split('\n')
-            lista_amostradores.pop(-1)
-
             if '.xlsx' in self.var_caminho_arquivo.get():
                 df = pd.read_excel(self.var_caminho_arquivo.get())
             elif '.csv' in self.var_caminho_arquivo.get():
@@ -590,94 +582,122 @@ class Janelas:
 
             lista_areas = define_areas(df)
 
-            var_amostrador = var_amostrador.get()
-            var_area = var_area.get()
-
             ocorrencias_geral = conta_ocorrencias_gerais(df, lista_areas)
             reads_gerais = conta_reads_gerais(df)
-
             lista_geral = cria_lista_geral(ocorrencias_geral, reads_gerais)
 
-            if idioma == 'eng':
-                caminho_lista_geral = asksaveasfilename(title='Save general list', initialfile='general_list',
-                                                        defaultextension='.*', filetypes=(
+            # PROCESSAMENTO ESPECÍFICO
+            if var_amostrador and not var_area:
+                amostradores = separa_amostradores(df, lista_amostradores)
+                ocorrencias = conta_ocorrencias(amostradores, amostradores=True)
+                reads_especie = calcula_reads_especie(amostradores, amostrador=True)
+                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
+
+            elif var_area and not var_amostrador:
+                areas = separa_areas(lista_areas, df=df)
+                ocorrencias = conta_ocorrencias(areas, areas=True)
+                reads_especie = calcula_reads_especie(areas, area=True)
+                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
+
+            elif var_amostrador and var_area:
+                amostradores = separa_amostradores(df, lista_amostradores)
+                lista_areas = define_areas(df)
+                areas = separa_areas(lista_areas, amostradores=amostradores)
+                ocorrencias_area = conta_ocorrencias(areas, amostradores=True, areas=True)
+                reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
+                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostradores=True, areas=True)
+            else:
+                tabelas_finais = None
+
+            self.fila_resultados_secundaria.put(('sucesso', lista_geral, tabelas_finais, var_amostrador, var_area))
+
+        except (UnboundLocalError, KeyError) as e:
+            self.fila_resultados_secundaria.put(('erro', 'UnboundLocalError'))
+        except Exception as e:
+            print(f"Erro: {e}")
+            self.fila_resultados_secundaria.put(('erro', 'Exception'))
+
+    def _verifica_processamento_secundario(self, progressbar, botao_run, idioma, contexto):
+        """Verifica periodicamente se o processamento secundário terminou."""
+        try:
+            resultado = self.fila_resultados_secundaria.get_nowait()
+            status, *dados = resultado
+
+            progressbar.stop()
+            progressbar.grid_forget()
+            botao_run.config(state='normal')
+
+            if status == 'sucesso':
+                lista_geral, tabelas_finais, var_amostrador, var_area = dados
+
+                if idioma == 'eng':
+                    msg_fim = tk.Label(contexto, text='Processing completed successfully!',
+                                       font=('Arial', 14, 'bold'), fg='#009900')
+                else:
+                    msg_fim = tk.Label(contexto, text='Processamento concluído com sucesso!',
+                                       font=('Arial', 14, 'bold'), fg='#009900')
+                msg_fim.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+
+                self._salvar_arquivos_secundarios(lista_geral, tabelas_finais, var_amostrador, var_area, idioma)
+
+            else:
+                tipo_erro = dados[0]
+                self._mostrar_erro_secundario(tipo_erro, idioma, contexto)
+
+        except queue.Empty:
+            contexto.after(100, self._verifica_processamento_secundario, progressbar, botao_run, idioma, contexto)
+
+    def _mostrar_erro_secundario(self, tipo_erro, idioma, contexto):
+        """Mostra mensagens de erro para o processamento secundário."""
+        if idioma == 'eng':
+            if tipo_erro == 'UnboundLocalError':
+                texto = 'ERROR: No file loaded, invalid input or invalid samplers entered!'
+            else:
+                texto = 'An ERROR occurred!'
+        else:
+            if tipo_erro == 'UnboundLocalError':
+                texto = 'ERRO: Nenhum arquivo carregado, input inválido ou amostradores informados inválidos!'
+            else:
+                texto = 'Houve algum ERRO!'
+
+        msg_erro = tk.Label(contexto, text=texto, font=('Arial', 14, 'bold'), fg='#ff0000')
+        msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+
+    def _salvar_arquivos_secundarios(self, lista_geral, tabelas_finais, var_amostrador, var_area, idioma):
+        """Salva os arquivos resultantes do processamento secundário."""
+        if idioma == 'eng':
+            caminho_lista_geral = asksaveasfilename(title='Save general list', initialfile='general_list',
+                                                    defaultextension='.*', filetypes=(
                     ("Excel files", "*.xlsx"), ("CSV file", "*.csv"), ("All files", "*.*")))
-            elif idioma == 'pt-br':
-                caminho_lista_geral = asksaveasfilename(title='Salve lista geral', initialfile='lista_geral',
-                                                        defaultextension='.*', filetypes=(
+        elif idioma == 'pt-br':
+            caminho_lista_geral = asksaveasfilename(title='Salve lista geral', initialfile='lista_geral',
+                                                    defaultextension='.*', filetypes=(
                     ("Excel files", "*.xlsx"), ("CSV files", "*.csv"), ("All files", "*.*")))
 
+        if caminho_lista_geral:
             if '.xlsx' in caminho_lista_geral:
                 lista_geral.to_excel(caminho_lista_geral)
             elif '.csv' in caminho_lista_geral:
                 lista_geral.to_csv(caminho_lista_geral, sep=';', encoding='utf-8-sig')
 
-            if var_amostrador and not var_area:
-                amostradores = separa_amostradores(df, lista_amostradores)
-
-                ocorrencias = conta_ocorrencias(amostradores, amostradores=True)
-
-                reads_especie = calcula_reads_especie(amostradores, amostrador=True)
-                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
-
-                if idioma == 'eng':
-                    caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-                elif idioma == 'pt-br':
-                    caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*',filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-
-                salva_resultados(tabelas_finais, caminho_resultado, amostrador=True)
-
-            elif var_area and not var_amostrador:
-                areas = separa_areas(lista_areas, df=df)
-
-                ocorrencias = conta_ocorrencias(areas, areas=True)
-
-                reads_especie = calcula_reads_especie(areas, area=True)
-
-                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
-
-                if idioma == 'eng':
-                    caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-                elif idioma == 'pt-br':
-                    caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-
-                salva_resultados(tabelas_finais, caminho_resultado, area=True)
-
-            elif var_amostrador and var_area:
-                amostradores = separa_amostradores(df, lista_amostradores)
-
-                lista_areas = define_areas(df)
-
-                areas = separa_areas(lista_areas, amostradores=amostradores)
-
-                ocorrencias_area = conta_ocorrencias(areas, amostradores=True, areas=True)
-
-                reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
-
-                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostradores=True, areas=True)
-
-                if idioma == 'eng':
-                    caminho_resultado = asksaveasfilename(title='Save results', initialfile='results', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-                elif idioma == 'pt-br':
-                    caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados', defaultextension='.*', filetypes=(("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
-
-                salva_resultados(tabelas_finais, caminho_resultado, amostrador=True, area=True)
-        except (UnboundLocalError, KeyError):
+        # Diálogo para resultados específicos (se aplicável)
+        if var_amostrador or var_area:
             if idioma == 'eng':
-                msg_erro = tk.Label(contexto, text='ERROR: No file loaded, invalid input or invalid samplers entered!', font=('Arial', 14, 'bold'), fg='#ff0000')
-                msg_erro.grid(row=8, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+                caminho_resultado = asksaveasfilename(title='Save results', initialfile='results',
+                                                      defaultextension='.*', filetypes=(
+                        ("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
             elif idioma == 'pt-br':
-                msg_erro = tk.Label(contexto, text='ERRO: Nenhum arquivo carregado, input inválido ou amostradores informados inválidos!', font=('Arial', 14, 'bold'), fg='#ff0000')
-                msg_erro.grid(row=8, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-        except:
-            if idioma == 'eng':
-                msg_erro = tk.Label(contexto, text='An ERROR occurred!', font=('Arial', 14, 'bold'),
-                                    fg='#ff0000')
-                msg_erro.grid(row=8, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
-            elif idioma == 'pt-br':
-                msg_erro = tk.Label(contexto, text='Houve algum ERRO!',
-                                    font=('Arial', 14, 'bold'), fg='#ff0000')
-                msg_erro.grid(row=8, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
+                caminho_resultado = asksaveasfilename(title='Salve os resultados', initialfile='resultados',
+                                                      defaultextension='.*', filetypes=(
+                        ("Excel files", "*.xlsx"), ("ZIP for CSV files", "*.zip"), ("All files", "*.*")))
+
+            if caminho_resultado:
+                if var_amostrador and not var_area:
+                    salva_resultados(tabelas_finais, caminho_resultado, amostrador=True)
+                elif var_area and not var_amostrador:
+                    salva_resultados(tabelas_finais, caminho_resultado, area=True)
+                elif var_amostrador and var_area:
+                    salva_resultados(tabelas_finais, caminho_resultado, amostrador=True, area=True)
 
 
 def main():
