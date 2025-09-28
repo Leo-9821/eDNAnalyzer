@@ -218,6 +218,7 @@ class Janelas:
                                     command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br', nova_janela))
             botao_run.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
+    # FIXME ajeitar docstrings
     def roda_analise_primaria(self, caixa_threshold, idioma, contexto):
         """Run threshold processing for OTUS/ASVs usando threading."""
         self.fila_resultados = queue.Queue()
@@ -241,6 +242,7 @@ class Janelas:
 
         contexto.after(100, self._verifica_processamento_primario, progressbar, botao_run, idioma, contexto)
 
+    # FIXME ajeitar docstrings
     def _processamento_primario_thread(self, caminho_arquivo, string_threshold, idioma, contexto):
         """Função que roda em thread separada para o processamento pesado."""
         try:
@@ -267,6 +269,7 @@ class Janelas:
             print(f"Erro: {e}")
             self.fila_resultados.put(('erro', 'Exception'))
 
+    # FIXME ajeitar docstrings
     def _verifica_processamento_primario(self, progressbar, botao_run, idioma, contexto):
         """Verifica periodicamente se o processamento terminou."""
         try:
@@ -298,6 +301,7 @@ class Janelas:
         except queue.Empty:
             contexto.after(100, self._verifica_processamento_primario, progressbar, botao_run, idioma, contexto)
 
+    # FIXME ajeitar docstrings
     def _mostrar_erro_primario(self, tipo_erro, idioma, contexto):
         """Mostra mensagens de erro."""
         if idioma == 'eng':
@@ -318,6 +322,7 @@ class Janelas:
         msg_erro = tk.Label(contexto, text=texto, font=('Arial', 14, 'bold'), fg='#ff0000')
         msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
+    # FIXME ajeitar docstrings
     def _salvar_arquivos_primarios(self, resultado_tratado_geral, nao_selecionados_geral, thresholds, idioma):
         """Função para salvar os arquivos (pode ser otimizada se necessário)."""
 
@@ -545,6 +550,7 @@ class Janelas:
             if caminho_arquivo:
                 label_arquivo_selecionado['text'] = f'Arquivo carregado {caminho_arquivo}'
 
+    # FIXME ajeitar docstrings
     def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, idioma, contexto):
         """Run the second process of the program using threading."""
         self.fila_resultados_secundaria = queue.Queue()
@@ -572,6 +578,7 @@ class Janelas:
 
         contexto.after(100, self._verifica_processamento_secundario, progressbar, botao_run, idioma, contexto)
 
+    # FIXME ajeitar docstrings
     def _processamento_secundario_thread(self, lista_amostradores, var_amostrador, var_area, idioma):
         """Função que roda em thread separada para o processamento secundário."""
         try:
@@ -617,6 +624,7 @@ class Janelas:
             print(f"Erro: {e}")
             self.fila_resultados_secundaria.put(('erro', 'Exception'))
 
+    # FIXME ajeitar docstrings
     def _verifica_processamento_secundario(self, progressbar, botao_run, idioma, contexto):
         """Verifica periodicamente se o processamento secundário terminou."""
         try:
@@ -647,6 +655,7 @@ class Janelas:
         except queue.Empty:
             contexto.after(100, self._verifica_processamento_secundario, progressbar, botao_run, idioma, contexto)
 
+    # FIXME ajeitar docstrings
     def _mostrar_erro_secundario(self, tipo_erro, idioma, contexto):
         """Mostra mensagens de erro para o processamento secundário."""
         if idioma == 'eng':
@@ -663,6 +672,7 @@ class Janelas:
         msg_erro = tk.Label(contexto, text=texto, font=('Arial', 14, 'bold'), fg='#ff0000')
         msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
+    # FIXME ajeitar docstrings
     def _salvar_arquivos_secundarios(self, lista_geral, tabelas_finais, var_amostrador, var_area, idioma):
         """Salva os arquivos resultantes do processamento secundário."""
         if idioma == 'eng':
