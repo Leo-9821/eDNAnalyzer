@@ -5,8 +5,6 @@ from tkinter import ttk
 import pandas as pd
 from PIL import Image, ImageTk
 import os
-import psutil
-import time
 import threading
 import queue
 
@@ -34,7 +32,7 @@ class Janelas:
         self.idioma.iconphoto(True, self.logo)
 
     def inicia_janela(self):
-        """Initialize the first window for language selection."""
+        """Initializes the first window for language selection."""
 
         label_titulo = tk.Label(self.idioma, text='Choose a language', font=('Arial', 16, 'bold'), borderwidth=2, relief='solid')
         label_titulo.grid(row=0, column=0, padx=10, pady=5, sticky='nswe', columnspan=4)
@@ -51,7 +49,7 @@ class Janelas:
         botao_english.grid(row=1, column=2, padx=10, pady=10, sticky='nsew')
 
     def janela_principal(self, idioma):
-        """Initialize the window for process selection and manual access.
+        """Initializes the window for process selection and manual access.
 
         Parameters:
         idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
@@ -98,7 +96,7 @@ class Janelas:
             botao_selecionar_funcionalidade2.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
     def abrir_manual(self, idioma):
-        """Open the program manual file.
+        """Opens the program manual file.
 
         Parameters:
         idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
@@ -109,7 +107,7 @@ class Janelas:
             os.startfile(resource_path('manual_eDNAnalyzer_eng.pdf'))
 
     def proc_inicial_threshold(self, idioma):
-        """Open the threshold application process window.
+        """Opens the threshold application process window.
 
         Parameters:
         idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
@@ -218,9 +216,14 @@ class Janelas:
                                     command=lambda: self.roda_analise_primaria(caixa_threshold, 'pt-br', nova_janela))
             botao_run.grid(row=3, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-    # FIXME ajeitar docstrings
     def roda_analise_primaria(self, caixa_threshold, idioma, contexto):
-        """Run threshold processing for OTUS/ASVs usando threading."""
+        """Runs threshold processing for OTUS/ASVs.
+
+        Parameters:
+        caixa_threshold (str): Percentage for threshold calculation provided by the user.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): Context to add new widgets to the GUI.
+        """
         self.fila_resultados = queue.Queue()
 
         progressbar = ttk.Progressbar(contexto, mode='indeterminate')
@@ -242,9 +245,14 @@ class Janelas:
 
         contexto.after(100, self._verifica_processamento_primario, progressbar, botao_run, idioma, contexto)
 
-    # FIXME ajeitar docstrings
     def _processamento_primario_thread(self, caminho_arquivo, string_threshold, idioma, contexto):
-        """Função que roda em thread separada para o processamento pesado."""
+        """Runs threshold processing for OTUS/ASVs in a separate thread.
+
+        Parameters:
+        caminho_arquivo (str): Path to the file to be processed.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): Context to add new widgets to the GUI.
+        """
         try:
             if '.xlsx' in caminho_arquivo:
                 df = pd.read_excel(caminho_arquivo)
@@ -269,9 +277,15 @@ class Janelas:
             print(f"Erro: {e}")
             self.fila_resultados.put(('erro', 'Exception'))
 
-    # FIXME ajeitar docstrings
     def _verifica_processamento_primario(self, progressbar, botao_run, idioma, contexto):
-        """Verifica periodicamente se o processamento terminou."""
+        """Periodically checks whether primary processing has finished.
+
+        Parameters:
+        progressbar (tkinter widget): Progressbar widget.
+        botao_run (tkinter widget): Run button widget.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): Context to add new widgets to the GUI.
+        """
         try:
             resultado = self.fila_resultados.get_nowait()
             status, *dados = resultado
@@ -301,9 +315,14 @@ class Janelas:
         except queue.Empty:
             contexto.after(100, self._verifica_processamento_primario, progressbar, botao_run, idioma, contexto)
 
-    # FIXME ajeitar docstrings
     def _mostrar_erro_primario(self, tipo_erro, idioma, contexto):
-        """Mostra mensagens de erro."""
+        """Shows error messages.
+
+        Parameters:
+        tipo_erro (str): Error type.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): Context to add new widgets to the GUI.
+        """
         if idioma == 'eng':
             if tipo_erro == 'UnboundLocalError':
                 texto = 'ERROR: No file loaded or invalid input!'
@@ -322,9 +341,15 @@ class Janelas:
         msg_erro = tk.Label(contexto, text=texto, font=('Arial', 14, 'bold'), fg='#ff0000')
         msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-    # FIXME ajeitar docstrings
     def _salvar_arquivos_primarios(self, resultado_tratado_geral, nao_selecionados_geral, thresholds, idioma):
-        """Função para salvar os arquivos (pode ser otimizada se necessário)."""
+        """Saves the files
+
+        Parameters:
+        resultado_tratado_geral (data frame): OTUs/ASVs selected, above the threshold.
+        nao_selecionados_geral (data frame): OTUs/ASVs excluded, under or equal the threshold.
+        thresholds (data frame): Threshold values per sequencing sample.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        """
 
         if idioma == 'eng':
             caminho_salvar_resultado = asksaveasfilename(title='Save the results table',
@@ -396,7 +421,7 @@ class Janelas:
                 thresholds.to_csv(caminho_salvar_thresholds, sep=';', encoding='utf-8-sig')
 
     def proc_tabelas_consolidadas(self, idioma):
-        """Run the results consolidation process.
+        """Runs the results consolidation process.
 
         Parameters:
         idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
@@ -532,7 +557,7 @@ class Janelas:
             botao_run.grid(row=2, column=0, padx=10, pady=10, columnspan=3)
 
     def seleciona_arquivo(self, idioma):
-        """Open a dialog box for selecting the input file.
+        """Opens a dialog box for selecting the input file.
 
         Parameters:
         idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
@@ -550,9 +575,16 @@ class Janelas:
             if caminho_arquivo:
                 label_arquivo_selecionado['text'] = f'Arquivo carregado {caminho_arquivo}'
 
-    # FIXME ajeitar docstrings
     def roda_analise_secundaria(self, caixa_amostradores, var_amostrador, var_area, idioma, contexto):
-        """Run the second process of the program using threading."""
+        """Runs the second process of the program, filtering the taxonomic assignment table.
+
+        Parameters:
+        caixa_amostradores (str): Designations for the samplers.
+        var_amostrador (bool): "True" to filter by samplers, "False" to not filter by samplers.
+        var_area (bool): "True" to filter by areas, "False" to not filter by areas.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): Context to add new widgets to the GUI.
+        """
         self.fila_resultados_secundaria = queue.Queue()
 
         progressbar = ttk.Progressbar(contexto, mode='indeterminate')
@@ -564,7 +596,7 @@ class Janelas:
 
         texto_amostradores = caixa_amostradores.get('1.0', tk.END)
         lista_amostradores = texto_amostradores.split('\n')
-        lista_amostradores.pop(-1)  # Remove última linha vazia
+        lista_amostradores.pop(-1)
 
         var_amostrador_val = var_amostrador.get()
         var_area_val = var_area.get()
@@ -578,9 +610,15 @@ class Janelas:
 
         contexto.after(100, self._verifica_processamento_secundario, progressbar, botao_run, idioma, contexto)
 
-    # FIXME ajeitar docstrings
     def _processamento_secundario_thread(self, lista_amostradores, var_amostrador, var_area, idioma):
-        """Função que roda em thread separada para o processamento secundário."""
+        """Runs the second process of the program, filtering the taxonomic assignment table in a separate thread.
+
+        Parameters:
+        lista_amostradores (list): List of samplers.
+        var_amostrador (bool): Indicates the choice to filter by samplers.
+        var_area (bool): Indicates the choice to filter by areas.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        """
         try:
             if '.xlsx' in self.var_caminho_arquivo.get():
                 df = pd.read_excel(self.var_caminho_arquivo.get())
@@ -593,7 +631,6 @@ class Janelas:
             reads_gerais = conta_reads_gerais(df)
             lista_geral = cria_lista_geral(ocorrencias_geral, reads_gerais)
 
-            # PROCESSAMENTO ESPECÍFICO
             if var_amostrador and not var_area:
                 amostradores = separa_amostradores(df, lista_amostradores)
                 ocorrencias = conta_ocorrencias(amostradores, amostradores=True)
@@ -624,9 +661,15 @@ class Janelas:
             print(f"Erro: {e}")
             self.fila_resultados_secundaria.put(('erro', 'Exception'))
 
-    # FIXME ajeitar docstrings
     def _verifica_processamento_secundario(self, progressbar, botao_run, idioma, contexto):
-        """Verifica periodicamente se o processamento secundário terminou."""
+        """Periodically checks whether secondary processing has finished.
+
+        Parameters:
+        progressbar (tkinter widget): progressbar widget.
+        botao_run (tkinter widget): run button widget.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): Context to add new widgets to the GUI.
+        """
         try:
             resultado = self.fila_resultados_secundaria.get_nowait()
             status, *dados = resultado
@@ -655,9 +698,14 @@ class Janelas:
         except queue.Empty:
             contexto.after(100, self._verifica_processamento_secundario, progressbar, botao_run, idioma, contexto)
 
-    # FIXME ajeitar docstrings
     def _mostrar_erro_secundario(self, tipo_erro, idioma, contexto):
-        """Mostra mensagens de erro para o processamento secundário."""
+        """Shows error messages.
+
+        Parameters:
+        tipo_erro (str): Error type.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        contexto (tkinter Toplevel widget): Context to add new widgets to the GUI.
+        """
         if idioma == 'eng':
             if tipo_erro == 'UnboundLocalError':
                 texto = 'ERROR: No file loaded, invalid input or invalid samplers entered!'
@@ -672,9 +720,16 @@ class Janelas:
         msg_erro = tk.Label(contexto, text=texto, font=('Arial', 14, 'bold'), fg='#ff0000')
         msg_erro.grid(row=5, column=0, padx=10, pady=10, sticky='nsew', columnspan=3)
 
-    # FIXME ajeitar docstrings
     def _salvar_arquivos_secundarios(self, lista_geral, tabelas_finais, var_amostrador, var_area, idioma):
-        """Salva os arquivos resultantes do processamento secundário."""
+        """Saves the files from secondary processing.
+
+        Parameters:
+        lista_geral (data frame): A general list of the taxa.
+        tabelas_finais (dict): Dictionary with dataframes representing the final tables with results displayed according to the filters.
+        var_amostrador (bool): Indicates the choice to filter by samplers.
+        var_area (bool): Indicates the choice to filter by areas.
+        idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
+        """
         if idioma == 'eng':
             caminho_lista_geral = asksaveasfilename(title='Save general list', initialfile='general_list',
                                                     defaultextension='.*', filetypes=(
@@ -711,7 +766,7 @@ class Janelas:
 
 
 def main():
-    """Initialize the graphical interface and run the program."""
+    """Initializes the graphical interface and run the program."""
     janela = Janelas()
     janela.inicia_janela()
     janela.idioma.mainloop()

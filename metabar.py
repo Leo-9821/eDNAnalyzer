@@ -142,8 +142,8 @@ def conta_ocorrencias_gerais(df, lista_areas):
 
             for ponto in lista_pontos:
                 areas_ponto = amst_areas[amst_areas['ponto'] == ponto]
-                taxons = areas_ponto['otu/asv_final_curada'].to_frame()
-                taxons = pd.DataFrame(taxons['otu/asv_final_curada'].unique())
+                taxons = areas_ponto['taxon_final_curada'].to_frame()
+                taxons = pd.DataFrame(taxons['taxon_final_curada'].unique())
                 contagens.append(taxons)
 
             cont_ocorr = pd.concat(contagens, ignore_index=True)
@@ -160,8 +160,8 @@ def conta_ocorrencias_gerais(df, lista_areas):
 
             for ponto in lista_pontos:
                 areas_ponto = amst_areas[amst_areas['point'] == ponto]
-                taxons = areas_ponto['final_otu/asv_curated'].to_frame()
-                taxons = pd.DataFrame(taxons['final_otu/asv_curated'].unique())
+                taxons = areas_ponto['final_taxon_curated'].to_frame()
+                taxons = pd.DataFrame(taxons['final_taxon_curated'].unique())
                 contagens.append(taxons)
 
         cont_ocorr = pd.concat(contagens, ignore_index=True)
@@ -182,16 +182,16 @@ def conta_reads_gerais(df):
     Returns:
     df_reads_sp (DataFrame): Dataframe with total reads per taxon.
     """
-    if 'otu/asv_final_curada' in df.columns:
-        df_read_sp = df[['n_reads', 'otu/asv_final_curada']]
-        df_read_sp = df_read_sp.groupby(by='otu/asv_final_curada').sum()
+    if 'taxon_final_curada' in df.columns:
+        df_read_sp = df[['n_reads', 'taxon_final_curada']]
+        df_read_sp = df_read_sp.groupby(by='taxon_final_curada').sum()
         df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
-        df_read_sp = df_read_sp.rename(columns={'otu/asv_final_curada': 'taxon', 'n_reads': 'Reads'})
-    elif 'final_otu/asv_curated' in df.columns:
-        df_read_sp = df[['n_reads', 'final_otu/asv_curated']]
-        df_read_sp = df_read_sp.groupby(by='final_otu/asv_curated').sum()
+        df_read_sp = df_read_sp.rename(columns={'taxon_final_curada': 'taxon', 'n_reads': 'Reads'})
+    elif 'final_taxon_curated' in df.columns:
+        df_read_sp = df[['n_reads', 'final_taxon_curated']]
+        df_read_sp = df_read_sp.groupby(by='final_taxon_curated').sum()
         df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
-        df_read_sp = df_read_sp.rename(columns={'final_otu/asv_curated': 'taxon', 'n_reads': 'Reads'})
+        df_read_sp = df_read_sp.rename(columns={'final_taxon_curated': 'taxon', 'n_reads': 'Reads'})
 
     return df_read_sp
 
@@ -270,7 +270,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                         tabelas_taxons = []
                         for ponto in pontos:
                             df_ponto = tabela.loc[tabela['ponto'] == ponto]
-                            taxons = df_ponto['otu/asv_final_curada'].unique()
+                            taxons = df_ponto['taxon_final_curada'].unique()
                             df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                             tabelas_taxons.append(df_taxons)
 
@@ -285,7 +285,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                         tabelas_taxons = []
                         for ponto in pontos:
                             df_ponto = tabela.loc[tabela['point'] == ponto]
-                            taxons = df_ponto['final_otu/asv_curated'].unique()
+                            taxons = df_ponto['final_taxon_curated'].unique()
                             df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                             tabelas_taxons.append(df_taxons)
 
@@ -305,7 +305,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 tabelas_taxons = []
                 for ponto in pontos:
                     df_ponto = tabela.loc[tabela['ponto'] == ponto]
-                    taxons = df_ponto['otu/asv_final_curada'].unique()
+                    taxons = df_ponto['taxon_final_curada'].unique()
                     df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                     tabelas_taxons.append(df_taxons)
                 try:
@@ -322,7 +322,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 tabelas_taxons = []
                 for ponto in pontos:
                     df_ponto = tabela.loc[tabela['point'] == ponto]
-                    taxons = df_ponto['final_otu/asv_curated'].unique()
+                    taxons = df_ponto['final_taxon_curated'].unique()
                     df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                     tabelas_taxons.append(df_taxons)
                 try:
@@ -345,7 +345,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 tabelas_taxons = []
                 for ponto in pontos:
                     df_ponto = tabela.loc[tabela['ponto'] == ponto]
-                    taxons = df_ponto['otu/asv_final_curada'].unique()
+                    taxons = df_ponto['taxon_final_curada'].unique()
                     df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                     tabelas_taxons.append(df_taxons)
                 try:
@@ -362,7 +362,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 tabelas_taxons = []
                 for ponto in pontos:
                     df_ponto = tabela.loc[tabela['point'] == ponto]
-                    taxons = df_ponto['final_otu/asv_curated'].unique()
+                    taxons = df_ponto['final_taxon_curated'].unique()
                     df_taxons = pd.DataFrame(taxons, columns=[f'taxon'])
                     tabelas_taxons.append(df_taxons)
                 try:
@@ -396,34 +396,34 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
             tabelas_areas = dfs[amostrador]
             for tabela_area in tabelas_areas:
                 for area, tabela in tabela_area.items():
-                    if 'otu/asv_final_curada' in tabela.columns:
-                        df_read_sp = tabela[['n_reads', 'otu/asv_final_curada']]
-                        df_read_sp = df_read_sp.groupby(by='otu/asv_final_curada').sum()
+                    if 'taxon_final_curada' in tabela.columns:
+                        df_read_sp = tabela[['n_reads', 'taxon_final_curada']]
+                        df_read_sp = df_read_sp.groupby(by='taxon_final_curada').sum()
                         df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
-                        df_read_sp = df_read_sp.rename(columns={'otu/asv_final_curada': 'Taxon', 'n_reads': 'Reads'})
+                        df_read_sp = df_read_sp.rename(columns={'taxon_final_curada': 'Taxon', 'n_reads': 'Reads'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
-                    elif 'final_otu/asv_curated' in tabela.columns:
-                        df_read_sp = tabela[['n_reads', 'final_otu/asv_curated']]
-                        df_read_sp = df_read_sp.groupby(by='final_otu/asv_curated').sum()
+                    elif 'final_taxon_curated' in tabela.columns:
+                        df_read_sp = tabela[['n_reads', 'final_taxon_curated']]
+                        df_read_sp = df_read_sp.groupby(by='final_taxon_curated').sum()
                         df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
-                        df_read_sp = df_read_sp.rename(columns={'final_otu/asv_curated': 'Taxon', 'n_reads': 'Reads'})
+                        df_read_sp = df_read_sp.rename(columns={'final_taxon_curated': 'Taxon', 'n_reads': 'Reads'})
                         reads_especie.setdefault(amostrador, []).append({area: df_read_sp})
         return reads_especie
 
     elif amostrador and not area:
         for amostrador in dfs:
             tabela = dfs[amostrador]
-            if 'otu/asv_final_curada' in tabela.columns:
-                df_read_sp = tabela[['n_reads', 'otu/asv_final_curada']]
-                df_read_sp = df_read_sp.groupby(by='otu/asv_final_curada').sum()
+            if 'taxon_final_curada' in tabela.columns:
+                df_read_sp = tabela[['n_reads', 'taxon_final_curada']]
+                df_read_sp = df_read_sp.groupby(by='taxon_final_curada').sum()
                 df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'otu/asv_final_curada': 'Taxon', 'n_reads': 'Reads'})
+                df_read_sp = df_read_sp.rename(columns={'taxon_final_curada': 'Taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(amostrador, df_read_sp)
-            elif 'final_otu/asv_curated' in tabela.columns:
-                df_read_sp = tabela[['n_reads', 'final_otu/asv_curated']]
-                df_read_sp = df_read_sp.groupby(by='final_otu/asv_curated').sum()
+            elif 'final_taxon_curated' in tabela.columns:
+                df_read_sp = tabela[['n_reads', 'final_taxon_curated']]
+                df_read_sp = df_read_sp.groupby(by='final_taxon_curated').sum()
                 df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'final_otu/asv_curated': 'Taxon', 'n_reads': 'Reads'})
+                df_read_sp = df_read_sp.rename(columns={'final_taxon_curated': 'Taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(amostrador, df_read_sp)
 
         return reads_especie
@@ -431,24 +431,24 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
     elif not amostrador and area:
         for area in dfs:
             tabela = dfs[area]
-            if 'otu/asv_final_curada' in tabela.columns:
-                df_read_sp = tabela[['n_reads', 'otu/asv_final_curada']]
-                df_read_sp = df_read_sp.groupby(by='otu/asv_final_curada').sum()
+            if 'taxon_final_curada' in tabela.columns:
+                df_read_sp = tabela[['n_reads', 'taxon_final_curada']]
+                df_read_sp = df_read_sp.groupby(by='taxon_final_curada').sum()
                 df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'otu/asv_final_curada': 'Taxon', 'n_reads': 'Reads'})
+                df_read_sp = df_read_sp.rename(columns={'taxon_final_curada': 'Taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(area, df_read_sp)
-            elif 'final_otu/asv_curated' in tabela.columns:
-                df_read_sp = tabela[['n_reads', 'final_otu/asv_curated']]
-                df_read_sp = df_read_sp.groupby(by='final_otu/asv_curated').sum()
+            elif 'final_taxon_curated' in tabela.columns:
+                df_read_sp = tabela[['n_reads', 'final_taxon_curated']]
+                df_read_sp = df_read_sp.groupby(by='final_taxon_curated').sum()
                 df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
-                df_read_sp = df_read_sp.rename(columns={'final_otu/asv_curated': 'Taxon', 'n_reads': 'Reads'})
+                df_read_sp = df_read_sp.rename(columns={'final_taxon_curated': 'Taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(area, df_read_sp)
         print(reads_especie)
         return reads_especie
 
 
 def constroi_tabela_final(df_reads_sp, df_deteccoes, amostradores=False, areas=False):
-    """Build tables with consolidated results.
+    """Builds tables with consolidated results.
 
     Parameters:
     df_reads_sp (dict): Dictionary with dataframes of read counts per taxon.
