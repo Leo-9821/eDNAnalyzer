@@ -1,4 +1,4 @@
-﻿sequencing_sample;barcode;tag;area_sampler;point;aliquot;otu/asv;n_reads;%_id;taxon
+﻿amostra_sequenciamento;barcode;tag;area_amostrador;ponto;aliquota;otu/asv;n_reads;%_id;taxon
 P08;12SrRNA;TB;P2_MC;2;1;4;3;100.0;Sus scrofa
 P08;12SrRNA;TC;P2_MC;2;1;7;2;99.26;Equus caballus
 P08;12SrRNA;TC;P2_MC;2;1;8;4;100.0;Leopardus pardalis
@@ -43,7 +43,7 @@ P09;12SrRNA;TK;P6_MC;6;1;16;3;100.0;Tapirus terrestris
 P09;12SrRNA;TM;P7_MQ;7;1;4;2;99.26;Camelidae sp.
 P09;12SrRNA;TS;P8_MC;8;1;3;4;100.0;Rhea americana
 P09;12SrRNA;TX;P8_MC;8;1;2;3;100.0;Gallus gallus
-P09;12SrRNA;TX;P8_MC;8;1;3;4;100.0;Tapirus terrestris 
+P09;12SrRNA;TX;P8_MC;8;1;3;4;100.0;Tapirus terrestris
 P09;12SrRNA;TY;P8_MC;8;1;6;2;100.0;Nomascus leucogenys
 P10;16SrRNA;TA;P1_MQ;1;1;4;2;100.0;Cavia porcellus
 P10;16SrRNA;TA;P1_MQ;1;1;5;2;100.0;Hydrochaeris hydrochaeris
@@ -62,7 +62,7 @@ P10;16SrRNA;TF;P2_MC;2;1;1;3;95.42;Canis lupus familiaris
 P10;16SrRNA;TG;P2_MC;2;1;2;2;96.95;Cuon alpinus
 P10;16SrRNA;TI;P3_MQ;3;1;3;2;99.28;Hydrochaeris hydrochaeris
 P10;16SrRNA;TK;P3_MC;3;1;1;2;100.0;Hydrochaeris hydrochaeris
-P10;16SrRNA;TL;P3_MC;3;1;5;2;97.52;Pseudalopex culpaeus 
+P10;16SrRNA;TL;P3_MC;3;1;5;2;97.52;Pseudalopex culpaeus
 P10;16SrRNA;TL;P3_MC;3;1;8;2;94.07;Sus scrofa
 P10;16SrRNA;TL;P3_MC;3;1;9;4;100.0;Sus scrofa
 P10;16SrRNA;TM;P3_MC;3;1;2;2;97.83;Bradypus tridactylus
@@ -109,7 +109,7 @@ P11;16SrRNA;TP;P8_MQ;8;1;3;2;100.0;Sphiggurus insidiosus
 P11;16SrRNA;TS;P8_MC;8;1;2;2;99.24;Lama glama
 P11;16SrRNA;TS;P8_MC;8;1;4;2;99.26;Tapirus terrestris
 P11;16SrRNA;TX;P8_MC;8;1;1;4;97.52;Pseudalopex culpaeus
-P11;16SrRNA;TY;P8_MC;8;1;3;7;97.52;Pseudalopex culpaeus 
+P11;16SrRNA;TY;P8_MC;8;1;3;7;97.52;Pseudalopex culpaeus
 P11;16SrRNA;TY;P8_MC;8;1;4;2;99.23;Puma concolor
 P11;16SrRNA;TY;P8_MC;8;1;5;2;100.0;Sphiggurus insidiosus
 P11;16SrRNA;TY;P8_MC;8;1;6;2;99.25;Tamandua tetradactyla
