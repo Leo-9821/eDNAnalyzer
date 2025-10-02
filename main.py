@@ -358,7 +358,7 @@ class Janelas:
                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"),
                                                                     ("All files", "*.*")))
 
-            resultado_tratado_geral['final_otu/asv_curated'] = ''
+            resultado_tratado_geral['final_taxon_curated'] = ''
 
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)
@@ -390,8 +390,7 @@ class Janelas:
                                                          defaultextension='.*',
                                                          filetypes=(("Excel files", "*.xlsx"), ("CSV files", "*.csv"),
                                                                     ("All files", "*.*")))
-
-            resultado_tratado_geral['otu/asv_final_curada'] = ''
+            resultado_tratado_geral['taxon_final_curada'] = ''
 
             if ".xlsx" in caminho_salvar_resultado:
                 resultado_tratado_geral.to_excel(caminho_salvar_resultado, index=False)

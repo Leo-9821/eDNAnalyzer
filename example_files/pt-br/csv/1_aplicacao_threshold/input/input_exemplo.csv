@@ -1,326 +1,326 @@
-amostra_sequenciamento;barcode;tag;area_amostrador;ponto;aliquota;otu/asv;n_reads;%_id;taxon;;;;
-P08;12SrRNA;TA;P1_MQ;1;1;1;233;100;Nycticorax nycticorax;;;;
-P08;12SrRNA;TB;P2_MC;2;1;1;50;99.26;Bos taurus;;;;
-P08;12SrRNA;TB;P2_MC;2;1;2;41;99.25;Canis lupus;;;;
-P08;12SrRNA;TB;P2_MC;2;1;4;3;100;Sus scrofa;;;;
-P08;12SrRNA;TC;P2_MC;2;1;2;20;99.26;Canis lupus familiaris;;;;
-P08;12SrRNA;TC;P2_MC;2;1;3;38;100;Canis lupus familiaris;;;;
-P08;12SrRNA;TC;P2_MC;2;1;4;524;100;Canis lupus familiaris;;;;
-P08;12SrRNA;TC;P2_MC;2;1;6;7;100;Canis lupus ;;;;
-P08;12SrRNA;TC;P2_MC;2;1;7;2;99.26;Equus caballus;;;;
-P08;12SrRNA;TC;P2_MC;2;1;8;4;100;Leopardus pardalis;;;;
-P08;12SrRNA;TC;P2_MC;2;1;9;2;100;Puma concolor;;;;
-P08;12SrRNA;TF;P2_MC;2;1;1;6;100;plant junction region;;;;
-P08;12SrRNA;TG;P2_MC;2;1;1;17;99.29;Canis lupus;;;;
-P08;12SrRNA;TH;P3_MC;3;1;1;109;100;Bos taurus;;;;
-P08;12SrRNA;TH;P3_MC;3;1;2;52;100;Canis lupus familiaris;;;;
-P08;12SrRNA;TH;P3_MC;3;1;3;9;100;Pecari tajacu;;;;
-P08;12SrRNA;TH;P3_MC;3;1;4;1859;100;Rhea americana;;;;
-P08;12SrRNA;TH;P3_MC;3;1;5;7;100;Didelphis albiventris;;;;
-P08;12SrRNA;TH;P3_MC;3;1;6;4;98.56;Gallus gallus;;;;
-P08;12SrRNA;TH;P3_MC;3;1;7;6;97.81;Gymnogyps californianus;;;;
-P08;12SrRNA;TH;P3_MC;3;1;9;4;100;Streptopelia decaocto;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;1;14;100;Bos taurus;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;2;127;100;Equus caballus;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;3;28;100;Sus scrofa ;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;4;27;100;Tamandua tetradactyla;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;5;8;100;Hydrochoerus hydrochaeris;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;6;25;100;Bubulcus ibis;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;7;1013;100;Gallus gallus;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;8;4;100;Gallus gallus;;;;
-P08;12SrRNA;TI;P3_MQ;3;1;9;2;100;Nycticorax nycticorax;;;;
-P08;12SrRNA;TK;P3_MC;3;1;1;33;100;Zaedyus pichiy;;;;
-P08;12SrRNA;TK;P3_MC;3;1;2;26;97.04;Euphractus sexcinctus;;;;
-P08;12SrRNA;TL;P3_MC;3;1;1;1111;100;Canis aureus;;;;
-P08;12SrRNA;TL;P3_MC;3;1;2;481;100;Zaedyus pichiy;;;;
-P08;12SrRNA;TL;P3_MC;3;1;3;72;100;Dasypus yepesi;;;;
-P08;12SrRNA;TL;P3_MC;3;1;4;50;97.08;Euphractus sexcinctus;;;;
-P08;12SrRNA;TL;P3_MC;3;1;5;1155;100;Sus scrofa;;;;
-P08;12SrRNA;TL;P3_MC;3;1;6;3;100;Canis lupus familiaris;;;;
-P08;12SrRNA;TL;P3_MC;3;1;7;3;100;Sus scrofa;;;;
-P08;12SrRNA;TL;P3_MC;3;1;8;2;98.52;Zaedyus pichiy;;;;
-P08;12SrRNA;TM;P3_MC;3;1;1;4;100;Gallus gallus;;;;
-P08;12SrRNA;TO;P4_MQ;4;1;1;205;99.27;Callicebus cupreus;;;;
-P08;12SrRNA;TO;P4_MQ;4;1;2;2;99.25;Zaedyus pichiy;;;;
-P08;12SrRNA;TP;P4_MC ;4;1;1;8;100;Bos taurus;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;1;1026;99.26;Callicebus cupreus;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;2;147;100;Pecari tajacu;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;3;32;97.83;Columba livia;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;4;76;97.83;Columba livia;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;5;2474;100; Columba livia;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;6;49;100;Coryphospingus cucullatus;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;8;135;100;Gallus gallus;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;9;421;100;Nycticorax nycticorax;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;10;141;100;Turdus rufiventris;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;11;4;100;Gallus gallus;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;12;5;99.27;Rhea americana;;;;
-P08;12SrRNA;TS;P4_MQ;4;1;13;2;96.35;Turdus rufiventris;;;;
-P08;12SrRNA;TX;P4_MC;4;1;1;17;100;Sus scrofa;;;;
-P08;12SrRNA;TX;P4_MC;4;1;2;704;100;Oncorhynchus clarkii;;;;
-P08;12SrRNA;TX;P4_MC;4;1;3;2;99.26;Canis lupaster;;;;
-P08;12SrRNA;TX;P4_MC;4;1;4;2;100;Nycticorax nycticorax;;;;
-P08;12SrRNA;TY;P4_MC;4;1;1;301;100;Ateles paniscus;;;;
-P08;12SrRNA;TY;P4_MC;4;1;2;2;99.25;Canis aureus;;;;
-P09;12SrRNA;TA;P4_MC;4;1;1;531;100;Bos taurus;;;;
-P09;12SrRNA;TA;P4_MC;4;1;2;2482;100;Lama guanicoe;;;;
-P09;12SrRNA;TA;P4_MC;4;1;3;2;100;Canis aureus;;;;
-P09;12SrRNA;TA;P4_MC;4;1;4;2;100;Hydrochoerus hydrochaeris;;;;
-P09;12SrRNA;TA;P4_MC;4;1;5;2;98.52;Lama guanicoe;;;;
-P09;12SrRNA;TA;P4_MC;4;1;6;4;97.76;Tapirus terrestris;;;;
-P09;12SrRNA;TB;P4_MC;4;1;1;137;100;Bos taurus;;;;
-P09;12SrRNA;TB;P4_MC;4;1;3;139;100;Nycticorax nycticorax;;;;
-P09;12SrRNA;TF;P6_MC;6;1;1;66;100;Bos taurus;;;;
-P09;12SrRNA;TF;P6_MC;6;1;2;42;99.26;Callicebus cupreus;;;;
-P09;12SrRNA;TF;P6_MC;6;1;3;84;100;Canis aureus;;;;
-P09;12SrRNA;TF;P6_MC;6;1;4;28;100;Canis lupus;;;;
-P09;12SrRNA;TF;P6_MC;6;1;5;65;100;Pecari tajacu;;;;
-P09;12SrRNA;TF;P6_MC;6;1;6;4;100;Rhea americana;;;;
-P09;12SrRNA;TF;P6_MC;6;1;7;7;100;Sturnira lilium;;;;
-P09;12SrRNA;TG;P6_MC;6;1;1;24;100;Zaedyus pichiy;;;;
-P09;12SrRNA;TG;P6_MC;6;1;2;24;96.27;Euphractus sexcinctus;;;;
-P09;12SrRNA;TG;P6_MC;6;1;4;2645;100;Tapirus terrestris;;;;
-P09;12SrRNA;TG;P6_MC;6;1;5;10;98.55;Columba livia;;;;
-P09;12SrRNA;TG;P6_MC;6;1;6;7;100;Canis lupus familiaris;;;;
-P09;12SrRNA;TG;P6_MC;6;1;7;4;99.26;Sapajus apella;;;;
-P09;12SrRNA;TG;P6_MC;6;1;8;6;99.24;Sphiggurus insidiosus;;;;
-P09;12SrRNA;TG;P6_MC;6;1;9;2;99.25;Tapirus terrestris;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;1;465;100;Bos taurus ;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;2;143;100;Canis aureus;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;3;466;100;Rattus norvegicus;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;4;99;99.26;Saguinus midas;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;5;11;100;Sus scrofa;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;6;2268;100;Hydrochoerus hydrochaeris;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;7;12;100;Columba livia;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;8;42;100;Gallus gallus;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;10;3;95.56;Callicebus cupreus;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;11;2;98.52;Canis lupus;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;12;2;92.65;Hemiodopsis gracilis;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;13;3;90.3;Myotis adversus;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;14;2;100;Rhea americana;;;;
-P09;12SrRNA;TH;P6_MQ;6;1;15;2;100;Tapirus terrestris;;;;
-P09;12SrRNA;TK;P6_MC;6;1;1;61;100;Bos taurus;;;;
-P09;12SrRNA;TK;P6_MC;6;1;2;226;99.26;Callicebus cupreus;;;;
-P09;12SrRNA;TK;P6_MC;6;1;3;45;97.06;Callicebus donacophilus;;;;
-P09;12SrRNA;TK;P6_MC;6;1;4;42;100;Callithrix kuhlii;;;;
-P09;12SrRNA;TK;P6_MC;6;1;5;387;100;Canis aureus;;;;
-P09;12SrRNA;TK;P6_MC;6;1;6;86;100;Rattus tanezumi;;;;
-P09;12SrRNA;TK;P6_MC;6;1;7;39;100;Cairina moschata;;;;
-P09;12SrRNA;TK;P6_MC;6;1;8;113;95.59; Columba livia;;;;
-P09;12SrRNA;TK;P6_MC;6;1;9;98;100;Gallus gallus;;;;
-P09;12SrRNA;TK;P6_MC;6;1;10;18;100;Nymphicus hollandicus;;;;
-P09;12SrRNA;TK;P6_MC;6;1;11;65;100;Thraupis sayaca;;;;
-P09;12SrRNA;TK;P6_MC;6;1;13;2;95.56;Callicebus cupreus;;;;
-P09;12SrRNA;TK;P6_MC;6;1;14;4;100;Lama guanicoe;;;;
-P09;12SrRNA;TK;P6_MC;6;1;15;6;100;Leopardus pardalis;;;;
-P09;12SrRNA;TK;P6_MC;6;1;16;3;100;Tapirus terrestris;;;;
-P09;12SrRNA;TM;P7_MQ;7;1;1;265;100;Canis aureus;;;;
-P09;12SrRNA;TM;P7_MQ;7;1;2;67;100;Amazilia brevirostris;;;;
-P09;12SrRNA;TM;P7_MQ;7;1;3;86;100;Amazilia versicolor ;;;;
-P09;12SrRNA;TM;P7_MQ;7;1;4;2;99.26;Camelidae sp.;;;;
-P09;12SrRNA;TN;P7_MC ;7;1;1;16;99.26;Mazama gouazoupira;;;;
-P09;12SrRNA;TN;P7_MC ;7;1;2;705;100;Rhea americana;;;;
-P09;12SrRNA;TS;P8_MC;8;1;1;23;97.04;Euphractus sexcinctus;;;;
-P09;12SrRNA;TS;P8_MC;8;1;2;33;100;Sus scrofa;;;;
-P09;12SrRNA;TS;P8_MC;8;1;3;4;100;Rhea americana;;;;
-P09;12SrRNA;TX;P8_MC;8;1;1;529;100;Ateles belzebuth;;;;
-P09;12SrRNA;TX;P8_MC;8;1;2;3;100;Gallus gallus;;;;
-P09;12SrRNA;TX;P8_MC;8;1;3;4;100;Tapirus terrestris ;;;;
-P09;12SrRNA;TY;P8_MC;8;1;1;204;100;Canis aureus;;;;
-P09;12SrRNA;TY;P8_MC;8;1;2;74;97.04;Canis familiaris;;;;
-P09;12SrRNA;TY;P8_MC;8;1;3;47;100;Canis lupus familiaris;;;;
-P09;12SrRNA;TY;P8_MC;8;1;4;57;96.3;Canis lupus familiaris;;;;
-P09;12SrRNA;TY;P8_MC;8;1;5;1851;100;Rhea americana;;;;
-P09;12SrRNA;TY;P8_MC;8;1;6;2;100;Nomascus leucogenys;;;;
-P10;16SrRNA;TA;P1_MQ;1;1;1;6;100;Alouatta guariba;;;;
-P10;16SrRNA;TA;P1_MQ;1;1;2;315;96.21;Canis lupus familiaris;;;;
-P10;16SrRNA;TA;P1_MQ;1;1;3;7;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TA;P1_MQ;1;1;4;2;100;Cavia porcellus;;;;
-P10;16SrRNA;TA;P1_MQ;1;1;5;2;100;Hydrochaeris hydrochaeris;;;;
-P10;16SrRNA;TA;P1_MQ;1;1;6;8;100;Puma concolor;;;;
-P10;16SrRNA;TA;P1_MQ;1;1;7;29;100;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TA;P1_MQ;1;1;8;2;96.35;Sylvilagus floridanus;;;;
-P10;16SrRNA;TB;P2_MC;2;1;1;2;93.18;Callicebus lugens;;;;
-P10;16SrRNA;TB;P2_MC;2;1;2;95;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TB;P2_MC;2;1;3;2;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TB;P2_MC;2;1;4;69;99.24;Didelphis albiventris;;;;
-P10;16SrRNA;TB;P2_MC;2;1;5;2;99.24;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TB;P2_MC;2;1;6;3;100;Sus scrofa;;;;
-P10;16SrRNA;TC;P2_MC;2;1;1;49;100;Ateles belzebuth ;;;;
-P10;16SrRNA;TC;P2_MC;2;1;2;51;99.24;Bos taurus;;;;
-P10;16SrRNA;TC;P2_MC;2;1;3;14;98.45;Canis lupus familiaris;;;;
-P10;16SrRNA;TC;P2_MC;2;1;4;29;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TC;P2_MC;2;1;5;56;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TC;P2_MC;2;1;6;2;94.57;Canis lupus familiaris;;;;
-P10;16SrRNA;TC;P2_MC;2;1;7;2;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TC;P2_MC;2;1;8;3;96.18;Canis lupus familiaris;;;;
-P10;16SrRNA;TC;P2_MC;2;1;9;3;96.21;Canis lupus familiaris;;;;
-P10;16SrRNA;TC;P2_MC;2;1;10;3;99.24;Canis lupus familiaris;;;;
-P10;16SrRNA;TC;P2_MC;2;1;11;37;100;Cavia porcellus;;;;
-P10;16SrRNA;TC;P2_MC;2;1;12;35;99.23;Myocastor coypus;;;;
-P10;16SrRNA;TC;P2_MC;2;1;13;24;98.7;Sardinella longiceps;;;;
-P10;16SrRNA;TC;P2_MC;2;1;14;56;100;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TC;P2_MC;2;1;15;2;100;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TF;P2_MC;2;1;1;3;95.42;Canis lupus familiaris;;;;
-P10;16SrRNA;TF;P2_MC;2;1;2;125;98.54;Priodontes maximus;;;;
-P10;16SrRNA;TF;P2_MC;2;1;3;127;99.26;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TG;P2_MC;2;1;1;124;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TG;P2_MC;2;1;2;2;96.95;Cuon alpinus;;;;
-P10;16SrRNA;TH;P3_MC;3;1;1;280;100;Bos taurus;;;;
-P10;16SrRNA;TH;P3_MC;3;1;2;198;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TI;P3_MQ;3;1;1;328;100;Equus caballus;;;;
-P10;16SrRNA;TI;P3_MQ;3;1;2;277;100;Hydrochaeris hydrochaeris;;;;
-P10;16SrRNA;TI;P3_MQ;3;1;3;2;99.28;Hydrochaeris hydrochaeris;;;;
-P10;16SrRNA;TI;P3_MQ;3;1;4;171;97.48;Lycalopex sechurae;;;;
-P10;16SrRNA;TI;P3_MQ;3;1;5;151;100;Sus scrofa;;;;
-P10;16SrRNA;TK;P3_MC;3;1;1;2;100;Hydrochaeris hydrochaeris;;;;
-P10;16SrRNA;TK;P3_MC;3;1;2;202;98.46;Speothos venaticus;;;;
-P10;16SrRNA;TK;P3_MC;3;1;3;115;100;Sphiggurus insidiosus ;;;;
-P10;16SrRNA;TL;P3_MC;3;1;1;197;93.23;Callicebus lugens;;;;
-P10;16SrRNA;TL;P3_MC;3;1;2;482;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TL;P3_MC;3;1;3;52;99.22;Didelphis albiventris;;;;
-P10;16SrRNA;TL;P3_MC;3;1;4;8;99.24;Euphractus sexcinctus;;;;
-P10;16SrRNA;TL;P3_MC;3;1;5;2;97.52;Pseudalopex culpaeus ;;;;
-P10;16SrRNA;TL;P3_MC;3;1;6;364;100;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TL;P3_MC;3;1;7;1314;100;Sus scrofa;;;;
-P10;16SrRNA;TL;P3_MC;3;1;8;2;94.07;Sus scrofa;;;;
-P10;16SrRNA;TL;P3_MC;3;1;9;4;100;Sus scrofa;;;;
-P10;16SrRNA;TM;P3_MC;3;1;1;421;99.27;Bradypus tridactylus;;;;
-P10;16SrRNA;TM;P3_MC;3;1;2;2;97.83;Bradypus tridactylus;;;;
-P10;16SrRNA;TM;P3_MC;3;1;3;930;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TM;P3_MC;3;1;4;2;100;Sus scrofa;;;;
-P10;16SrRNA;TN;P3_MC;3;1;1;38;99.24;Canis lupus familiaris;;;;
-P10;16SrRNA;TN;P3_MC;3;1;2;58;97.52;Pseudalopex culpaeus;;;;
-P10;16SrRNA;TN;P3_MC;3;1;3;119;99.24;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TN;P3_MC;3;1;4;3;100;Sus scrofa;;;;
-P10;16SrRNA;TN;P3_MC;3;1;5;56;100;Tapirus terrestris;;;;
-P10;16SrRNA;TO;P4_MQ;4;1;1;19;100;Chiropotes albinasus;;;;
-P10;16SrRNA;TO;P4_MQ;4;1;2;33;98.47;Plecturocebus moloch;;;;
-P10;16SrRNA;TO;P4_MQ;4;1;3;48;96.99;Procyon lotor;;;;
-P10;16SrRNA;TO;P4_MQ;4;1;4;110;97.52;Pseudalopex culpaeus;;;;
-P10;16SrRNA;TO;P4_MQ;4;1;5;50;99.24;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TO;P4_MQ;4;1;6;2;97.71;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TP;P4_MC;4;1;1;2;99.26;Bradypus tridactylus;;;;
-P10;16SrRNA;TP;P4_MC;4;1;2;2;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TP;P4_MC;4;1;3;9;99.23;Dasypus sabanicola ;;;;
-P10;16SrRNA;TP;P4_MC;4;1;4;21;97.52;Pseudalopex culpaeus;;;;
-P10;16SrRNA;TP;P4_MC;4;1;5;28;100;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;2;16;99.27;Alouatta guariba;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;3;5;99.27;Bos taurus;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;4;6;97.06;Callithrix emiliae ;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;5;71;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;6;237;99.26;Canis lupus familiaris;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;7;2;97.76;Canis lupus familiaris;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;8;2;100;Canis lupus familiaris;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;9;2;97.81;Chrysocyon brachyurus;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;10;119;96.3;Didelphis marsupialis;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;11;172;99.28;Hydrochaeris hydrochaeris;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;12;114;100;Pecari tajacu;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;13;666;97.79;Plecturocebus moloch;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;14;283;97.52;Pseudalopex culpaeus;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;15;24;99.26;Puma concolor;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;16;334;97.78;Speothos venaticus;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;17;3;100;Sus scrofa;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;18;5;95.77;Sylvilagus floridanus;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;19;3;90.65;Tamandua mexicana;;;;
-P10;16SrRNA;TS;P4_MQ;4;1;20;8;91.3;Trinomys dimidiatus;;;;
-P10;16SrRNA;TX;P4_MC;4;1;1;2;93.23;Callicebus lugens;;;;
-P10;16SrRNA;TX;P4_MC;4;1;2;443;100;Hydrochaeris hydrochaeris;;;;
-P10;16SrRNA;TX;P4_MC;4;1;3;38;100;Sus scrofa;;;;
-P10;16SrRNA;TY;P4_MC;4;1;1;137;98.47;Ateles belzebuth;;;;
-P10;16SrRNA;TY;P4_MC;4;1;2;2;100;Hydrochaeris hydrochaeris;;;;
-P10;16SrRNA;TY;P4_MC;4;1;3;2;97.71;Myocastor coypus;;;;
-P10;16SrRNA;TY;P4_MC;4;1;4;220;97.52;Pseudalopex culpaeus;;;;
-P10;16SrRNA;TY;P4_MC;4;1;5;232;99.24;Sphiggurus insidiosus;;;;
-P10;16SrRNA;TY;P4_MC;4;1;6;106;95.52;Trinomys dimidiatus;;;;
-P11;16SrRNA;TA;P4_MC;4;1;1;365;100;Bos taurus;;;;
-P11;16SrRNA;TA;P4_MC;4;1;2;9;100;Canis lupus familiaris;;;;
-P11;16SrRNA;TA;P4_MC;4;1;3;2;100;Hydrochaeris hydrochaeris;;;;
-P11;16SrRNA;TA;P4_MC;4;1;4;1654;100;Lama glama;;;;
-P11;16SrRNA;TA;P4_MC;4;1;5;16;97.71;Plecturocebus moloch;;;;
-P11;16SrRNA;TA;P4_MC;4;1;6;23;97.52;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TA;P4_MC;4;1;7;22;97.71;Pudu puda;;;;
-P11;16SrRNA;TA;P4_MC;4;1;8;3;100;Tapirus terrestris;;;;
-P11;16SrRNA;TB;P4_MC;4;1;1;84;99.24;Ateles belzebuth;;;;
-P11;16SrRNA;TB;P4_MC;4;1;2;26;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TC;P5_MQ;5;1;1;53;100;Canis lupus familiaris;;;;
-P11;16SrRNA;TC;P5_MQ;5;1;2;2;99.22;Dasypus sabanicola;;;;
-P11;16SrRNA;TC;P5_MQ;5;1;3;83;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TF;P6_MC;6;1;1;42;99.26;Canis familiaris;;;;
-P11;16SrRNA;TF;P6_MC;6;1;2;88;98.54;Priodontes maximus;;;;
-P11;16SrRNA;TF;P6_MC;6;1;3;426;99.26;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TG;P6_MC;6;1;1;133;100;Canis lupus familiaris;;;;
-P11;16SrRNA;TG;P6_MC;6;1;2;13;97.71;Plecturocebus moloch;;;;
-P11;16SrRNA;TG;P6_MC;6;1;3;10;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TG;P6_MC;6;1;4;1550;100;Tapirus terrestris;;;;
-P11;16SrRNA;TG;P6_MC;6;1;5;2;96.18;Tapirus terrestris;;;;
-P11;16SrRNA;TG;P6_MC;6;1;6;4;100;Tapirus terrestris;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;1;4;90;Alouatta palliata;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;2;805;100;Bos taurus;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;3;3;92.48;Callicebus lugens;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;4;3;92.37;Callicebus nigrifrons;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;5;19;96.18;Canis lupus familiaris;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;6;2;98.45;Canis lupus familiaris;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;7;7;99.24;Canis lupus familiaris;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;9;2;93.23;Cheracebus purinus;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;10;1690;100;Hydrochaeris hydrochaeris;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;11;4;89.31;Hylobates syndactylus;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;12;4;100;Lama glama;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;13;44;96.21;Nasua nasua;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;14;226;97.71;Plecturocebus moloch;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;15;4;98.47;Plecturocebus moloch;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;16;1801;97.52;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;17;21;93.94;Pteralopex atrata;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;18;229;100;Puma concolor;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;19;9;100;Rattus hoogerwerfi;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;20;7;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TH;P6_MQ;6;1;21;3;100;Tapirus terrestris;;;;
-P11;16SrRNA;TI;P6_MC;6;1;1;2;98.4;Plecturocebus moloch;;;;
-P11;16SrRNA;TI;P6_MC;6;1;2;29;97.52;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TI;P6_MC;6;1;3;25;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TK;P6_MC;6;1;1;85;100;Bos taurus;;;;
-P11;16SrRNA;TK;P6_MC;6;1;2;21;97.71;Callithrix emiliae;;;;
-P11;16SrRNA;TK;P6_MC;6;1;3;118;100;Callithrix penicillata;;;;
-P11;16SrRNA;TK;P6_MC;6;1;4;25;100;Canis lupus familiaris;;;;
-P11;16SrRNA;TK;P6_MC;6;1;5;570;100;Canis lupus familiaris;;;;
-P11;16SrRNA;TK;P6_MC;6;1;7;3;100;Chiropotes albinasus;;;;
-P11;16SrRNA;TK;P6_MC;6;1;8;19;98.48;Chrysocyon brachyurus;;;;
-P11;16SrRNA;TK;P6_MC;6;1;9;32;97.67;Dasypus sabanicola;;;;
-P11;16SrRNA;TK;P6_MC;6;1;10;38;99.25;Hydrochaeris hydrochaeris;;;;
-P11;16SrRNA;TK;P6_MC;6;1;11;2;100;Lama glama;;;;
-P11;16SrRNA;TK;P6_MC;6;1;12;2;100;Leopardus pardalis;;;;
-P11;16SrRNA;TK;P6_MC;6;1;13;9;99.24;Pecari tajacu;;;;
-P11;16SrRNA;TK;P6_MC;6;1;14;723;98.47;Plecturocebus moloch;;;;
-P11;16SrRNA;TK;P6_MC;6;1;15;156;97.52;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TK;P6_MC;6;1;16;53;99.23;Puma concolor;;;;
-P11;16SrRNA;TK;P6_MC;6;1;17;91;100;Rattus rattus;;;;
-P11;16SrRNA;TK;P6_MC;6;1;18;36;98.46;Speothos venaticus;;;;
-P11;16SrRNA;TK;P6_MC;6;1;19;94;100;Sus scrofa;;;;
-P11;16SrRNA;TL;P6_MC;6;1;1;17;97.52;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TL;P6_MC;6;1;2;111;97.69;Puma concolor;;;;
-P11;16SrRNA;TM;P7_MQ;7;1;1;109;100;Ateles belzebuth;;;;
-P11;16SrRNA;TM;P7_MQ;7;1;2;184;100;Canis lupus familiaris;;;;
-P11;16SrRNA;TM;P7_MQ;7;1;3;2;100;Hydrochaeris hydrochaeris;;;;
-P11;16SrRNA;TM;P7_MQ;7;1;4;349;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TM;P7_MQ;7;1;5;207;96.35;Sylvilagus floridanus;;;;
-P11;16SrRNA;TN;P7_MC;7;1;1;62;100;Alouatta guariba;;;;
-P11;16SrRNA;TN;P7_MC;7;1;2;209;97.52;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TN;P7_MC;7;1;3;66;100;Puma concolor;;;;
-P11;16SrRNA;TN;P7_MC;7;1;4;571;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TN;P7_MC;7;1;5;64;96.35;Sylvilagus floridanus;;;;
-P11;16SrRNA;TO;P7_MC;7;1;1;219;99.23;Ateles belzebuth;;;;
-P11;16SrRNA;TO;P7_MC;7;1;2;2;100;Lama glama;;;;
-P11;16SrRNA;TP;P8_MQ;8;1;1;2;100;Ateles belzebuth;;;;
-P11;16SrRNA;TP;P8_MQ;8;1;2;4;98.46;Plecturocebus moloch;;;;
-P11;16SrRNA;TP;P8_MQ;8;1;3;2;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TS;P8_MC;8;1;1;77;99.27;Alouatta guariba;;;;
-P11;16SrRNA;TS;P8_MC;8;1;2;2;99.24;Lama glama;;;;
-P11;16SrRNA;TS;P8_MC;8;1;3;48;97.52;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TS;P8_MC;8;1;4;2;99.26;Tapirus terrestris;;;;
-P11;16SrRNA;TX;P8_MC;8;1;1;4;97.52;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TX;P8_MC;8;1;2;273;99.25;Tamandua tetradactyla;;;;
-P11;16SrRNA;TY;P8_MC;8;1;1;48;97.71;Didelphis marsupialis;;;;
-P11;16SrRNA;TY;P8_MC;8;1;2;83;100;Pseudalopex culpaeus;;;;
-P11;16SrRNA;TY;P8_MC;8;1;3;7;97.52;Pseudalopex culpaeus ;;;;
-P11;16SrRNA;TY;P8_MC;8;1;4;2;99.23;Puma concolor;;;;
-P11;16SrRNA;TY;P8_MC;8;1;5;2;100;Sphiggurus insidiosus;;;;
-P11;16SrRNA;TY;P8_MC;8;1;6;2;99.25;Tamandua tetradactyla;;;;
+amostra_sequenciamento;barcode;tag;area_amostrador;ponto;aliquota;otu/asv;n_reads;%_id;taxon
+P08;12SrRNA;TA;P1_MQ;1;1;1;233;100;Nycticorax nycticorax
+P08;12SrRNA;TB;P2_MC;2;1;1;50;99.26;Bos taurus
+P08;12SrRNA;TB;P2_MC;2;1;2;41;99.25;Canis lupus
+P08;12SrRNA;TB;P2_MC;2;1;4;3;100;Sus scrofa
+P08;12SrRNA;TC;P2_MC;2;1;2;20;99.26;Canis lupus familiaris
+P08;12SrRNA;TC;P2_MC;2;1;3;38;100;Canis lupus familiaris
+P08;12SrRNA;TC;P2_MC;2;1;4;524;100;Canis lupus familiaris
+P08;12SrRNA;TC;P2_MC;2;1;6;7;100;Canis lupus
+P08;12SrRNA;TC;P2_MC;2;1;7;2;99.26;Equus caballus
+P08;12SrRNA;TC;P2_MC;2;1;8;4;100;Leopardus pardalis
+P08;12SrRNA;TC;P2_MC;2;1;9;2;100;Puma concolor
+P08;12SrRNA;TF;P2_MC;2;1;1;6;100;plant junction region
+P08;12SrRNA;TG;P2_MC;2;1;1;17;99.29;Canis lupus
+P08;12SrRNA;TH;P3_MC;3;1;1;109;100;Bos taurus
+P08;12SrRNA;TH;P3_MC;3;1;2;52;100;Canis lupus familiaris
+P08;12SrRNA;TH;P3_MC;3;1;3;9;100;Pecari tajacu
+P08;12SrRNA;TH;P3_MC;3;1;4;1859;100;Rhea americana
+P08;12SrRNA;TH;P3_MC;3;1;5;7;100;Didelphis albiventris
+P08;12SrRNA;TH;P3_MC;3;1;6;4;98.56;Gallus gallus
+P08;12SrRNA;TH;P3_MC;3;1;7;6;97.81;Gymnogyps californianus
+P08;12SrRNA;TH;P3_MC;3;1;9;4;100;Streptopelia decaocto
+P08;12SrRNA;TI;P3_MQ;3;1;1;14;100;Bos taurus
+P08;12SrRNA;TI;P3_MQ;3;1;2;127;100;Equus caballus
+P08;12SrRNA;TI;P3_MQ;3;1;3;28;100;Sus scrofa
+P08;12SrRNA;TI;P3_MQ;3;1;4;27;100;Tamandua tetradactyla
+P08;12SrRNA;TI;P3_MQ;3;1;5;8;100;Hydrochoerus hydrochaeris
+P08;12SrRNA;TI;P3_MQ;3;1;6;25;100;Bubulcus ibis
+P08;12SrRNA;TI;P3_MQ;3;1;7;1013;100;Gallus gallus
+P08;12SrRNA;TI;P3_MQ;3;1;8;4;100;Gallus gallus
+P08;12SrRNA;TI;P3_MQ;3;1;9;2;100;Nycticorax nycticorax
+P08;12SrRNA;TK;P3_MC;3;1;1;33;100;Zaedyus pichiy
+P08;12SrRNA;TK;P3_MC;3;1;2;26;97.04;Euphractus sexcinctus
+P08;12SrRNA;TL;P3_MC;3;1;1;1111;100;Canis aureus
+P08;12SrRNA;TL;P3_MC;3;1;2;481;100;Zaedyus pichiy
+P08;12SrRNA;TL;P3_MC;3;1;3;72;100;Dasypus yepesi
+P08;12SrRNA;TL;P3_MC;3;1;4;50;97.08;Euphractus sexcinctus
+P08;12SrRNA;TL;P3_MC;3;1;5;1155;100;Sus scrofa
+P08;12SrRNA;TL;P3_MC;3;1;6;3;100;Canis lupus familiaris
+P08;12SrRNA;TL;P3_MC;3;1;7;3;100;Sus scrofa
+P08;12SrRNA;TL;P3_MC;3;1;8;2;98.52;Zaedyus pichiy
+P08;12SrRNA;TM;P3_MC;3;1;1;4;100;Gallus gallus
+P08;12SrRNA;TO;P4_MQ;4;1;1;205;99.27;Callicebus cupreus
+P08;12SrRNA;TO;P4_MQ;4;1;2;2;99.25;Zaedyus pichiy
+P08;12SrRNA;TP;P4_MC ;4;1;1;8;100;Bos taurus
+P08;12SrRNA;TS;P4_MQ;4;1;1;1026;99.26;Callicebus cupreus
+P08;12SrRNA;TS;P4_MQ;4;1;2;147;100;Pecari tajacu
+P08;12SrRNA;TS;P4_MQ;4;1;3;32;97.83;Columba livia
+P08;12SrRNA;TS;P4_MQ;4;1;4;76;97.83;Columba livia
+P08;12SrRNA;TS;P4_MQ;4;1;5;2474;100; Columba livia
+P08;12SrRNA;TS;P4_MQ;4;1;6;49;100;Coryphospingus cucullatus
+P08;12SrRNA;TS;P4_MQ;4;1;8;135;100;Gallus gallus
+P08;12SrRNA;TS;P4_MQ;4;1;9;421;100;Nycticorax nycticorax
+P08;12SrRNA;TS;P4_MQ;4;1;10;141;100;Turdus rufiventris
+P08;12SrRNA;TS;P4_MQ;4;1;11;4;100;Gallus gallus
+P08;12SrRNA;TS;P4_MQ;4;1;12;5;99.27;Rhea americana
+P08;12SrRNA;TS;P4_MQ;4;1;13;2;96.35;Turdus rufiventris
+P08;12SrRNA;TX;P4_MC;4;1;1;17;100;Sus scrofa
+P08;12SrRNA;TX;P4_MC;4;1;2;704;100;Oncorhynchus clarkii
+P08;12SrRNA;TX;P4_MC;4;1;3;2;99.26;Canis lupaster
+P08;12SrRNA;TX;P4_MC;4;1;4;2;100;Nycticorax nycticorax
+P08;12SrRNA;TY;P4_MC;4;1;1;301;100;Ateles paniscus
+P08;12SrRNA;TY;P4_MC;4;1;2;2;99.25;Canis aureus
+P09;12SrRNA;TA;P4_MC;4;1;1;531;100;Bos taurus
+P09;12SrRNA;TA;P4_MC;4;1;2;2482;100;Lama guanicoe
+P09;12SrRNA;TA;P4_MC;4;1;3;2;100;Canis aureus
+P09;12SrRNA;TA;P4_MC;4;1;4;2;100;Hydrochoerus hydrochaeris
+P09;12SrRNA;TA;P4_MC;4;1;5;2;98.52;Lama guanicoe
+P09;12SrRNA;TA;P4_MC;4;1;6;4;97.76;Tapirus terrestris
+P09;12SrRNA;TB;P4_MC;4;1;1;137;100;Bos taurus
+P09;12SrRNA;TB;P4_MC;4;1;3;139;100;Nycticorax nycticorax
+P09;12SrRNA;TF;P6_MC;6;1;1;66;100;Bos taurus
+P09;12SrRNA;TF;P6_MC;6;1;2;42;99.26;Callicebus cupreus
+P09;12SrRNA;TF;P6_MC;6;1;3;84;100;Canis aureus
+P09;12SrRNA;TF;P6_MC;6;1;4;28;100;Canis lupus
+P09;12SrRNA;TF;P6_MC;6;1;5;65;100;Pecari tajacu
+P09;12SrRNA;TF;P6_MC;6;1;6;4;100;Rhea americana
+P09;12SrRNA;TF;P6_MC;6;1;7;7;100;Sturnira lilium
+P09;12SrRNA;TG;P6_MC;6;1;1;24;100;Zaedyus pichiy
+P09;12SrRNA;TG;P6_MC;6;1;2;24;96.27;Euphractus sexcinctus
+P09;12SrRNA;TG;P6_MC;6;1;4;2645;100;Tapirus terrestris
+P09;12SrRNA;TG;P6_MC;6;1;5;10;98.55;Columba livia
+P09;12SrRNA;TG;P6_MC;6;1;6;7;100;Canis lupus familiaris
+P09;12SrRNA;TG;P6_MC;6;1;7;4;99.26;Sapajus apella
+P09;12SrRNA;TG;P6_MC;6;1;8;6;99.24;Sphiggurus insidiosus
+P09;12SrRNA;TG;P6_MC;6;1;9;2;99.25;Tapirus terrestris
+P09;12SrRNA;TH;P6_MQ;6;1;1;465;100;Bos taurus
+P09;12SrRNA;TH;P6_MQ;6;1;2;143;100;Canis aureus
+P09;12SrRNA;TH;P6_MQ;6;1;3;466;100;Rattus norvegicus
+P09;12SrRNA;TH;P6_MQ;6;1;4;99;99.26;Saguinus midas
+P09;12SrRNA;TH;P6_MQ;6;1;5;11;100;Sus scrofa
+P09;12SrRNA;TH;P6_MQ;6;1;6;2268;100;Hydrochoerus hydrochaeris
+P09;12SrRNA;TH;P6_MQ;6;1;7;12;100;Columba livia
+P09;12SrRNA;TH;P6_MQ;6;1;8;42;100;Gallus gallus
+P09;12SrRNA;TH;P6_MQ;6;1;10;3;95.56;Callicebus cupreus
+P09;12SrRNA;TH;P6_MQ;6;1;11;2;98.52;Canis lupus
+P09;12SrRNA;TH;P6_MQ;6;1;12;2;92.65;Hemiodopsis gracilis
+P09;12SrRNA;TH;P6_MQ;6;1;13;3;90.3;Myotis adversus
+P09;12SrRNA;TH;P6_MQ;6;1;14;2;100;Rhea americana
+P09;12SrRNA;TH;P6_MQ;6;1;15;2;100;Tapirus terrestris
+P09;12SrRNA;TK;P6_MC;6;1;1;61;100;Bos taurus
+P09;12SrRNA;TK;P6_MC;6;1;2;226;99.26;Callicebus cupreus
+P09;12SrRNA;TK;P6_MC;6;1;3;45;97.06;Callicebus donacophilus
+P09;12SrRNA;TK;P6_MC;6;1;4;42;100;Callithrix kuhlii
+P09;12SrRNA;TK;P6_MC;6;1;5;387;100;Canis aureus
+P09;12SrRNA;TK;P6_MC;6;1;6;86;100;Rattus tanezumi
+P09;12SrRNA;TK;P6_MC;6;1;7;39;100;Cairina moschata
+P09;12SrRNA;TK;P6_MC;6;1;8;113;95.59; Columba livia
+P09;12SrRNA;TK;P6_MC;6;1;9;98;100;Gallus gallus
+P09;12SrRNA;TK;P6_MC;6;1;10;18;100;Nymphicus hollandicus
+P09;12SrRNA;TK;P6_MC;6;1;11;65;100;Thraupis sayaca
+P09;12SrRNA;TK;P6_MC;6;1;13;2;95.56;Callicebus cupreus
+P09;12SrRNA;TK;P6_MC;6;1;14;4;100;Lama guanicoe
+P09;12SrRNA;TK;P6_MC;6;1;15;6;100;Leopardus pardalis
+P09;12SrRNA;TK;P6_MC;6;1;16;3;100;Tapirus terrestris
+P09;12SrRNA;TM;P7_MQ;7;1;1;265;100;Canis aureus
+P09;12SrRNA;TM;P7_MQ;7;1;2;67;100;Amazilia brevirostris
+P09;12SrRNA;TM;P7_MQ;7;1;3;86;100;Amazilia versicolor
+P09;12SrRNA;TM;P7_MQ;7;1;4;2;99.26;Camelidae sp.
+P09;12SrRNA;TN;P7_MC ;7;1;1;16;99.26;Mazama gouazoupira
+P09;12SrRNA;TN;P7_MC ;7;1;2;705;100;Rhea americana
+P09;12SrRNA;TS;P8_MC;8;1;1;23;97.04;Euphractus sexcinctus
+P09;12SrRNA;TS;P8_MC;8;1;2;33;100;Sus scrofa
+P09;12SrRNA;TS;P8_MC;8;1;3;4;100;Rhea americana
+P09;12SrRNA;TX;P8_MC;8;1;1;529;100;Ateles belzebuth
+P09;12SrRNA;TX;P8_MC;8;1;2;3;100;Gallus gallus
+P09;12SrRNA;TX;P8_MC;8;1;3;4;100;Tapirus terrestris
+P09;12SrRNA;TY;P8_MC;8;1;1;204;100;Canis aureus
+P09;12SrRNA;TY;P8_MC;8;1;2;74;97.04;Canis familiaris
+P09;12SrRNA;TY;P8_MC;8;1;3;47;100;Canis lupus familiaris
+P09;12SrRNA;TY;P8_MC;8;1;4;57;96.3;Canis lupus familiaris
+P09;12SrRNA;TY;P8_MC;8;1;5;1851;100;Rhea americana
+P09;12SrRNA;TY;P8_MC;8;1;6;2;100;Nomascus leucogenys
+P10;16SrRNA;TA;P1_MQ;1;1;1;6;100;Alouatta guariba
+P10;16SrRNA;TA;P1_MQ;1;1;2;315;96.21;Canis lupus familiaris
+P10;16SrRNA;TA;P1_MQ;1;1;3;7;100;Canis lupus familiaris
+P10;16SrRNA;TA;P1_MQ;1;1;4;2;100;Cavia porcellus
+P10;16SrRNA;TA;P1_MQ;1;1;5;2;100;Hydrochaeris hydrochaeris
+P10;16SrRNA;TA;P1_MQ;1;1;6;8;100;Puma concolor
+P10;16SrRNA;TA;P1_MQ;1;1;7;29;100;Sphiggurus insidiosus
+P10;16SrRNA;TA;P1_MQ;1;1;8;2;96.35;Sylvilagus floridanus
+P10;16SrRNA;TB;P2_MC;2;1;1;2;93.18;Callicebus lugens
+P10;16SrRNA;TB;P2_MC;2;1;2;95;100;Canis lupus familiaris
+P10;16SrRNA;TB;P2_MC;2;1;3;2;100;Canis lupus familiaris
+P10;16SrRNA;TB;P2_MC;2;1;4;69;99.24;Didelphis albiventris
+P10;16SrRNA;TB;P2_MC;2;1;5;2;99.24;Sphiggurus insidiosus
+P10;16SrRNA;TB;P2_MC;2;1;6;3;100;Sus scrofa
+P10;16SrRNA;TC;P2_MC;2;1;1;49;100;Ateles belzebuth
+P10;16SrRNA;TC;P2_MC;2;1;2;51;99.24;Bos taurus
+P10;16SrRNA;TC;P2_MC;2;1;3;14;98.45;Canis lupus familiaris
+P10;16SrRNA;TC;P2_MC;2;1;4;29;100;Canis lupus familiaris
+P10;16SrRNA;TC;P2_MC;2;1;5;56;100;Canis lupus familiaris
+P10;16SrRNA;TC;P2_MC;2;1;6;2;94.57;Canis lupus familiaris
+P10;16SrRNA;TC;P2_MC;2;1;7;2;100;Canis lupus familiaris
+P10;16SrRNA;TC;P2_MC;2;1;8;3;96.18;Canis lupus familiaris
+P10;16SrRNA;TC;P2_MC;2;1;9;3;96.21;Canis lupus familiaris
+P10;16SrRNA;TC;P2_MC;2;1;10;3;99.24;Canis lupus familiaris
+P10;16SrRNA;TC;P2_MC;2;1;11;37;100;Cavia porcellus
+P10;16SrRNA;TC;P2_MC;2;1;12;35;99.23;Myocastor coypus
+P10;16SrRNA;TC;P2_MC;2;1;13;24;98.7;Sardinella longiceps
+P10;16SrRNA;TC;P2_MC;2;1;14;56;100;Sphiggurus insidiosus
+P10;16SrRNA;TC;P2_MC;2;1;15;2;100;Sphiggurus insidiosus
+P10;16SrRNA;TF;P2_MC;2;1;1;3;95.42;Canis lupus familiaris
+P10;16SrRNA;TF;P2_MC;2;1;2;125;98.54;Priodontes maximus
+P10;16SrRNA;TF;P2_MC;2;1;3;127;99.26;Sphiggurus insidiosus
+P10;16SrRNA;TG;P2_MC;2;1;1;124;100;Canis lupus familiaris
+P10;16SrRNA;TG;P2_MC;2;1;2;2;96.95;Cuon alpinus
+P10;16SrRNA;TH;P3_MC;3;1;1;280;100;Bos taurus
+P10;16SrRNA;TH;P3_MC;3;1;2;198;100;Canis lupus familiaris
+P10;16SrRNA;TI;P3_MQ;3;1;1;328;100;Equus caballus
+P10;16SrRNA;TI;P3_MQ;3;1;2;277;100;Hydrochaeris hydrochaeris
+P10;16SrRNA;TI;P3_MQ;3;1;3;2;99.28;Hydrochaeris hydrochaeris
+P10;16SrRNA;TI;P3_MQ;3;1;4;171;97.48;Lycalopex sechurae
+P10;16SrRNA;TI;P3_MQ;3;1;5;151;100;Sus scrofa
+P10;16SrRNA;TK;P3_MC;3;1;1;2;100;Hydrochaeris hydrochaeris
+P10;16SrRNA;TK;P3_MC;3;1;2;202;98.46;Speothos venaticus
+P10;16SrRNA;TK;P3_MC;3;1;3;115;100;Sphiggurus insidiosus
+P10;16SrRNA;TL;P3_MC;3;1;1;197;93.23;Callicebus lugens
+P10;16SrRNA;TL;P3_MC;3;1;2;482;100;Canis lupus familiaris
+P10;16SrRNA;TL;P3_MC;3;1;3;52;99.22;Didelphis albiventris
+P10;16SrRNA;TL;P3_MC;3;1;4;8;99.24;Euphractus sexcinctus
+P10;16SrRNA;TL;P3_MC;3;1;5;2;97.52;Pseudalopex culpaeus
+P10;16SrRNA;TL;P3_MC;3;1;6;364;100;Sphiggurus insidiosus
+P10;16SrRNA;TL;P3_MC;3;1;7;1314;100;Sus scrofa
+P10;16SrRNA;TL;P3_MC;3;1;8;2;94.07;Sus scrofa
+P10;16SrRNA;TL;P3_MC;3;1;9;4;100;Sus scrofa
+P10;16SrRNA;TM;P3_MC;3;1;1;421;99.27;Bradypus tridactylus
+P10;16SrRNA;TM;P3_MC;3;1;2;2;97.83;Bradypus tridactylus
+P10;16SrRNA;TM;P3_MC;3;1;3;930;100;Canis lupus familiaris
+P10;16SrRNA;TM;P3_MC;3;1;4;2;100;Sus scrofa
+P10;16SrRNA;TN;P3_MC;3;1;1;38;99.24;Canis lupus familiaris
+P10;16SrRNA;TN;P3_MC;3;1;2;58;97.52;Pseudalopex culpaeus
+P10;16SrRNA;TN;P3_MC;3;1;3;119;99.24;Sphiggurus insidiosus
+P10;16SrRNA;TN;P3_MC;3;1;4;3;100;Sus scrofa
+P10;16SrRNA;TN;P3_MC;3;1;5;56;100;Tapirus terrestris
+P10;16SrRNA;TO;P4_MQ;4;1;1;19;100;Chiropotes albinasus
+P10;16SrRNA;TO;P4_MQ;4;1;2;33;98.47;Plecturocebus moloch
+P10;16SrRNA;TO;P4_MQ;4;1;3;48;96.99;Procyon lotor
+P10;16SrRNA;TO;P4_MQ;4;1;4;110;97.52;Pseudalopex culpaeus
+P10;16SrRNA;TO;P4_MQ;4;1;5;50;99.24;Sphiggurus insidiosus
+P10;16SrRNA;TO;P4_MQ;4;1;6;2;97.71;Sphiggurus insidiosus
+P10;16SrRNA;TP;P4_MC;4;1;1;2;99.26;Bradypus tridactylus
+P10;16SrRNA;TP;P4_MC;4;1;2;2;100;Canis lupus familiaris
+P10;16SrRNA;TP;P4_MC;4;1;3;9;99.23;Dasypus sabanicola
+P10;16SrRNA;TP;P4_MC;4;1;4;21;97.52;Pseudalopex culpaeus
+P10;16SrRNA;TP;P4_MC;4;1;5;28;100;Sphiggurus insidiosus
+P10;16SrRNA;TS;P4_MQ;4;1;2;16;99.27;Alouatta guariba
+P10;16SrRNA;TS;P4_MQ;4;1;3;5;99.27;Bos taurus
+P10;16SrRNA;TS;P4_MQ;4;1;4;6;97.06;Callithrix emiliae
+P10;16SrRNA;TS;P4_MQ;4;1;5;71;100;Canis lupus familiaris
+P10;16SrRNA;TS;P4_MQ;4;1;6;237;99.26;Canis lupus familiaris
+P10;16SrRNA;TS;P4_MQ;4;1;7;2;97.76;Canis lupus familiaris
+P10;16SrRNA;TS;P4_MQ;4;1;8;2;100;Canis lupus familiaris
+P10;16SrRNA;TS;P4_MQ;4;1;9;2;97.81;Chrysocyon brachyurus
+P10;16SrRNA;TS;P4_MQ;4;1;10;119;96.3;Didelphis marsupialis
+P10;16SrRNA;TS;P4_MQ;4;1;11;172;99.28;Hydrochaeris hydrochaeris
+P10;16SrRNA;TS;P4_MQ;4;1;12;114;100;Pecari tajacu
+P10;16SrRNA;TS;P4_MQ;4;1;13;666;97.79;Plecturocebus moloch
+P10;16SrRNA;TS;P4_MQ;4;1;14;283;97.52;Pseudalopex culpaeus
+P10;16SrRNA;TS;P4_MQ;4;1;15;24;99.26;Puma concolor
+P10;16SrRNA;TS;P4_MQ;4;1;16;334;97.78;Speothos venaticus
+P10;16SrRNA;TS;P4_MQ;4;1;17;3;100;Sus scrofa
+P10;16SrRNA;TS;P4_MQ;4;1;18;5;95.77;Sylvilagus floridanus
+P10;16SrRNA;TS;P4_MQ;4;1;19;3;90.65;Tamandua mexicana
+P10;16SrRNA;TS;P4_MQ;4;1;20;8;91.3;Trinomys dimidiatus
+P10;16SrRNA;TX;P4_MC;4;1;1;2;93.23;Callicebus lugens
+P10;16SrRNA;TX;P4_MC;4;1;2;443;100;Hydrochaeris hydrochaeris
+P10;16SrRNA;TX;P4_MC;4;1;3;38;100;Sus scrofa
+P10;16SrRNA;TY;P4_MC;4;1;1;137;98.47;Ateles belzebuth
+P10;16SrRNA;TY;P4_MC;4;1;2;2;100;Hydrochaeris hydrochaeris
+P10;16SrRNA;TY;P4_MC;4;1;3;2;97.71;Myocastor coypus
+P10;16SrRNA;TY;P4_MC;4;1;4;220;97.52;Pseudalopex culpaeus
+P10;16SrRNA;TY;P4_MC;4;1;5;232;99.24;Sphiggurus insidiosus
+P10;16SrRNA;TY;P4_MC;4;1;6;106;95.52;Trinomys dimidiatus
+P11;16SrRNA;TA;P4_MC;4;1;1;365;100;Bos taurus
+P11;16SrRNA;TA;P4_MC;4;1;2;9;100;Canis lupus familiaris
+P11;16SrRNA;TA;P4_MC;4;1;3;2;100;Hydrochaeris hydrochaeris
+P11;16SrRNA;TA;P4_MC;4;1;4;1654;100;Lama glama
+P11;16SrRNA;TA;P4_MC;4;1;5;16;97.71;Plecturocebus moloch
+P11;16SrRNA;TA;P4_MC;4;1;6;23;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TA;P4_MC;4;1;7;22;97.71;Pudu puda
+P11;16SrRNA;TA;P4_MC;4;1;8;3;100;Tapirus terrestris
+P11;16SrRNA;TB;P4_MC;4;1;1;84;99.24;Ateles belzebuth
+P11;16SrRNA;TB;P4_MC;4;1;2;26;100;Sphiggurus insidiosus
+P11;16SrRNA;TC;P5_MQ;5;1;1;53;100;Canis lupus familiaris
+P11;16SrRNA;TC;P5_MQ;5;1;2;2;99.22;Dasypus sabanicola
+P11;16SrRNA;TC;P5_MQ;5;1;3;83;100;Sphiggurus insidiosus
+P11;16SrRNA;TF;P6_MC;6;1;1;42;99.26;Canis familiaris
+P11;16SrRNA;TF;P6_MC;6;1;2;88;98.54;Priodontes maximus
+P11;16SrRNA;TF;P6_MC;6;1;3;426;99.26;Sphiggurus insidiosus
+P11;16SrRNA;TG;P6_MC;6;1;1;133;100;Canis lupus familiaris
+P11;16SrRNA;TG;P6_MC;6;1;2;13;97.71;Plecturocebus moloch
+P11;16SrRNA;TG;P6_MC;6;1;3;10;100;Sphiggurus insidiosus
+P11;16SrRNA;TG;P6_MC;6;1;4;1550;100;Tapirus terrestris
+P11;16SrRNA;TG;P6_MC;6;1;5;2;96.18;Tapirus terrestris
+P11;16SrRNA;TG;P6_MC;6;1;6;4;100;Tapirus terrestris
+P11;16SrRNA;TH;P6_MQ;6;1;1;4;90;Alouatta palliata
+P11;16SrRNA;TH;P6_MQ;6;1;2;805;100;Bos taurus
+P11;16SrRNA;TH;P6_MQ;6;1;3;3;92.48;Callicebus lugens
+P11;16SrRNA;TH;P6_MQ;6;1;4;3;92.37;Callicebus nigrifrons
+P11;16SrRNA;TH;P6_MQ;6;1;5;19;96.18;Canis lupus familiaris
+P11;16SrRNA;TH;P6_MQ;6;1;6;2;98.45;Canis lupus familiaris
+P11;16SrRNA;TH;P6_MQ;6;1;7;7;99.24;Canis lupus familiaris
+P11;16SrRNA;TH;P6_MQ;6;1;9;2;93.23;Cheracebus purinus
+P11;16SrRNA;TH;P6_MQ;6;1;10;1690;100;Hydrochaeris hydrochaeris
+P11;16SrRNA;TH;P6_MQ;6;1;11;4;89.31;Hylobates syndactylus
+P11;16SrRNA;TH;P6_MQ;6;1;12;4;100;Lama glama
+P11;16SrRNA;TH;P6_MQ;6;1;13;44;96.21;Nasua nasua
+P11;16SrRNA;TH;P6_MQ;6;1;14;226;97.71;Plecturocebus moloch
+P11;16SrRNA;TH;P6_MQ;6;1;15;4;98.47;Plecturocebus moloch
+P11;16SrRNA;TH;P6_MQ;6;1;16;1801;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TH;P6_MQ;6;1;17;21;93.94;Pteralopex atrata
+P11;16SrRNA;TH;P6_MQ;6;1;18;229;100;Puma concolor
+P11;16SrRNA;TH;P6_MQ;6;1;19;9;100;Rattus hoogerwerfi
+P11;16SrRNA;TH;P6_MQ;6;1;20;7;100;Sphiggurus insidiosus
+P11;16SrRNA;TH;P6_MQ;6;1;21;3;100;Tapirus terrestris
+P11;16SrRNA;TI;P6_MC;6;1;1;2;98.4;Plecturocebus moloch
+P11;16SrRNA;TI;P6_MC;6;1;2;29;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TI;P6_MC;6;1;3;25;100;Sphiggurus insidiosus
+P11;16SrRNA;TK;P6_MC;6;1;1;85;100;Bos taurus
+P11;16SrRNA;TK;P6_MC;6;1;2;21;97.71;Callithrix emiliae
+P11;16SrRNA;TK;P6_MC;6;1;3;118;100;Callithrix penicillata
+P11;16SrRNA;TK;P6_MC;6;1;4;25;100;Canis lupus familiaris
+P11;16SrRNA;TK;P6_MC;6;1;5;570;100;Canis lupus familiaris
+P11;16SrRNA;TK;P6_MC;6;1;7;3;100;Chiropotes albinasus
+P11;16SrRNA;TK;P6_MC;6;1;8;19;98.48;Chrysocyon brachyurus
+P11;16SrRNA;TK;P6_MC;6;1;9;32;97.67;Dasypus sabanicola
+P11;16SrRNA;TK;P6_MC;6;1;10;38;99.25;Hydrochaeris hydrochaeris
+P11;16SrRNA;TK;P6_MC;6;1;11;2;100;Lama glama
+P11;16SrRNA;TK;P6_MC;6;1;12;2;100;Leopardus pardalis
+P11;16SrRNA;TK;P6_MC;6;1;13;9;99.24;Pecari tajacu
+P11;16SrRNA;TK;P6_MC;6;1;14;723;98.47;Plecturocebus moloch
+P11;16SrRNA;TK;P6_MC;6;1;15;156;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TK;P6_MC;6;1;16;53;99.23;Puma concolor
+P11;16SrRNA;TK;P6_MC;6;1;17;91;100;Rattus rattus
+P11;16SrRNA;TK;P6_MC;6;1;18;36;98.46;Speothos venaticus
+P11;16SrRNA;TK;P6_MC;6;1;19;94;100;Sus scrofa
+P11;16SrRNA;TL;P6_MC;6;1;1;17;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TL;P6_MC;6;1;2;111;97.69;Puma concolor
+P11;16SrRNA;TM;P7_MQ;7;1;1;109;100;Ateles belzebuth
+P11;16SrRNA;TM;P7_MQ;7;1;2;184;100;Canis lupus familiaris
+P11;16SrRNA;TM;P7_MQ;7;1;3;2;100;Hydrochaeris hydrochaeris
+P11;16SrRNA;TM;P7_MQ;7;1;4;349;100;Sphiggurus insidiosus
+P11;16SrRNA;TM;P7_MQ;7;1;5;207;96.35;Sylvilagus floridanus
+P11;16SrRNA;TN;P7_MC;7;1;1;62;100;Alouatta guariba
+P11;16SrRNA;TN;P7_MC;7;1;2;209;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TN;P7_MC;7;1;3;66;100;Puma concolor
+P11;16SrRNA;TN;P7_MC;7;1;4;571;100;Sphiggurus insidiosus
+P11;16SrRNA;TN;P7_MC;7;1;5;64;96.35;Sylvilagus floridanus
+P11;16SrRNA;TO;P7_MC;7;1;1;219;99.23;Ateles belzebuth
+P11;16SrRNA;TO;P7_MC;7;1;2;2;100;Lama glama
+P11;16SrRNA;TP;P8_MQ;8;1;1;2;100;Ateles belzebuth
+P11;16SrRNA;TP;P8_MQ;8;1;2;4;98.46;Plecturocebus moloch
+P11;16SrRNA;TP;P8_MQ;8;1;3;2;100;Sphiggurus insidiosus
+P11;16SrRNA;TS;P8_MC;8;1;1;77;99.27;Alouatta guariba
+P11;16SrRNA;TS;P8_MC;8;1;2;2;99.24;Lama glama
+P11;16SrRNA;TS;P8_MC;8;1;3;48;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TS;P8_MC;8;1;4;2;99.26;Tapirus terrestris
+P11;16SrRNA;TX;P8_MC;8;1;1;4;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TX;P8_MC;8;1;2;273;99.25;Tamandua tetradactyla
+P11;16SrRNA;TY;P8_MC;8;1;1;48;97.71;Didelphis marsupialis
+P11;16SrRNA;TY;P8_MC;8;1;2;83;100;Pseudalopex culpaeus
+P11;16SrRNA;TY;P8_MC;8;1;3;7;97.52;Pseudalopex culpaeus
+P11;16SrRNA;TY;P8_MC;8;1;4;2;99.23;Puma concolor
+P11;16SrRNA;TY;P8_MC;8;1;5;2;100;Sphiggurus insidiosus
+P11;16SrRNA;TY;P8_MC;8;1;6;2;99.25;Tamandua tetradactyla
