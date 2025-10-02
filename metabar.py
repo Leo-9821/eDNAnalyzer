@@ -313,7 +313,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 except ValueError:
                     pass
 
-                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts())
+                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts()).reset_index()
                 df_ocorr = df_ocorr.rename(columns={'taxon': 'Taxon', 'count': f'Detecções por {amostrador}'})
 
                 ocorr.setdefault(amostrador, df_ocorr)
@@ -330,7 +330,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 except ValueError:
                     pass
 
-                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts())
+                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts()).reset_index()
                 df_ocorr = df_ocorr.rename(columns={'taxon': 'Taxon', 'count': f'Detections by {amostrador}'})
 
                 ocorr.setdefault(amostrador, df_ocorr)
@@ -353,7 +353,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 except ValueError:
                     pass
 
-                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts())
+                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts()).reset_index()
                 df_ocorr = df_ocorr.rename(columns={'taxon': 'Taxon', 'count': f'Detecções em {area}'})
 
                 ocorr.setdefault(area, df_ocorr)
@@ -370,7 +370,7 @@ def conta_ocorrencias(dfs, amostradores=False, areas=False):
                 except ValueError:
                     pass
 
-                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts())
+                df_ocorr = pd.DataFrame(df_taxons['taxon'].value_counts()).reset_index()
                 df_ocorr = df_ocorr.rename(columns={'taxon': 'Taxon', 'count': f'Detections in {area}'})
 
                 ocorr.setdefault(area, df_ocorr)
@@ -443,7 +443,6 @@ def calcula_reads_especie(dfs, amostrador=False, area=False):
                 df_read_sp = df_read_sp.sort_values(by='n_reads', ascending=False).reset_index()
                 df_read_sp = df_read_sp.rename(columns={'final_taxon_curated': 'Taxon', 'n_reads': 'Reads'})
                 reads_especie.setdefault(area, df_read_sp)
-        print(reads_especie)
         return reads_especie
 
 

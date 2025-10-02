@@ -618,47 +618,47 @@ class Janelas:
         var_area (bool): Indicates the choice to filter by areas.
         idioma (str): Indicates the chosen language, Portuguese ("pt-br") or English ("eng-us").
         """
-        try:
-            if '.xlsx' in self.var_caminho_arquivo.get():
-                df = pd.read_excel(self.var_caminho_arquivo.get())
-            elif '.csv' in self.var_caminho_arquivo.get():
-                df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, encoding='utf-8-sig', engine='python')
+        # try:
+        if '.xlsx' in self.var_caminho_arquivo.get():
+            df = pd.read_excel(self.var_caminho_arquivo.get())
+        elif '.csv' in self.var_caminho_arquivo.get():
+            df = pd.read_csv(self.var_caminho_arquivo.get(), sep=None, encoding='utf-8-sig', engine='python')
 
+        lista_areas = define_areas(df)
+
+        ocorrencias_geral = conta_ocorrencias_gerais(df, lista_areas)
+        reads_gerais = conta_reads_gerais(df)
+        lista_geral = cria_lista_geral(ocorrencias_geral, reads_gerais)
+
+        if var_amostrador and not var_area:
+            amostradores = separa_amostradores(df, lista_amostradores)
+            ocorrencias = conta_ocorrencias(amostradores, amostradores=True)
+            reads_especie = calcula_reads_especie(amostradores, amostrador=True)
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
+
+        elif var_area and not var_amostrador:
+            areas = separa_areas(lista_areas, df=df)
+            ocorrencias = conta_ocorrencias(areas, areas=True)
+            reads_especie = calcula_reads_especie(areas, area=True)
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
+
+        elif var_amostrador and var_area:
+            amostradores = separa_amostradores(df, lista_amostradores)
             lista_areas = define_areas(df)
+            areas = separa_areas(lista_areas, amostradores=amostradores)
+            ocorrencias_area = conta_ocorrencias(areas, amostradores=True, areas=True)
+            reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
+            tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostradores=True, areas=True)
+        else:
+            tabelas_finais = None
 
-            ocorrencias_geral = conta_ocorrencias_gerais(df, lista_areas)
-            reads_gerais = conta_reads_gerais(df)
-            lista_geral = cria_lista_geral(ocorrencias_geral, reads_gerais)
+        self.fila_resultados_secundaria.put(('sucesso', lista_geral, tabelas_finais, var_amostrador, var_area))
 
-            if var_amostrador and not var_area:
-                amostradores = separa_amostradores(df, lista_amostradores)
-                ocorrencias = conta_ocorrencias(amostradores, amostradores=True)
-                reads_especie = calcula_reads_especie(amostradores, amostrador=True)
-                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, amostradores=True)
-
-            elif var_area and not var_amostrador:
-                areas = separa_areas(lista_areas, df=df)
-                ocorrencias = conta_ocorrencias(areas, areas=True)
-                reads_especie = calcula_reads_especie(areas, area=True)
-                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias, areas=True)
-
-            elif var_amostrador and var_area:
-                amostradores = separa_amostradores(df, lista_amostradores)
-                lista_areas = define_areas(df)
-                areas = separa_areas(lista_areas, amostradores=amostradores)
-                ocorrencias_area = conta_ocorrencias(areas, amostradores=True, areas=True)
-                reads_especie = calcula_reads_especie(areas, amostrador=True, area=True)
-                tabelas_finais = constroi_tabela_final(reads_especie, ocorrencias_area, amostradores=True, areas=True)
-            else:
-                tabelas_finais = None
-
-            self.fila_resultados_secundaria.put(('sucesso', lista_geral, tabelas_finais, var_amostrador, var_area))
-
-        except (UnboundLocalError, KeyError) as e:
-            self.fila_resultados_secundaria.put(('erro', 'UnboundLocalError'))
-        except Exception as e:
-            print(f"Erro: {e}")
-            self.fila_resultados_secundaria.put(('erro', 'Exception'))
+        # except (UnboundLocalError, KeyError) as e:
+        #     self.fila_resultados_secundaria.put(('erro', 'UnboundLocalError'))
+        # except Exception as e:
+        #     print(f"Erro: {e}")
+        #     self.fila_resultados_secundaria.put(('erro', 'Exception'))
 
     def _verifica_processamento_secundario(self, progressbar, botao_run, idioma, contexto):
         """Periodically checks whether secondary processing has finished.
