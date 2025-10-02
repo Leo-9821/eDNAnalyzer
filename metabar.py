@@ -1,7 +1,6 @@
 import pandas as pd
 import zipfile
 
-
 def separa_corridas(df):
     """Splits the complete dataframe into its individual sequencing samples.
 
