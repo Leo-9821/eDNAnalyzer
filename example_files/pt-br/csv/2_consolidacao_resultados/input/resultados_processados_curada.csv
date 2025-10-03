@@ -1,4 +1,4 @@
-﻿amostra_sequenciamento;barcode;tag;area_amostrador;ponto;aliquota;otu/asv;n_reads;%_id;taxon;otu/asv_final_curada
+﻿amostra_sequenciamento;barcode;tag;area_amostrador;ponto;aliquota;otu/asv;n_reads;%_id;taxon;taxon_final_curada
 P08;12SrRNA;TA;P1_MQ;1;1;1;233;100;Nycticorax nycticorax;Nycticorax nycticorax
 P08;12SrRNA;TB;P2_MC;2;1;1;50;99.26;Bos taurus;Bos taurus
 P08;12SrRNA;TB;P2_MC;2;1;2;41;99.25;Canis lupus;Canis lupus familiaris
