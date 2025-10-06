@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e37fe3a9-85d8-4ceb-8efe-7ab34096e2ce" name="Changes" comment="Adicionando mensagens de FIXME na main.py" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Leo-9821&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Leo-9821/analise_metabarcoding.git&quot;,
+    &quot;accountId&quot;: &quot;6c86bda9-f377-49b9-b06c-44e5948f13c5&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2ZjaHwlE6Fn0QGnOekYRr91KRRk" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+    <option name="sortKey" value="BY_TYPE" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;Python.janelas.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.metabar.executor&quot;: &quot;Run&quot;,
+    &quot;Python.teste.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;threading__processing&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/leow/OneDrive/CEP/resultados_seq_dez23/dev/analise_metabarcoding&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.EditorConfig&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\leow\OneDrive\CEP\resultados_seq_dez23\dev\analise_metabarcoding" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\leow\OneDrive\CEP\resultados_seq_dez23\dev\analise_metabarcoding" />
+      <recent name="C:\Users\leow\OneDrive\CEP\resultados_seq_dez23\dev\analise_metabarcoding\executaveis_passados" />
+      <recent name="C:\Users\leow\OneDrive\CEP\resultados_seq_dez23\dev\analise_metabarcoding\img" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.main">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="analise_metabarcoding" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="C:\Users\leow\OneDrive\CEP\resultados_seq_dez23\dev\analise_metabarcoding\main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="teste" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="analise_metabarcoding" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/teste.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.teste" />
+        <item itemvalue="Python.teste" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-48aec45f0201-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.17011.127" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e37fe3a9-85d8-4ceb-8efe-7ab34096e2ce" name="Changes" comment="" />
+      <created>1702937857549</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1702937857549</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Adicionando tabela com otus eliminadas pelo threshold">
+      <option name="closed" value="true" />
+      <created>1707145666824</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1707145666824</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Adicionando executável da versão 0.2">
+      <option name="closed" value="true" />
+      <created>1707151771764</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1707151771764</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Grande atualização - Adicionando versão em inglês">
+      <option name="closed" value="true" />
+      <created>1710619940649</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1710619940649</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Arrumando funcionalidades com DataFrames, adicionando manuais atualizados em português e inglês, criando função main, dessa forma excluindo arquivo main.py e adicionando o executável atualizado e já com o nome eDNAnalyzer">
+      <option name="closed" value="true" />
+      <created>1717005403209</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1717005403209</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fazendo algumas alterações e correções na interface gráfica e adicionando docstrings">
+      <option name="closed" value="true" />
+      <created>1723490051528</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1723490051528</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Fazendo algumas alterações e correções na interface gráfica e adicionando docstrings">
+      <option name="closed" value="true" />
+      <created>1723490218099</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1723490218099</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Adicionando eDNAnalyzer_1-1.exe">
+      <option name="closed" value="true" />
+      <created>1723490269321</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1723490269321</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Reorganizando executáveis anteriores">
+      <option name="closed" value="true" />
+      <created>1723490797413</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1723490797413</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Adicionando funcionalidades para arquivos csv, arrumando bugs e a lista geral">
+      <option name="closed" value="true" />
+      <created>1725661564335</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1725661564335</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Adicionando funcionalidades para arquivos csv, arrumando bugs e a lista geral">
+      <option name="closed" value="true" />
+      <created>1725662111096</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1725662111096</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Arrumando funcionalidades para todas as filtragens, adaptando algumas os nomes das colunas do arquivo de entrada e acrescentando logo definitivo">
+      <option name="closed" value="true" />
+      <created>1731936789270</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1731936789270</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Ajeitando bug no salvamento do arquivo de thresholds, acrescentando o enconding='utf-8' para todos os csv e atualizando o readme.">
+      <option name="closed" value="true" />
+      <created>1731940388307</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1731940388307</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Ajustando gitignore e atualizando manuais">
+      <option name="closed" value="true" />
+      <created>1731955420230</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1731955420230</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Fazendo alterações de escrita, atualizando manuais e adicionando os executáveis 1.2 e 1.3">
+      <option name="closed" value="true" />
+      <created>1736883131482</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1736883131482</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Botão de voltar e seleção de revisão com coluna otu_final">
+      <option name="closed" value="true" />
+      <created>1740770184052</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1740770184052</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Modificando botão de voltar">
+      <option name="closed" value="true" />
+      <created>1741114586682</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1741114586682</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Mudando bandeiras, nomes de pastas e botões">
+      <option name="closed" value="true" />
+      <created>1741377751835</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1741377751835</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Trocando contigs por reads">
+      <option name="closed" value="true" />
+      <created>1741380246212</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1741380246212</updated>
+    </task>
+    <task id="LOCAL-00034" summary="Arrumando outputs, acrescentando executável 1.3.1">
+      <option name="closed" value="true" />
+      <created>1741456871744</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1741456871744</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Arrumando frases de carregamento de arquivos">
+      <option name="closed" value="true" />
+      <created>1741457151805</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1741457151805</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Adicionando executável 1.3.2, com correções">
+      <option name="closed" value="true" />
+      <created>1741461711801</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1741461711801</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Adicionando arquivos de exemplos">
+      <option name="closed" value="true" />
+      <created>1741631182690</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1741631182690</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Organizando input e outputs">
+      <option name="closed" value="true" />
+      <created>1741633072078</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1741633072078</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Ajustando README">
+      <option name="closed" value="true" />
+      <created>1741634793048</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1741634793048</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Arrumando outputs">
+      <option name="closed" value="true" />
+      <created>1741803950093</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1741803950093</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Arrumando bug de enconding no csv">
+      <option name="closed" value="true" />
+      <created>1741807742935</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1741807742935</updated>
+    </task>
+    <task id="LOCAL-00042" summary="Alterando nome de coluna de fina_otu para final_otu_curated">
+      <option name="closed" value="true" />
+      <created>1742059979203</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1742059979203</updated>
+    </task>
+    <task id="LOCAL-00043" summary="Adicionando exemplos corrigidos">
+      <option name="closed" value="true" />
+      <created>1742060732365</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1742060732365</updated>
+    </task>
+    <task id="LOCAL-00044" summary="Corrigindo erros de encoding e acrescentando exemplos pt-br">
+      <option name="closed" value="true" />
+      <created>1742912862655</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1742912862655</updated>
+    </task>
+    <task id="LOCAL-00045" summary="Atualizando manuais">
+      <option name="closed" value="true" />
+      <created>1742914761957</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1742914761957</updated>
+    </task>
+    <task id="LOCAL-00046" summary="Atualizando manuais, corrigindo mais casos de encoding e adicionando exe 1.4">
+      <option name="closed" value="true" />
+      <created>1742921655130</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1742921655130</updated>
+    </task>
+    <task id="LOCAL-00047" summary="Acrescentando citação ao readme">
+      <option name="closed" value="true" />
+      <created>1742921873396</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1742921873396</updated>
+    </task>
+    <task id="LOCAL-00048" summary="Traduzindo docstrings e correções menores nos manuais">
+      <option name="closed" value="true" />
+      <created>1743597620090</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1743597620090</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Corrigindo arquivos de exemplos">
+      <option name="closed" value="true" />
+      <created>1743599244931</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1743599244931</updated>
+    </task>
+    <task id="LOCAL-00050" summary="Movendo executável 1.4 e adicionando 1.4.1">
+      <option name="closed" value="true" />
+      <created>1743600110327</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1743600110328</updated>
+    </task>
+    <task id="LOCAL-00051" summary="Adicionando DOI do Zenodo ao readme">
+      <option name="closed" value="true" />
+      <created>1743618481984</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1743618481984</updated>
+    </task>
+    <task id="LOCAL-00052" summary="Adicionando barra de progresso e error handling">
+      <option name="closed" value="true" />
+      <created>1754420632715</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1754420632716</updated>
+    </task>
+    <task id="LOCAL-00053" summary="Adicionando manual online">
+      <option name="closed" value="true" />
+      <created>1757619617703</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1757619617703</updated>
+    </task>
+    <task id="LOCAL-00054" summary="Refatorando pastas de imagem do manual e suas referências">
+      <option name="closed" value="true" />
+      <created>1757619863928</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1757619863928</updated>
+    </task>
+    <task id="LOCAL-00055" summary="Adicionando possibilidade de ASV">
+      <option name="closed" value="true" />
+      <created>1758655183917</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1758655183918</updated>
+    </task>
+    <task id="LOCAL-00056" summary="Retirando CNAME">
+      <option name="closed" value="true" />
+      <created>1758655362368</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1758655362368</updated>
+    </task>
+    <task id="LOCAL-00057" summary="Adicionando ASV">
+      <option name="closed" value="true" />
+      <created>1758655742915</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1758655742915</updated>
+    </task>
+    <task id="LOCAL-00058" summary="ASV no manual online">
+      <option name="closed" value="true" />
+      <created>1758655971699</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1758655971700</updated>
+    </task>
+    <task id="LOCAL-00059" summary="Alterando nome da última coluna (adicionando ASV) e gerando novos arquivos de teste.">
+      <option name="closed" value="true" />
+      <created>1758734655096</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1758734655096</updated>
+    </task>
+    <task id="LOCAL-00060" summary="Adicionando arquivo de exemplo">
+      <option name="closed" value="true" />
+      <created>1758734740557</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1758734740557</updated>
+    </task>
+    <task id="LOCAL-00061" summary="Arrumando barra de progresso com threading e linhas para medir RAM e tempo">
+      <option name="closed" value="true" />
+      <created>1758833871573</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1758833871573</updated>
+    </task>
+    <task id="LOCAL-00062" summary="Arrumando barra de progresso com threading e linhas para medir RAM e tempo">
+      <option name="closed" value="true" />
+      <created>1758904783017</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1758904783017</updated>
+    </task>
+    <task id="LOCAL-00063" summary="Ajustando funções da analise secundaria">
+      <option name="closed" value="true" />
+      <created>1758972074124</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1758972074124</updated>
+    </task>
+    <task id="LOCAL-00064" summary="Adicionando mensagens de FIXME na main.py">
+      <option name="closed" value="true" />
+      <created>1759051869808</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1759051869808</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Ajustando README" />
+    <MESSAGE value="Arrumando outputs" />
+    <MESSAGE value="Arrumando bug de enconding no csv" />
+    <MESSAGE value="Alterando nome de coluna de fina_otu para final_otu_curated" />
+    <MESSAGE value="Adicionando exemplos corrigidos" />
+    <MESSAGE value="Corrigindo erros de encoding e acrescentando exemplos pt-br" />
+    <MESSAGE value="Atualizando manuais" />
+    <MESSAGE value="Atualizando manuais, corrigindo mais casos de encoding e adicionando exe 1.4" />
+    <MESSAGE value="Acrescentando citação ao readme" />
+    <MESSAGE value="Traduzindo docstrings e correções menores nos manuais" />
+    <MESSAGE value="Corrigindo arquivos de exemplos" />
+    <MESSAGE value="Movendo executável 1.4 e adicionando 1.4.1" />
+    <MESSAGE value="Adicionando DOI do Zenodo ao readme" />
+    <MESSAGE value="Adicionando barra de progresso e error handling" />
+    <MESSAGE value="Adicionando manual online" />
+    <MESSAGE value="Refatorando pastas de imagem do manual e suas referências" />
+    <MESSAGE value="Adicionando possibilidade de ASV" />
+    <MESSAGE value="Retirando CNAME" />
+    <MESSAGE value="Adicionando ASV" />
+    <MESSAGE value="ASV no manual online" />
+    <MESSAGE value="Alterando nome da última coluna (adicionando ASV) e gerando novos arquivos de teste." />
+    <MESSAGE value="Adicionando arquivo de exemplo" />
+    <MESSAGE value="Arrumando barra de progresso com threading e linhas para medir RAM e tempo" />
+    <MESSAGE value="Ajustando funções da analise secundaria" />
+    <MESSAGE value="Adicionando mensagens de FIXME na main.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionando mensagens de FIXME na main.py" />
+  </component>
+</project>

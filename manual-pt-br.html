@@ -4,7 +4,382 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Manual eDNAnalyzer</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styleManual.css" />
   </head>
-  <body></body>
+  <body>
+    <main>
+      <h1>
+        <img
+          src="img/logo_ednanalyzer_nome.png"
+          alt="eDNAnalyzer logo"
+          id="ednanalyzer-logo"
+        /> MANUAL eDNAnalyzer
+      </h1>
+
+      <p>
+        <strong
+          >eDNAnalyzer é uma ferramenta computacional de fácil uso e acesso aberto,</strong
+        >
+        desenvolvida para processar e filtrar dados de atribuição taxonômica provenientes de
+          estudos de metabarcoding, especialmente aqueles derivados de DNA ambiental (eDNA) e
+          DNA derivado de invertebrados (iDNA).
+      </p>
+
+      <h2>Como citar o eDNAnalyzer? </h2>
+      <p>
+        Olimpio, L.W.G.F.; Gestich, C.C.; Saranholi, B.H.; Galetti Jr, P.M.; Freitas, P.D. 2025.
+          eDNAnalyzer: a user-friendly computational tool for post-processing taxonomic assignment
+          data derived from eDNA and iDNA metabarcoding (doi: )..
+      </p>
+
+      <h2>Como acessar o eDNAnalyzer? </h2>
+      <p>
+        Você pode encontrar a ferramenta eDNAnalyzer acessando o repositório no GitHub em
+        <a href="https://github.com/Leo-9821/eDNAnalyzer" target="_blank"
+          >https://github.com/Leo-9821/eDNAnalyzer</a
+        >.
+      </p>
+      <p>
+        O arquivo executável (.exe) está disponível para Windows®, enquanto o código-fonte em
+          Python (.py) pode ser usado para executar o programa em Linux® ou macOS®. Neste caso,
+          baixe os arquivos "main.py" e "metabar.py" e a pasta "img" para o mesmo diretório em
+          seu computador e certifique-se de instalar as bibliotecas pandas, Pillow e openpyxl.
+      </p>
+
+      <h2>Como o eDNAnalyzer funciona?</h2>
+      <p>
+        O software oferece duas funções principais: "Aplicação do Threshold" e "Consolidação de
+          Resultados", cada uma exigindo um arquivo de entrada específico. Exemplos de arquivos
+          de entrada e saída estão disponíveis no repositório
+        <a
+          href="https://github.com/Leo-9821/eDNAnalyzer/tree/master/example_files"
+          target="_blank"
+          >https://github.com/Leo-9821/eDNAnalyzer/tree/master/example_files</a
+        >.
+      </p>
+      <p>
+        Uma visão do funcionamento geral do programa, é fornecida ao final deste manual,
+          juntamente com instruções detalhadas para realizar as duas funções principais:
+          “Aplicação do Threshold” e “Consolidação dos Resultados”.
+      </p>
+
+      <h2>Escolhendo a opção Aplicação do Threshold</h2>
+      <p>
+        Esta opção processa dados de atribuições taxonômicas prévias, calculando o número
+          total de reads por OTU/ASV por amostra de sequenciamento, filtrando OTUs/ASVs de
+          acordo com um valor do threshold adotado (padrão ≥ 0,05%) e gerando saídas após a
+          aplicação dos filtros selecionados.
+      </p>
+
+      <h3>Visão geral do processo:</h3>
+      <ol>
+        <li>
+          Calcular o número total de reads por OTU/ASV por amostra de sequenciamento,
+            com base nas atribuições taxonômicas fornecidas.
+        </li>
+        <li>
+          Filtrar OTUs/ASVs de acordo com um valor de corte adotado (padrão: ≥ 0,05%).
+        </li>
+        <li>
+          Gera arquivos (arquivos de saída) contendo o número total de reads por
+            OTU/ASV, as OTUs/ASVs que não passaram no limiar e as OTUs/ASVs que passaram.
+        </li>
+      </ol>
+
+      <h3>Arquivo de entrada:</h3>
+      <p>
+        Um arquivo em formato  <span class="code">.xlsx</span> ou
+        <span class="code">.csv</span> (exemplo:
+        <a
+          href="https://github.com/Leo-9821/eDNAnalyzer/blob/master/example_files/pt-br/xlsx/1_aplicacao_threshold/input/input_exemplo.xlsx"
+          target="_blank"
+          >input_exemplo.xlsx</a
+        >), contendo os dados de atribuição taxonômica, deve ser fornecido com as
+          seguintes colunas obrigatórias:
+      </p>
+      <ul>
+        <li>
+          <span class="code">●	amostra_sequenciamento </span> (identificação das
+            amostras de sequenciamento)
+        </li>
+        <li>
+          <span class="code">●	area_amostrador </span> (indicando a área de coleta
+            e o amostrador de DNA – por exemplo, amostra de água, solo, invertebrado
+            utilizado como amostrador. Garanta que áreas e amostradores sejam identificados
+            sem ambiguidade para evitar erros. Use um underscore para separar a área do
+            coletor: area_amostrador)
+        </li>
+        <li>
+          <span class="code">ponto</span> (indicando o ponto de coleta)
+        </li>
+        <li><span class="code">n_reads</span> (número de reads por OTU/ASV)</li>
+        <li>
+          <span class="code">taxon</span> (táxon determinado a partir da atribuição taxonômica)
+        </li>
+      </ul>
+      <p>
+        Colunas adicionais com informações extras também podem ser incluídas, conforme mostrado
+          na Tabela 1.
+      </p>
+
+      <h3>
+        Tabela resumo de um arquivo de entrada mostrando as informações gerais para a etapa de
+          aplicação do threshold.
+      </h3>
+      <img
+        src="manual_img/pt-br/tabela1.png"
+        class="tables"
+        alt="Tabela de entrada"
+      />
+
+      <h3>Arquivos de saída:</h3>
+      <p>
+        Todas as tabelas podem ser salvas em formato  <span class="code">.xlsx</span> e
+        <span class="code">.csv</span>. Veja um exemplo de arquivo gerado nesta etapa
+          na Tabela 2.
+      </p>
+
+      <h3>
+        Tabela 2: Tabela resumo de um arquivo de saída mostrando os dados processados
+          após a execução da etapa de aplicação do threshold.
+      </h3>
+      <img
+        src="manual_img/pt-br/tabela2.png"
+        class="tables"
+        alt="Tabela de saída"
+      />
+
+      <h2>Escolhendo a opção Consolidação dos Resultados</h2>
+      <p>
+        Este processo fornece tabelas com os resultados, listas de espécies com seus
+          números de detecções e reads. As tabelas podem ser geradas separando as listas
+          por amostrador, área ou ambos.
+      </p>
+
+      <h3>Visão geral do processo:</h3>
+      <ol>
+        <li>
+          Edite a tabela contendo as OTUs/ASVs de interesse, preenchendo a coluna
+          <span class="code">taxon_final_curada</span> com a atribuição taxonômica
+            selecionada após curadoria manual. Esta etapa visa revisar e refinar a
+            identificação taxonômica para corrigir possíveis inconsistências, incorporando
+            dados de distribuição de espécies e observações de campo para maior precisão.
+        </li>
+        <li>
+          Insira a tabela curada (arquivo de entrada) no eDNAnalyzer. O programa processará
+            os dados e retornará as informações de interesse de acordo com os filtros
+            selecionados pelo usuário (por exemplo: amostrador, área ou ambos).
+        </li>
+        <li>
+          Gera arquivos com resultados consolidados em formatos
+          <span class="code">.xlsx</span> e
+          <span class="code">.csv</span>. Quando necessário, arquivos
+          <span class="code">.csv</span> em arquivo
+          <span class="code">.zip</span> serão fornecidos.
+        </li>
+      </ol>
+
+      <h3>Arquivo de entrada:</h3>
+      <p>
+        A tabela de entrada (Tabela 3) para a etapa de consolidação de resultados é uma
+          tabela (em formato  <span class="code">.xlsx</span> ou <span class="code">.csv</span>)
+          contendo os dados de taxon final da etapa anterior de aplicação de threshold e a lista
+          de taxon curada.
+      </p>
+
+      <h3>
+        Tabela 3: Tabela resumo de um arquivo de entrada mostrando as informações gerais para
+          a etapa de consolidação.
+      </h3>
+      <img
+        src="manual_img/pt-br/tabela3.png"
+        class="tables"
+        alt="Tabela de entrada"
+      />
+
+      <h3>Arquivos de saída:</h3>
+      <p>
+        Todas as tabelas podem ser salvas em formatos  <span class="code">.xlsx</span> e
+        <span class="code">.csv</span>. Veja um exemplo de arquivo gerado nesta etapa na
+          Figura 1.
+      </p>
+
+      <h3>
+        Figura 1: Tabela resumo de um arquivo de saída mostrando os resultados consolidados
+          após a execução da etapa de consolidação.
+      </h3>
+      <p class="note">
+        Observe que a lista de táxons é apresentada de acordo com o filtro selecionado em diferentes
+          guias da planilha.
+      </p>
+      <img
+        src="manual_img/pt-br/figura1.png"
+        class="tables"
+        alt="Arquivo de saída"
+      />
+
+      <h2>Funcionamento Geral do Programa eDNAnalyzer</h2>
+      <p>
+        Após acessar o programa em
+        <a href="https://github.com/Leo-9821/eDNAnalyzer" target="_blank"
+          >https://github.com/Leo-9821/eDNAnalyzer</a
+        >, siga as etapas clicando nas opções disponíveis.
+      </p>
+
+      <div class="step">
+        <h3>Etapa 1: Selecione o idioma</h3>
+        <img
+          src="manual_img/pt-br/tela01.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 2: Leia o manual e escolha uma das duas opções de processamento
+        </h3>
+        <img
+          src="manual_img/pt-br/tela02.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>Etapa 3: Escolha a opção "Aplicação do Threshold".</h3>
+        <img
+          src="manual_img/pt-br/tela02.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>Etapa 4: Carregue um arquivo contendo os dados de atribuição taxonômica</h3>
+        <img
+          src="manual_img/pt-br/tela03.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 5: Verifique o diretório fornecido para garantir que o arquivo foi
+            carregado corretamente.
+        </h3>
+        <img
+          src="manual_img/pt-br/tela04.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 6: Insira um valor do threshold em porcentagem ou deixe vazio para usar o
+            padrão (0,05%) e execute a etapa de Aplicação do threshold.
+        </h3>
+        <img
+          src="manual_img/pt-br/tela05.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 7: Após a execução, três arquivos de saída serão gerados, contendo respectivamente:
+
+        </h3>
+          <p>
+            (i) o valor do threshold calculado por amostra de sequenciamento,
+            (ii) as OTUs/ASVs com reads abaixo do limiar e (iii) as OTUs/ASVs com reads
+            iguais ou acima do limiar. Salve pelo menos o último arquivo em
+            <span class="code">.xlsx</span> ou <span class="code">.csv</span>
+            para usar para a curadoria manual e entrada na etapa de consolidação.
+          </p>
+        <img
+          src="manual_img/pt-br/tela06.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>Etapa 8: Escolha a opção "Consolidação de Resultados".</h3>
+        <img
+          src="manual_img/pt-br/tela02.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 9: Carregue um arquivo contendo a tabela curada após a aplicação do threshold.
+        </h3>
+        <img
+          src="manual_img/pt-br/tela07.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 10: Verifique o diretório para confirmar o carregamento correto do arquivo.
+        </h3>
+        <img
+          src="manual_img/pt-br/tela08.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 11: Selecione as opções para filtrar os dados por coletor e/ou área.
+        </h3>
+        <img
+          src="manual_img/pt-br/tela09.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 12: Se selecionou a opção "Amostrador", digite os IDs dos coletores,
+            separando-os com a tecla "Enter". Se você não selecionou “Amostrador”, deixe
+            o campo em branco.
+        </h3>
+        <img
+          src="manual_img/pt-br/tela10.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+
+      <div class="step">
+        <h3>
+          Etapa 13:  Salve as tabelas geradas com os dados filtrados.
+        </h3>
+          <p>
+            Para compactar todas
+            as tabelas em <span class="code">.csv</span> em um único arquivo
+            <span class="code">.zip</span>, selecione a opção ZIP. Assim, você
+            salvará os resultados consolidados com a lista final de táxons e as informações
+            sobre o número de reads que cada táxon apresentou e o número de vezes que foi
+            detectado.
+          </p>
+        <img
+          src="manual_img/pt-br/tela11.png"
+          class="screenshots"
+          alt=""
+        />
+      </div>
+    </main>
+  </body>
 </html>
