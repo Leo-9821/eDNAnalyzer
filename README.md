@@ -15,7 +15,7 @@ The program's manual explains how to make the input files and how to use its int
 The manual is also available [here](https://ednanalyzer-manual.netlify.app).
 
 **How to cite eDNAnalyzer?**  
-Olimpio, L.W.G.F.; Gestich, C.C.; Saranholi, B.H.; Galetti Jr, P.M.; Freitas, P.D. 2025. eDNAnalyzer: a fast and user-friendly computational tool for processing massive taxonomic assignment data derived from eDNA and iDNA metabarcoding (doi: ).
+Olimpio, L.W.G.F.; Gestich, C.C.; Saranholi, B.H.; Galetti Jr, P.M.; Freitas, P.D. 2025. eDNAnalyzer: a user-friendly computational tool for post-processing taxonomic assignment data derived from eDNA and iDNA metabarcoding (doi: ).
 
 ---
 
@@ -36,4 +36,4 @@ O manual do programa explica como devem ser feitos os arquivos de entrada e como
 O manual também está disponível [aqui](https://ednanalyzer-manual.netlify.app).
 
 **Como citar eDNAnalyzer?**  
-Olimpio, L.W.G.F.; Gestich, C.C.; Saranholi, B.H.; Galetti Jr, P.M.; Freitas, P.D. 2025. eDNAnalyzer: a fast and user-friendly computational tool for processing massive taxonomic assignment data derived from eDNA and iDNA metabarcoding (doi: ).
+Olimpio, L.W.G.F.; Gestich, C.C.; Saranholi, B.H.; Galetti Jr, P.M.; Freitas, P.D. 2025. eDNAnalyzer: a user-friendly computational tool for post-processing taxonomic assignment data derived from eDNA and iDNA metabarcoding (doi: ).
